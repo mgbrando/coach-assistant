@@ -1,0 +1,14 @@
+{
+  "name": "coach-assistant",
+  "version": "1.0.0",
+  "description": "App used to create a roster for a soccer team.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Brando",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
