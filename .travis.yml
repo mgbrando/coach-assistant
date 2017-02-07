@@ -4,6 +4,6 @@ deploy:
   provider: heroku
   api_key:
     secure: DnwFn43FlssbhxUcIUZWkGO+7Cp/yOeoyAOAwVReYsFaA2EWAYnHV8EAe2QFciHO0x+LKDZsiv9jhnApzrdmXRb3xxu99oyOcduRq38619xNHdNQajPDUVLGq2BhBOXKGeTGZXWZ2+QbTGx9unPIB5XjE/baNtjov2c3O4hiGuZ2iyN9/d6d1iVYZefczOjgT3jiB7yzk1+Q/tkE+tm2tvpkq5SqbN+7i+sR/edStPH84XH4JVvWqcZyUBnXQF9U5mXQjYTZOUlmU8COvI4cQhyuBbOz0tLeEgXG6iOIfd2g3LhUpOkgIFk/P/706IX/qqtCShg4D6YU/0MuSaoAGVuI+jFMPU81jvuoVsUep8Ya8JKlsghNJV00DLpG+qH920gDYspgLzzEmU8qmvlcKBfT2DZJ/UCaIbNWvZvUtcsaRj0UDit6J37MnPcyXxBTIP5FcICv/r1Sm3YybNo2OZnp5iNw2dHzKEh2gnhrpm2xqR+0jypwalUsQIlQR9+m55n2nM4xlwiOk+f/SFqn7MIm59PE3UXIZ9FnDHzKlZ79pZKDJ1AXFzO1tgilbHO1FWLDGWHLj8KsCP3yae/pD8p8sp7ja8a/dXtxNmXj+7+cO4DMZWvWH7NebBVJRRJMrA0dyXPxLN5C8m/JjAe6RfuoPo94bXnCAHwkIeVOoao=
-  app: coach-assistant
+  app: serene-plateau-21873
   on:
     repo: mgbrando/coach-assistant
