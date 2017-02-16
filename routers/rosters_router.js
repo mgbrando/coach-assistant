@@ -8,19 +8,18 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 
-const {Player} = require('../models');
-//const {deletePlayer} = require('../services');
+const {Roster} = require('../models');
 
 //Method that returns an array of player objects from the database
 router.get('/', (req, res) => {
-	Player
+	Roster
 		.find()
 		.exec()
-		.then(players => {
-			console.log(players);
+		.then(rosters => {
+			console.log(rosters);
 			res.json({
-				players: players.map(player => {
-					return player.playerRepr();
+				rosters: rosters.map(roster => {
+					return roster.rosterRepr();
 				})
 			});
 		});
@@ -29,19 +28,19 @@ router.get('/', (req, res) => {
 //Method that returns a player object from the database given that players's id
 router.get('/:id', (req, res) => {
 	console.log(req.params.id);
-	Player
+	Roster
 		.findById(req.params.id)
 		.exec()
-		.then(player => {
+		.then(roster => {
 			console.log(player);
-			res.json(player.playerRepr());
+			res.json(roster.rosterRepr());
 		});
 });
 
 //Method that stores a player in the database and then returns that player representation
 router.post('/', jsonParser, (req, res) => {
-	const requiredFields = ['firstName', 'lastName'];
-	for(let i = 0; i < requiredFields.length; i++){
+	//const requiredFields = ['playerPositions', 'formation'];
+	/*for(let i = 0; i < requiredFields.length; i++){
 		const field = requiredFields[i];
 		console.log(field);
 		console.log(req.body);
@@ -51,15 +50,23 @@ router.post('/', jsonParser, (req, res) => {
 			return res.status(400).json({message: message});
 		}
 	}
-
-	Player
+*/
+	if(!('formationId' in req.body)){
+			const message = `Missing \` formationId \` in request body`;
+			console.error(message);
+			return res.status(400).json({message: message});
+	}
+	for(let field in req.body)
+		console.log(req.body[field]);
+	Roster
 		.create({
-			firstName: req.body.firstName,
-			lastName: req.body.lastName,
-			status: req.body.status,
-			preferredPosition: req.body.preferredPosition
+			formationId: req.body.formationId,
+			playerPositions: req.body.playerPositions,
+			dateCreated: new Date().toDateString(),
+			description: req.body.description,
+			notes: req.body.notes
 		})
-		.then(player => {res.status(201).json(player.playerRepr());})
+		.then(roster => {res.status(201).json(roster.rosterRepr());})
 		.catch(err => {
 			console.error(err);
 			res.status(500).json({message: 'Internal server error'});
@@ -74,16 +81,17 @@ router.put('/:id', jsonParser, (req, res) => {
 		return res.status(400).json({message: message});
  	}
  	const toUpdate = {};
- 	const updatableFields = ['firstName', 'lastName', 'status', 'preferredPosition'];
+ 	const updatableFields = ['formationId', 'playerPositions', 'description', 'notes'];
  	updatableFields.forEach(field => {
  		if(field in req.body)
  			toUpdate[field] = req.body[field];
  	});
+ 	toUpdate['lastModified'] = new Date().toDateString();
 
- 	Player
+ 	Roster
  		.findByIdAndUpdate(req.params.id, {$set: toUpdate})
  		.exec()
- 		.then(player => {
+ 		.then(roster => {
  			res.status(204).end();
  		})
  		.catch(err => {
@@ -93,21 +101,17 @@ router.put('/:id', jsonParser, (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-	Player
+	Roster
 		.findByIdAndRemove(req.params.id)
 		.exec()
 		.then(player => {
-			console.log(`Deleted player \`${req.params.id}\``);
+			console.log(`Deleted roster \`${req.params.id}\``);
 			res.status(204).end();
 		})
 		.catch(err => {
 			console.error(err);
 			res.status(500).json({message: 'Internal Service Error: '+err});
 		});
-	//playerService.delete(req.params.id);
 });
 
 module.exports = router;
-
-
-

@@ -1,16 +1,18 @@
 'use strict';
 
 class Player{
-	constructor(id, firstName, lastName, status = 'active', preferredPosition = 'Not Specified'){
-		this._id = id
+
+	constructor(playerObject /*= throw new Error('playerObject is required')*/){
+		this.deconstructs(playerObject);
+	}
+
+	/*constructor(id, firstName, lastName, status = 'active', preferredPosition = 'Not Specified'){
+		this._id = id;
 		this._firstName = firstName;
 		this._lastName = lastName;
 		this._status = status;
 		this._preferredPosition = preferredPosition;
-	}
-	constructor(playerObject = throw new Error('playerObject is required')){
-		deconstructs(playerObject);
-	}
+	}*/
 
 	deconstructs(playerObject){
 		this._id = playerObject.id;
@@ -57,7 +59,20 @@ class Player{
 	set preferredPosition(preferredPosition){
 		this._preferredPosition = preferredPosition;
 	}
-
+	getFullName(){
+		return `${this.firstName()} ${this.lastName()}`;
+	}
+	getHtmlRepr(){
+		return `<div class="player-row">
+						<div>${this.getFullName()}</div>
+						<div>${this.status()}</div>
+						<div>${this.preferredPosition()}</div>
+						<div>
+							<button type="button" class="js-update-player update-player">Update</button>
+							<button type="button" class="js-delete-player delete-player">Delete</button>
+						</div>
+					</div>`;
+	}
 }
 
-module.exports = Player;
+//module.exports = Player;

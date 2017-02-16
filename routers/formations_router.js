@@ -130,6 +130,7 @@ router.delete('/:id', (req,res) => {
 		.findByIdAndRemove(req.params.id)
 		.exec()
 		.then(formation => {
+			console.log(`Deleted formation \`${req.params.id}\``);
 			res.status(204).end();
 		})
 		.catch(err => {

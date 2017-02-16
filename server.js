@@ -7,6 +7,7 @@ var app = express();
 const {DATABASE_URL, PORT} = require('./config');
 const players_router = require('./routers/players_router');
 const formations_router = require('./routers/formations_router');
+const rosters_router = require('./routers/rosters_router');
 
 app.use(morgan('common'));
 app.use(express.static('public'));
@@ -16,6 +17,7 @@ app.use(express.static('public'));
 });*/
 app.use('/players', players_router);
 app.use('/formations', formations_router);
+app.use('/rosters', rosters_router);
 app.use('*', (req, res) => {
 	res.status(404).json({message: 'Not Found'});
 });
