@@ -91,7 +91,7 @@ describe('players api', function(){
 				});
 		});
 
-		it('should list a single player with correct fields when given their id', () => {
+		it('should list a single player with correct fields when given its id', () => {
 			let player;
 
 			return Player
@@ -166,8 +166,8 @@ describe('players api', function(){
           			return Player.findById(updateData.id).exec();
         		})
         		.then(player => {
-        			String(player._id).should.equal(updateData.id)
-     				player.firstName.should.equal(updateData.firstName)
+        			String(player._id).should.equal(updateData.id);
+     				player.firstName.should.equal(updateData.firstName);
           			player.lastName.should.equal(updateData.lastName);
           			player.status.should.equal(updateData.status);
           			player.preferredPosition.should.equal(updateData.preferredPosition);

@@ -1,11 +1,11 @@
-/*const chai = require('chai');
+const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const {DATABASE_URL} = require('../config');
-const {Player} = require('../models');
+const {Roster} = require('../models');
 const {app, runServer, closeServer} = require('../server'); 
 
 const should = chai.should();
@@ -13,19 +13,25 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 
-function seedPlayerData(){
-	console.info('seeding player data');
+function seedRosterData(){
+	console.info('seeding roster data');
   	const seedData = [];
   	for (let i=1; i<=10; i++) {
     	seedData.push({
-    		firstName: faker.name.firstName(),
-        	lastName: faker.name.lastName(),
-    		status: faker.lorem.word(),
-      		preferredPosition: faker.lorem.word()
+    		formationId: faker.random.uuid(),
+        playerPositions: {
+          layer: faker.random.number(),
+          position: faker.random.number(),
+          playerId: faker.random.uuid(),
+        },
+        dateCreated: faker.date.past(),
+        lastModified: faker.date.recent(),
+        description: faker.lorem.sentence(),
+        notes: faker.lorem.sentences()
     	});
 	}
 	console.log('SEED DATA: '+seedData[0].firstName);
-  	return Player.insertMany(seedData);
+  	return Roster.insertMany(seedData);
 }
 
 function dropDatabase(){
@@ -37,14 +43,14 @@ function dropDatabase(){
   });
 }
 
-describe('players api', function(){
+describe('rosters api', function(){
 
 	before(function(){
 		return runServer();
 	});
 
 	beforeEach(function(){
-		return seedPlayerData();
+		return seedRosterData();
 	});
 
 	afterEach(function(){
@@ -63,65 +69,73 @@ describe('players api', function(){
 	}
 
 	describe('GET endpoint', () => {
-		it('should list all players with correct fields on GET', () => {
+		it('should list all rosters with correct fields on GET', () => {
 			let res;
 			return chai.request(app)
-				.get('/players')
+				.get('/rosters')
 				.then(_res => {
 					res = _res;
 					res.should.have.status(200);
 					res.should.be.json;	
-					res.body.players.should.be.a('array');
+					res.body.rosters.should.be.a('array');
 
-					res.body.players.length.should.be.at.least(1);
+					res.body.rosters.length.should.be.at.least(1);
 
-					const expectedKeys = ['id', 'name', 'status', 'preferredPosition'];
+					const expectedKeys = ['id', 'formationId', 'playerPositions', 'dateCreated', 'lastModified',
+          'description', 'notes'];
 					//checkKeys(res.body.players, expectedKeys);
-					console.log('All players: '+res.body.players.status);
-					res.body.players.forEach(player => {
-						console.log('Value for player: '+player);
-						player.should.be.a('object');
-						player.should.include.keys(expectedKeys);
+					//console.log('All rosters: '+res.body.players.status);
+					res.body.rosters.forEach(roster => {
+						console.log('Value for roster: '+roster);
+						roster.should.be.a('object');
+						roster.should.include.keys(expectedKeys);
 					});
 
-					return Player.count();		
+					return Roster.count();		
 				})
 				.then(count => {
-					res.body.players.should.have.length.of(count);
+					res.body.rosters.should.have.length.of(count);
 				});
 		});
 
-		it('should list a single player with correct fields when given their id', () => {
-			let player;
+		it('should list a single roster with correct fields when given its id', () => {
+			let roster;
 
-			return Player
+			return Roster
 				.findOne()
 				.exec()
-				.then(_player => {
-					player = _player;
-					return chai.request(app).get(`/players/${player.id}`);
+				.then(_roster => {
+					roster = _roster;
+					return chai.request(app).get(`/rosters/${roster.id}`);
 				})
 				.then(res => {
 					res.should.have.status(200);
 					res.should.be.json;
-					const expectedKeys = ['id', 'name', 'status', 'preferredPosition'];
+					const expectedKeys = ['id', 'formationId', 'playerPositions', 'dateCreated', 'lastModified',
+          'description', 'notes'];
 					checkKeys([res.body], expectedKeys);
 				});
 		});
 	});
 	describe('POST endpoint', () => {
-    	it('should add a new player and return a player representation', () => {
+    	it('should add a new roster and return a roster representation', () => {
 
-      		const newPlayer = {
-          		firstName: faker.name.firstName(),
-          		lastName: faker.name.lastName(),
-          		status: faker.lorem.word(),
-          		preferredPosition: faker.lorem.word()
-      		};
+      		const newRoster = {
+            formationId: faker.random.uuid(),
+            playerPositions: {
+              layer: faker.random.number(),
+              position: faker.random.number(),
+              playerId: faker.random.uuid(),
+            },
+            dateCreated: faker.date.past().toDateString(),
+            lastModified: faker.date.recent().toDateString(),
+            description: faker.lorem.sentence(),
+            notes: faker.lorem.sentences()
+          };
 
       		return chai.request(app)
-        		.post('/players')
-        		.send(newPlayer)
+        		.post('/rosters')
+        		.send(newRoster)
         		.then(res => {
           			res.should.have.status(201);
           			res.should.be.json;
@@ -129,71 +143,85 @@ describe('players api', function(){
           			res.body.should.include.keys(
             			'id', 'name', 'status', 'preferredPosition');
            			res.body.id.should.not.be.null;
-          			res.body.status.should.equal(newPlayer.status);
-          			res.body.preferredPosition.should.equal(newPlayer.preferredPosition);
-          			res.body.name.should.equal(`${newPlayer.firstName} ${newPlayer.lastName}`);
-          			return Player.findById(res.body.id).exec();
+                res.body.formationId.should.not.be.null;
+                res.body.playerPositions.should.deep.equal(newRoster.playerPositions);
+                res.body.dateCreated.should.equal(newRoster.dateCreated);
+                res.body.lastModified.should.equal(newRoster.lastModified);
+                res.body.description.should.equal(newRoster.description);
+                res.body.notes.should.equal(newRoster.notes);
+
+          			return Roster.findById(res.body.id).exec();
         		})
-        		.then(player => {
-          			player.firstName.should.equal(newPlayer.firstName);
-          			player.lastName.should.equal(newPlayer.lastName);
-          			player.status.should.equal(newPlayer.status);
-          			player.preferredPosition.should.equal(newPlayer.preferredPosition);
+        		.then(roster => {
+          			roster.formationId.should.equal(newRoster.formationId);
+          			roster.playerPositions.should.deep.equal(newRoster.playerPositions);
+          			roster.dateCreated.should.equal(newRoster.dateCreated);
+          			roster.lastModified.should.equal(newRoster.lastModified);
+                roster.description.should.equal(newRoster.description);
+                roster.notes.should.equal(newRoster.notes);
         		});
     	});
 
 	});
 	describe('PUT endpoint', () => {
-    	it('should update player fields that you include in the request', () => {
+    	it('should update roster fields that you include in the request', () => {
       		const updateData = {
-      			firstName: "David",
-      			lastName: "Beckham",
-      			status: "absent",
-      			preferredPosition: "center midfielder"
-      		};
+            formationId: faker.random.uuid(),
+            playerPositions: {
+              layer: faker.random.number(),
+              position: faker.random.number(),
+              playerId: faker.random.uuid(),
+            },
+            dateCreated: faker.date.past().toDateString(),
+            lastModified: faker.date.recent().toDateString(),
+            description: faker.lorem.sentence(),
+            notes: faker.lorem.sentences()
+          };
 
-      		return Player
+      		return Roster
         		.findOne()
         		.exec()
-        		.then(player => {
-          			updateData.id = player.id;
+        		.then(roster => {
+          			updateData.id = roster.id;
 					return chai.request(app)
-            			.put(`/players/${player.id}`)
+            			.put(`/rosters/${roster.id}`)
             			.send(updateData);
         		})
         		.then(res => {
           			res.should.have.status(204);
-          			return Player.findById(updateData.id).exec();
+          			return Roster.findById(updateData.id).exec();
         		})
-        		.then(player => {
-        			String(player._id).should.equal(updateData.id)
-     				player.firstName.should.equal(updateData.firstName)
-          			player.lastName.should.equal(updateData.lastName);
-          			player.status.should.equal(updateData.status);
-          			player.preferredPosition.should.equal(updateData.preferredPosition);
+        		.then(roster => {
+        		    String(roster._id).should.equal(updateData.id)
+     				    roster.formationId.should.equal(updateData.formationId)
+          			roster.playerPositions.should.deep.equal(updateData.playerPositions);
+          			roster.dateCreated.should.equal(updateData.dateCreated);
+          			roster.lastModified.should.equal(updateData.lastModified);
+                roster.description.should.equal(updateData.description);
+                roster.notes.should.equal(updateData.notes);
           		});
     	});
 	});
 	describe('DELETE endpoint', () => {
     	
-    	it('should delete a player given an id', () => {
+    	it('should delete a roster given an id', () => {
 
-      		let player;
+      		let roster;
 
-      		return Player
+      		return Roster
         		.findOne()
         		.exec()
-        		.then(_player => {
-          			player = _player;
-          			return chai.request(app).delete(`/players/${player.id}`);
+        		.then(_roster => {
+          			roster = _roster;
+          			return chai.request(app).delete(`/rosters/${roster.id}`);
         		})
         		.then(res => {
           			res.should.have.status(204);
-          			return Player.findById(player.id);
+          			return Roster.findById(roster.id);
         		})
-        		.then(_player => {
-          			should.not.exist(_player);
+        		.then(_roster => {
+          			should.not.exist(_roster);
         		});
     		});
 	});
-});*/
+});
