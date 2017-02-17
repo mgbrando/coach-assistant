@@ -106,9 +106,12 @@ describe('rosters api', function(){
 				.exec()
 				.then(_roster => {
 					roster = _roster;
+          console.log(roster);
+          console.log(roster.id);
 					return chai.request(app).get(`/rosters/${roster.id}`);
 				})
 				.then(res => {
+          console.log('MADE IT TO RES!');
 					res.should.have.status(200);
 					res.should.be.json;
 					const expectedKeys = ['id', 'formationId', 'playerPositions', 'dateCreated', 'lastModified',
@@ -122,13 +125,11 @@ describe('rosters api', function(){
 
       		const newRoster = {
             formationId: faker.random.uuid(),
-            playerPositions: {
+            playerPositions: [{
               layer: faker.random.number(),
               position: faker.random.number(),
               playerId: faker.random.uuid(),
-            },
-            dateCreated: faker.date.past().toDateString(),
-            lastModified: faker.date.recent().toDateString(),
+            }],
             description: faker.lorem.sentence(),
             notes: faker.lorem.sentences()
           };
@@ -140,13 +141,16 @@ describe('rosters api', function(){
           			res.should.have.status(201);
           			res.should.be.json;
           			res.body.should.be.a('object');
-          			res.body.should.include.keys(
-            			'id', 'name', 'status', 'preferredPosition');
+          			res.body.should.include.keys('id', 'formationId', 'playerPositions', 'dateCreated', 'lastModified',
+          'description', 'notes');
            			res.body.id.should.not.be.null;
                 res.body.formationId.should.not.be.null;
-                res.body.playerPositions.should.deep.equal(newRoster.playerPositions);
-                res.body.dateCreated.should.equal(newRoster.dateCreated);
-                res.body.lastModified.should.equal(newRoster.lastModified);
+                //newRoster.playerPositions[0]._id = res.body.playerPositions[0]._id;
+                res.body.playerPositions[0].layer.should.equal(newRoster.playerPositions[0].layer);
+                res.body.playerPositions[0].position.should.equal(newRoster.playerPositions[0].position);
+                res.body.playerPositions[0].playerId.should.equal(newRoster.playerPositions[0].playerId);
+                res.body.dateCreated.should.equal(new Date().toDateString());
+                res.body.lastModified.should.equal('');
                 res.body.description.should.equal(newRoster.description);
                 res.body.notes.should.equal(newRoster.notes);
 
@@ -154,9 +158,12 @@ describe('rosters api', function(){
         		})
         		.then(roster => {
           			roster.formationId.should.equal(newRoster.formationId);
-          			roster.playerPositions.should.deep.equal(newRoster.playerPositions);
-          			roster.dateCreated.should.equal(newRoster.dateCreated);
-          			roster.lastModified.should.equal(newRoster.lastModified);
+          			//roster.playerPositions[0].should.deep.equal(newRoster.playerPositions[0]);
+                roster.playerPositions[0].layer.should.equal(newRoster.playerPositions[0].layer);
+                roster.playerPositions[0].position.should.equal(newRoster.playerPositions[0].position);
+                roster.playerPositions[0].playerId.should.equal(newRoster.playerPositions[0].playerId);
+          			roster.dateCreated.should.equal(new Date().toDateString());
+          			roster.lastModified.should.equal('');
                 roster.description.should.equal(newRoster.description);
                 roster.notes.should.equal(newRoster.notes);
         		});
@@ -167,13 +174,11 @@ describe('rosters api', function(){
     	it('should update roster fields that you include in the request', () => {
       		const updateData = {
             formationId: faker.random.uuid(),
-            playerPositions: {
+            playerPositions: [{
               layer: faker.random.number(),
               position: faker.random.number(),
               playerId: faker.random.uuid(),
-            },
-            dateCreated: faker.date.past().toDateString(),
-            lastModified: faker.date.recent().toDateString(),
+            }],
             description: faker.lorem.sentence(),
             notes: faker.lorem.sentences()
           };
@@ -183,7 +188,9 @@ describe('rosters api', function(){
         		.exec()
         		.then(roster => {
           			updateData.id = roster.id;
-					return chai.request(app)
+                console.log('Roster: '+roster.lastModified);
+                console.log('updateData: '+updateData.lastModified);
+					 return chai.request(app)
             			.put(`/rosters/${roster.id}`)
             			.send(updateData);
         		})
@@ -192,11 +199,14 @@ describe('rosters api', function(){
           			return Roster.findById(updateData.id).exec();
         		})
         		.then(roster => {
-        		    String(roster._id).should.equal(updateData.id)
-     				    roster.formationId.should.equal(updateData.formationId)
-          			roster.playerPositions.should.deep.equal(updateData.playerPositions);
-          			roster.dateCreated.should.equal(updateData.dateCreated);
-          			roster.lastModified.should.equal(updateData.lastModified);
+        		    String(roster._id).should.equal(updateData.id);
+     				    roster.formationId.should.equal(updateData.formationId);
+                updateData.playerPositions[0]._id = roster.playerPositions[0]._id;
+                roster.playerPositions[0].layer.should.equal(updateData.playerPositions[0].layer);
+                roster.playerPositions[0].position.should.equal(updateData.playerPositions[0].position);
+                roster.playerPositions[0].playerId.should.equal(updateData.playerPositions[0].playerId);
+          			roster.dateCreated.should.not.be.null;
+          			roster.lastModified.should.equal(new Date().toDateString());
                 roster.description.should.equal(updateData.description);
                 roster.notes.should.equal(updateData.notes);
           		});

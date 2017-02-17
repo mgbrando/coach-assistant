@@ -10,7 +10,7 @@ const jsonParser = bodyParser.json();
 
 const {Roster} = require('../models');
 
-//Method that returns an array of player objects from the database
+//Method that returns an array of roster objects from the database
 router.get('/', (req, res) => {
 	Roster
 		.find()
@@ -25,19 +25,19 @@ router.get('/', (req, res) => {
 		});
 });
 
-//Method that returns a player object from the database given that players's id
+//Method that returns a roster object from the database given that roster's id
 router.get('/:id', (req, res) => {
 	console.log(req.params.id);
 	Roster
 		.findById(req.params.id)
 		.exec()
 		.then(roster => {
-			console.log(player);
+			console.log(roster);
 			res.json(roster.rosterRepr());
 		});
 });
 
-//Method that stores a player in the database and then returns that player representation
+//Method that stores a roster in the database and then returns that roster representation
 router.post('/', jsonParser, (req, res) => {
 	//const requiredFields = ['playerPositions', 'formation'];
 	/*for(let i = 0; i < requiredFields.length; i++){
@@ -56,6 +56,7 @@ router.post('/', jsonParser, (req, res) => {
 			console.error(message);
 			return res.status(400).json({message: message});
 	}
+
 	for(let field in req.body)
 		console.log(req.body[field]);
 	Roster
@@ -73,7 +74,7 @@ router.post('/', jsonParser, (req, res) => {
 		});
 });
 
-//Method that updates a player's information
+//Method that updates a roster's information
 router.put('/:id', jsonParser, (req, res) => {
 	if(!(req.params.id && req.body.id && req.params.id === req.body.id)){
 		const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`;
@@ -104,7 +105,7 @@ router.delete('/:id', (req, res) => {
 	Roster
 		.findByIdAndRemove(req.params.id)
 		.exec()
-		.then(player => {
+		.then(roster => {
 			console.log(`Deleted roster \`${req.params.id}\``);
 			res.status(204).end();
 		})
