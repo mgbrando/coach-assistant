@@ -16,10 +16,11 @@ class Player{
 
 	deconstructs(playerObject){
 		this._id = playerObject.id;
-		this._firstName = firstName;
-		this._lastName = lastName;
-		this._status = status || 'active';
-		this._preferredPosition = preferredPosition || 'Not Specified';
+		//this._name = playerObject.name;
+		this._firstName = playerObject.firstName;
+		this._lastName = playerObject.lastName;
+		this._status = playerObject.status || 'active';
+		this._preferredPosition = playerObject.preferredPosition || 'Not Specified';
 	}
 
     //Getters and setters
@@ -29,7 +30,12 @@ class Player{
 	set id(id){
 		this._id = id;
 	}
-
+	get name(){
+		return this._name;
+	}
+	set name(name){
+		this._name = name;
+	}
 	get firstName(){
 		return this._firstName;
 	}
@@ -60,13 +66,27 @@ class Player{
 		this._preferredPosition = preferredPosition;
 	}
 	getFullName(){
-		return `${this.firstName()} ${this.lastName()}`;
+		return `${this._firstName} ${this._lastName}`;
+	}
+	getPlayerRow(){
+		let playerRowHtml = `<div class="row" data-playerId="${this._id}">
+								<div class="col-xs-5ths" contenteditable="true">${this._firstName}</div>
+								<div class="col-xs-5ths" contenteditable="true">${this._lastName}</div>
+								<div class="col-xs-5ths" contenteditable="true">${this._status}</div>
+								<div class="col-xs-5ths" contenteditable="true">${this._preferredPosition}</div>
+								<div class="col-xs-5ths"><button class="js-update-button" type="button">Update</button></div>
+								<div class="col-xs-5ths"><button class="js-delete-button" type="button">Delete</button></div>
+							</div>'`;
+		return playerRowHtml;
+	}
+	getPlayerDraggableDiv(){
+		return `<div class="js-player-filled player-filled" data-playerId="${this._id}">${getFullName()}</div>`;
 	}
 	getHtmlRepr(){
 		return `<div class="player-row">
-						<div>${this.getFullName()}</div>
-						<div>${this.status()}</div>
-						<div>${this.preferredPosition()}</div>
+						<div>${this._name}</div>
+						<div>${this._status}</div>
+						<div>${this._preferredPosition}</div>
 						<div>
 							<button type="button" class="js-update-player update-player">Update</button>
 							<button type="button" class="js-delete-player delete-player">Delete</button>

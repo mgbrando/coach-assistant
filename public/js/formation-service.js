@@ -11,8 +11,9 @@ class FormationService{
 
 	static addFormation(formation){
 		return $.ajax({
-			type: 'POST',
+			method: 'POST',
 			url: '/formations',
+			contentType: 'application/json',
 			data: formation,
 			dataType: 'json'
 		});
@@ -20,15 +21,16 @@ class FormationService{
 
 	static updateFormation(updatedFormation){
 		return $.ajax({
-			type: 'PUT',
+			method: 'PUT',
 			url: `/formations/${updatedFormation.id()}`,
+			contentType: 'application/json',
 			data: updatedFormation
 		});
 	}
 
 	static deleteFormation(id){
 		return $.ajax({
-			type: 'DELETE',
+			method: 'DELETE',
 			url: `/formations/${id}`
 		});
 	}

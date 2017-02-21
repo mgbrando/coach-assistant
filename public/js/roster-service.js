@@ -1,7 +1,7 @@
 'use strict';
 
 class RosterService{
-	static getRosters(callback){
+	static getRosters(){
 		return $.getJSON('/rosters');
 	}
 
@@ -10,9 +10,13 @@ class RosterService{
 	}
 
 	static addRoster(roster){
+		for(let field in roster){
+			console.log('ROSTER: '+roster[field]);
+		}
 		return $.ajax({
-			type: 'POST',
+			method: 'POST',
 			url: '/rosters',
+			contentType: 'application/json',
 			data: roster,
 			dataType: 'json'
 		});
@@ -21,15 +25,16 @@ class RosterService{
 	static updateRoster(updatedRoster){
 		//ajax returns a promise return this:
 		return $.ajax({
-					type: 'PUT',
+					method: 'PUT',
 					url: `/rosters/${updatedRoster.id()}`,
+					contentType: 'application/json',
 					data: updatedRoster
 				});
 	}
 
 	static deleteRoster(id){
 		return $.ajax({
-					type: 'DELETE',
+					method: 'DELETE',
 					url: `/rosters/${id}`
 				});
 	}

@@ -75,7 +75,7 @@ describe('players api', function(){
 
 					res.body.players.length.should.be.at.least(1);
 
-					const expectedKeys = ['id', 'name', 'status', 'preferredPosition'];
+					const expectedKeys = ['id', 'firstName', 'lastName', 'status', 'preferredPosition'];
 					//checkKeys(res.body.players, expectedKeys);
 					console.log('All players: '+res.body.players.status);
 					res.body.players.forEach(player => {
@@ -104,7 +104,7 @@ describe('players api', function(){
 				.then(res => {
 					res.should.have.status(200);
 					res.should.be.json;
-					const expectedKeys = ['id', 'name', 'status', 'preferredPosition'];
+					const expectedKeys = ['id', 'firstName', 'lastName', 'status', 'preferredPosition'];
 					checkKeys([res.body], expectedKeys);
 				});
 		});
@@ -127,11 +127,12 @@ describe('players api', function(){
           			res.should.be.json;
           			res.body.should.be.a('object');
           			res.body.should.include.keys(
-            			'id', 'name', 'status', 'preferredPosition');
+            			'id', 'firstName', 'lastName', 'status', 'preferredPosition');
            			res.body.id.should.not.be.null;
           			res.body.status.should.equal(newPlayer.status);
           			res.body.preferredPosition.should.equal(newPlayer.preferredPosition);
-          			res.body.name.should.equal(`${newPlayer.firstName} ${newPlayer.lastName}`);
+          			res.body.firstName.should.equal(newPlayer.firstName);
+          			res.body.lastName.should.equal(newPlayer.lastName);
           			return Player.findById(res.body.id).exec();
         		})
         		.then(player => {

@@ -1,6 +1,6 @@
 'use strict';
 
-class Player{
+class Roster{
 
 	constructor(rosterObject /*= throw new Error('playerObject is required')*/){
 		this.deconstructs(rosterObject);
@@ -86,18 +86,15 @@ class Player{
 		this._notes = words;
 	}
 
-	getFullName(){
-		return `${this.firstName()} ${this.lastName()}`;
-	}
 	getHtmlRepr(){
-		return `<div class="player-row">
-						<div>${this.getFullName()}</div>
-						<div>${this.status()}</div>
-						<div>${this.preferredPosition()}</div>
-						<div>
-							<button type="button" class="js-update-player update-player">Update</button>
-							<button type="button" class="js-delete-player delete-player">Delete</button>
-						</div>
-					</div>`;
+		return `<div class="roster">
+					<div>${this._description}</div>
+					<div>Date Created: ${this._dateCreated}</div>
+					<div>Last Modified: ${this._lastModified}</div>
+					<div>
+						<button type="button" class="js-activate-roster activate-roster">Activate</button>
+						<button type="button" class="js-delete-roster delete-roster">Delete</button>
+					</div>
+				</div>`;
 	}
 }

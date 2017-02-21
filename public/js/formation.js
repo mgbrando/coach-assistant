@@ -40,25 +40,31 @@ class Formation{
 	set lastName(layers){
 		this._layers = layers;
 	}
-
-	getHtmlRepr(){
+	getFormationPageHtmlRepr(){
+		let html=`<div class="js-formation formation" data-formationId="${this._id}">
+				  	<header>${this._name}</header>
+				  	<footer class="js-formation-footer formtation-footer"><button type="button">Delete</button></footer>
+				  <div>`;
+	}
+	getHtmlRepr(elementNumber){
 		elementNumber = elementNumber || '';
-		let html = `<div class="formation">
+		let html = `<div class="formation" data-elementNumber="${elementNumber}">
 						<header class="formation-header">
-							${this.name()}
+							${this._name}
 						</header>
 						<div class="update-details hidden">
-							<form id="js-formation-form formation-form">`;
-		for(let i = 0; i < this.layers().length; i++){
+							<form id="js-formation-form">`;
+		for(let i = 0; i < this._layers.length; i++){
 			html += `<div class="layer"><label for="${i}">Layer ${i+1}</label>
 					<select id="${i}">`;
-			for(let i = 0; i < this.layers().length; i++)
-					html += `<option value=${i+1}>${i+1}</option>`;
+			for(let i = 0; i < this._layers.length; i++)
+					html += `<option value="${i+1}">${i+1}</option>`;
 			html+=`</select></div>`
 		}
-		html +=	`	</div>
-					<footer class="formation-footer"><button</footer>
+		html +=	`</form></div>
+				<footer class="formation-footer"></footer>
 				</div>`;
+		return html;		
 	}
 }
 

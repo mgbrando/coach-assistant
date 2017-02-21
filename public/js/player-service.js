@@ -1,7 +1,7 @@
 'use strict';
 
 class PlayerService{
-	static getPlayers(callback){
+	static getPlayers(){
 		return $.getJSON('/players');
 	}
 
@@ -10,9 +10,12 @@ class PlayerService{
 	}
 
 	static addPlayer(player){
+		console.log('PLAYER: '+player);
+		console.log(`${player.firstName} ${player.lastName} ${player.preferredPosition} ${player.status}`);
 		return $.ajax({
-			type: 'POST',
+			method: 'POST',
 			url: '/players',
+			contentType: 'application/json',
 			data: player,
 			dataType: 'json'
 		});
@@ -21,15 +24,16 @@ class PlayerService{
 	static updatePlayer(updatedPlayer){
 		//ajax returns a promise return this:
 		return $.ajax({
-					type: 'PUT',
+					method: 'PUT',
 					url: `/players/${updatedPlayer.id()}`,
+					contentType: 'application/json',
 					data: updatedPlayer
 				});
 	}
 
 	static deletePlayer(id){
 		return $.ajax({
-					type: 'DELETE',
+					method: 'DELETE',
 					url: `/players/${id}`
 				});
 	}

@@ -9,14 +9,15 @@ const playerSchema = mongoose.Schema({
   preferredPosition: {type: String, default: 'Not Specified'}
 });
 
-playerSchema.virtual('fullName').get(function(){
+/*playerSchema.virtual('fullName').get(function(){
   return `${this.firstName} ${this.lastName}`.trim();
-});
+});*/
 
 playerSchema.methods.playerRepr = function() {
   return {
     id: this._id,
-    name: this.fullName,
+    firstName: this.firstName,
+    lastName: this.lastName,
     status: this.status,
     preferredPosition: this.preferredPosition
   };

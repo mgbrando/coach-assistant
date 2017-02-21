@@ -40,6 +40,7 @@ router.get('/:id', (req, res) => {
 
 //Method that stores a player in the database and then returns that player representation
 router.post('/', jsonParser, (req, res) => {
+	console.log('made it to route!');
 	const requiredFields = ['firstName', 'lastName'];
 	for(let i = 0; i < requiredFields.length; i++){
 		const field = requiredFields[i];

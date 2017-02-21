@@ -7,12 +7,16 @@
 	<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
 	<link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/5.0.0/normalize.css">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.structure.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.theme.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" media="screen,projection"/>  
+    <!--<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>-->
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
-<div class="no-js-warning"><a href="enable-javscript.com">Enable javascript</a></div>
- <ul id="slide-out" class="side-nav">
+<!-- <div class="no-js-warning"><a href="enable-javscript.com">Enable javascript</a></div> -->
+ <!--<ul id="slide-out" class="side-nav">
     <li><div class="userView">
       <div class="background">
         <img src="images/office.jpg">
@@ -23,39 +27,86 @@
     </div></li>
     <li><div class="divider"></div></li>
     <li class="js-nav-button nav-button selected"><a href="#!">Home</a></li>
-    <li class="js-nav-button nav-button"><a href="#!">Roster</a></li>
-    <li class="js-nav-button nav-button"><a href="#!">Formations</a></li>
+    <li class="js-nav-button nav-button"><a href="#!">Rosters</a></li>
+    <li class="js-nav-button nav-button"><a href="#!">Team</a></li>
     <li><div class="divider"></div></li>
     <li class="js-nav-button nav-button selected">
     	<div>
     		<header>Positions</header>
     		<div class="js-positions positions"></div>
     	</div>
-    </li>
+    </li>-->
     <!--<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
     <li><a href="#!">Second Link</a></li>
     <li><div class="divider"></div></li>
     <li><a class="subheader">Subheader</a></li>
     <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>-->
-  </ul>
-  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-	<main>
-		<section class="js-team team">
+  <!--</ul>
+  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
+  	<div id="mySidenav" class="sidenav">
+  		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  		<a href="#">Home</a>
+  		<a href="#">Rosters</a>
+  		<a href="#">Team</a>
+  		<div class="js-player-positions player-positions">
+
+  		</div>
+	</div>
+	<span onclick="openNav()">MENU</span>
+	<main id="main">
+	<header><span class="main-header-text">Coach Assistant</span></header>
+	<section class="js-visual-section visual-section">
+		<header>
+			<span class="js-roster-name roster-name"></span>
+			<div class="js-select-container select-container">
+				<div class="js-select-type select-type">
+					<label for="js-roster-select">Roster: </label>
+					<select id="js-roster-select">
+						<option value="rosters">New Roster</option>
+					</select>
+					<label for="js-formation-select">Formation: </label>
+					<select id="js-formation-select">
+						<option value="formations">3-4-3</option>
+					</select>
+				</div>
+			</div>
+		</header>
+		<div class="js-main-visual main-visual">
+			
+		</div>
+	</section>
+		<section class="js-roster-section roster-section">
 			<div class="js-screen-select screen-select">
 			</div>
-			<header>Roster</header>
-			<div class="js-roster roster">
+			<header>Rosters</header>
+			<div class="js-rosters rosters container-fluid">
+			</div>
+		</section>
+		<section class="js-team-section team-section">
+			<div class="js-screen-select screen-select">
+			</div>
+			<header>Team</header>
+			<div class="js-team team container-fluid">
+				<div class="row">
+					<div class="col-xs-5ths">Name</div>
+					<div class="col-xs-5ths">Status</div>
+					<div class="col-xs-5ths">Preferred Position</div>
+					<div class="col-xs-5ths">Update</div>
+					<div class="col-xs-5ths">Delete</div>
+				</div>
 			</div>
 		</section>
 		<section class="js-formations formations">
 			<div class="js-screen-select screen-select"></div>
 			<header>Formations</header>
-			<div class="js-formation-listing formation-listing">
+			<div class="js-formation-listing formation-listing container-fluid">
 			</div>
 		</section>
 	</main>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<!--<script type="text/javascript" src="materialize/js/materialize.min.js"></script>-->
 	<script src="js/player.js"></script>
 	<script src="js/formation.js"></script>
 	<script src="js/roster.js"></script>
