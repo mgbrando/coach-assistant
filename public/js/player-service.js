@@ -16,7 +16,7 @@ class PlayerService{
 			method: 'POST',
 			url: '/players',
 			contentType: 'application/json',
-			data: player,
+			data: JSON.stringify(player),
 			dataType: 'json'
 		});
 	}

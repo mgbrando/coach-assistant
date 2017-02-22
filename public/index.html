@@ -45,9 +45,10 @@
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
   	<div id="mySidenav" class="sidenav">
   		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  		<a href="#">Home</a>
-  		<a href="#">Rosters</a>
-  		<a href="#">Team</a>
+  		<a class="js-nav-button nav-button" href="#">Home</a>
+  		<a class="js-nav-button nav-button" href="#">Rosters</a>
+  		<a class="js-nav-button nav-button" href="#">Formations</a>
+  		<a class="js-nav-button nav-button" href="#">Team</a>
   		<div class="js-player-positions player-positions">
 
   		</div>
@@ -60,14 +61,18 @@
 			<span class="js-roster-name roster-name"></span>
 			<div class="js-select-container select-container">
 				<div class="js-select-type select-type">
-					<label for="js-roster-select">Roster: </label>
-					<select id="js-roster-select">
-						<option value="rosters">New Roster</option>
-					</select>
-					<label for="js-formation-select">Formation: </label>
-					<select id="js-formation-select">
-						<option value="formations">3-4-3</option>
-					</select>
+					<div class="js-roster-select-container roster-select-container">
+						<label for="js-roster-select">Roster: </label>
+						<select id="js-roster-select">
+						<!--<option value="rosters">New Roster</option>-->
+						</select>
+					</div>
+					<div class="js-formation-select-container formation-select-container">
+						<label for="js-formation-select">Formation: </label>
+						<select id="js-formation-select">
+						<!--<option value="formations">3-4-3</option>-->
+						</select>
+					</div>
 				</div>
 			</div>
 		</header>
@@ -75,28 +80,21 @@
 			
 		</div>
 	</section>
-		<section class="js-roster-section roster-section">
+		<section class="js-roster-section roster-section hidden">
 			<div class="js-screen-select screen-select">
 			</div>
 			<header>Rosters</header>
 			<div class="js-rosters rosters container-fluid">
 			</div>
 		</section>
-		<section class="js-team-section team-section">
+		<section class="js-team-section team-section hidden">
 			<div class="js-screen-select screen-select">
 			</div>
 			<header>Team</header>
 			<div class="js-team team container-fluid">
-				<div class="row">
-					<div class="col-xs-5ths">Name</div>
-					<div class="col-xs-5ths">Status</div>
-					<div class="col-xs-5ths">Preferred Position</div>
-					<div class="col-xs-5ths">Update</div>
-					<div class="col-xs-5ths">Delete</div>
-				</div>
 			</div>
 		</section>
-		<section class="js-formations formations">
+		<section class="js-formations-section formations-section hidden">
 			<div class="js-screen-select screen-select"></div>
 			<header>Formations</header>
 			<div class="js-formation-listing formation-listing container-fluid">

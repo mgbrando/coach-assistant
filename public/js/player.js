@@ -70,19 +70,27 @@ class Player{
 	}
 	getPlayerRow(){
 		let playerRowHtml = `<div class="row" data-playerId="${this._id}">
+								<div class="col-xs-2" contenteditable="true">${this._firstName}</div>
+								<div class="col-xs-2" contenteditable="true">${this._lastName}</div>
+								<div class="col-xs-2" contenteditable="true">${this._status}</div>
+								<div class="col-xs-2" contenteditable="true">${this._preferredPosition}</div>
+								<div class="col-xs-2"><button class="js-update-button" type="button">Update</button></div>
+								<div class="col-xs-2"><button class="js-delete-button" type="button">Delete</button></div>
+							</div>`;
+		/*`<div class="row" data-playerId="${this._id}">
 								<div class="col-xs-5ths" contenteditable="true">${this._firstName}</div>
 								<div class="col-xs-5ths" contenteditable="true">${this._lastName}</div>
 								<div class="col-xs-5ths" contenteditable="true">${this._status}</div>
 								<div class="col-xs-5ths" contenteditable="true">${this._preferredPosition}</div>
 								<div class="col-xs-5ths"><button class="js-update-button" type="button">Update</button></div>
 								<div class="col-xs-5ths"><button class="js-delete-button" type="button">Delete</button></div>
-							</div>'`;
+							</div>`;*/
 		return playerRowHtml;
 	}
 	getPlayerDraggableDiv(){
 		return `<div class="js-player-filled player-filled" data-playerId="${this._id}">${getFullName()}</div>`;
 	}
-	getHtmlRepr(){
+	/*getHtmlRepr(){
 		return `<div class="player-row">
 						<div>${this._name}</div>
 						<div>${this._status}</div>
@@ -92,7 +100,7 @@ class Player{
 							<button type="button" class="js-delete-player delete-player">Delete</button>
 						</div>
 					</div>`;
-	}
+	}*/
 }
 
 //module.exports = Player;

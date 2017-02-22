@@ -85,7 +85,9 @@ class Roster{
 	set notes(words){
 		this._notes = words;
 	}
-
+	getRosterListItemRepr(){
+		return `<option value="${this._id}">${this._description}</option>`;
+	}
 	getHtmlRepr(){
 		return `<div class="roster">
 					<div>${this._description}</div>

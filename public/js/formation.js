@@ -27,7 +27,7 @@ class Formation{
 	}
 
 	get name(){
-		return this._firstName;
+		return this._name;
 	}
 	set name(name){
 		this._name = name;
@@ -45,6 +45,9 @@ class Formation{
 				  	<header>${this._name}</header>
 				  	<footer class="js-formation-footer formtation-footer"><button type="button">Delete</button></footer>
 				  <div>`;
+	}
+	getFormationListItemRepr(){
+		return `<option value="${this._id}">${this._name}</option>`;
 	}
 	getHtmlRepr(elementNumber){
 		elementNumber = elementNumber || '';

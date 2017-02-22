@@ -17,7 +17,7 @@ class RosterService{
 			method: 'POST',
 			url: '/rosters',
 			contentType: 'application/json',
-			data: roster,
+			data: JSON.stringify(roster),
 			dataType: 'json'
 		});
 	}

@@ -14,7 +14,7 @@ class FormationService{
 			method: 'POST',
 			url: '/formations',
 			contentType: 'application/json',
-			data: formation,
+			data: JSON.stringify(formation),
 			dataType: 'json'
 		});
 	}
