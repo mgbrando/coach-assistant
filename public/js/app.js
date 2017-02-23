@@ -91,7 +91,7 @@ function getPlayersListItem(player){
 	return html;
 }*/
 function getPlayersDisplay(players){
-	let html = '<div class="row"><div class="col-xs-2">First Name</div><div class="col-xs-2">Last Name</div><div class="col-xs-2">Status</div><div class="col-xs-2">Preferred Position</div><div class="col-xs-2">Update</div><div class="col-xs-2">Delete</div></div>';
+	let html = '<div class="row playerlist-header"><div class="col-xs-2">First Name</div><div class="col-xs-2">Last Name</div><div class="col-xs-2">Status</div><div class="col-xs-2">Preferred Position</div><div class="col-xs-2">Update</div><div class="col-xs-2">Delete</div></div>';
 	Object.keys(players).forEach(function(key){
 		html+=players[key].getPlayerRow();
 		/*html+=`<div class="row" data-playerId="${key}">`;
@@ -203,6 +203,7 @@ function setRosterName(name){
 
 //create delete and update for players
 function updatePlayerInterfaces(method, player){
+	//console.log('METHOD: '+method);
 	if(method==='create'){
 		applicationState.players[player.id]=player;
 		$('ul#bench').append(`<li class="js-position position">Bench</li>`);
@@ -217,10 +218,13 @@ function updatePlayerInterfaces(method, player){
 			.append(playerHtml);
 	}
 	else if(method === 'update'){
-		if((applicationState.players[player.id].firstName !== player.firstName) && 
-			(applicationState.players[player.id].lastName !== player.lastName))
-			$(`div[data-playerId="${player.id}"]`).text(player.name);
+		console.log('IN UPDATE');
+		//if((applicationState.players[player.id].firstName !== player.firstName) && 
+		//	(applicationState.players[player.id].lastName !== player.lastName)){
+			$(`div.player-filled[data-playerId="${player.id}"]`).text(player.getFullName());
+		//}
 		applicationState.players[player.id]=player;
+		console.log('PAST IF');
 	}
 	else{
 		$(`div[data-playerId="${player.id}"]`).remove();
@@ -336,17 +340,19 @@ function getVisualLayersByRoster(roster){
 		
 		$(`ul#${layer} li[data-position="${k+1}"]`)
 			//.empty()
-			.append(`<div class="js-player-filled player-filled" data-playerId="${player.id}">${player.getFullName()}</div>`);
+			.append(player.getPlayerDraggableDiv());
 
 		$(`div[data-layer="${k+1}"] li[data-position="${position}"]`)
 			//.empty()
-			.append(`<div class="js-player-filled player-filled" data-playerId="${player.id}">${player.getFullName()}</div>`);
+			.append(player.getPlayerDraggableDiv());
 	}
 	for(let n = 0; n < Object.keys(applicationState.players).length; n++){
 		$('ul#bench').append(`<li class="js-position position">Bench</li>`);
 		if(benchedPlayers[Object.keys(benchedPlayers)[n]])
 			$(`ul#bench li:nth-child(${n+1})`).append(getPlayerItem(benchedPlayers[Object.keys(benchedPlayers)[n]]));
 	}
+
+	handleDraggable();
 }
 
 function getPlayerItem(player){
@@ -402,6 +408,7 @@ function getVisualLayersByFormation(formation){
 	draggableHtml+=getPlayersList(applicationState.players);
 	$('.js-draggable').empty().html(draggableHtml);
 	$('.js-main-visual').empty().html(visualHtml);*/
+	handleDraggable();
 }
 
 function getDraggableInterface(){
@@ -517,6 +524,10 @@ function handleInitialization(){
 		getRosterInterfaces(applicationState.rosters);
 		getFormationInterfaces(applicationState.formations);
 		getPlayerInterfaces(applicationState.players);
+		handleSideNavigation();
+		handleRosterSelectionChanges();
+		handlePlayerOperations();
+		handleDraggable();
 	});
 	/*A check for last roster or formation that  was up is need here to determine whether
 	to show a roster with everything places correctly or a formation with everyone on the
@@ -676,13 +687,67 @@ function handleMainScreenEvents(){
 		RosterService.addRoster({});
 	});
 }
+function handlePlayerOperations(){
+	$('.js-update-button').click(function(){
+		const playerId = $(this).closest('.row').attr('data-playerId');
+		const oldPlayer = applicationState.players[playerId].getPlayerObject();
+		console.log(oldPlayer.status);
+		let newPlayer = {id: playerId};
+		console.log('NEW PLAYER: '+newPlayer);
+		let count = 0;
+		$(this).parent().siblings().each(function(){
+			console.log(count);
+			if(count < 4){
+				newPlayer[$(this).attr('data-type')] = $(this).text();
+			}
+			//console.log('HIYA!: '+$(this).text());
+			count++;
+		});
+		/*for(let field in newPlayer){
+			console.log('OLDPLAYER: '+oldPlayer[field]);
+			console.log('NEWPLAYER: '+newPlayer[field]);
 
+		}
+		console.log(objectsAreEqual(oldPlayer, newPlayer));*/
+		if(!objectsAreEqual(oldPlayer, newPlayer)){
+			const updatePlayerPromise = PlayerService.updatePlayer(newPlayer);
+			updatePlayerPromise.done(function(){
+				//applicationState.players[playerId] = new Player(newPlayer);
+				updatePlayerInterfaces('update', new Player(newPlayer));
+			});
+		}
+	});
+
+	$('.js-delete-button').click(function(){
+		const playerId = $(this).closest('.row').attr('data-playerId');
+		const player = applicationState.players[playerId];
+		if(confirm(`Permanently delete Player: ${applicationState.players[playerId].getFullName()}?`)){
+			const deletePlayerPromise = PlayerService.deletePlayer(playerId);
+			deletePlayerPromise.done(function(){
+				updatePlayerInterfaces('delete', player);
+			});
+		}
+	});
+}
+function objectsAreEqual(object1, object2){
+	if(typeof object1 === 'object' && typeof object2 === 'object'){
+		if(Object.keys(object1).length === Object.keys(object2).length){
+			for(let field in object1){
+				if(object1[field].trim() !== object2[field].trim())
+					return false;
+			}
+			return true;
+		}
+		return false;
+	}
+	return false;
+}
 /*function revealCurrentPage(pageElement){
 	
 }*/
 function handleDraggable(){
 	$(function() {
-		$('.js-player-filled').draggable();
+		$('.js-player-filled').draggable({axis: "y"});
 	});
 }
 function handleSideNavigation(){
@@ -743,9 +808,7 @@ $(document).ready(function(){
 	//$('no-js-warning').remove();
 	handleInitialization();
 	//handleMainScreenEvents();
-	handleSideNavigation();
-	handleRosterSelectionChanges();
-	handleDraggable();
+
 	//handlePlayerScreenEvents();
 	//handleFormationScreenEvents();
 	//handleRosterScreenEvents();

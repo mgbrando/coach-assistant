@@ -25,9 +25,9 @@ class PlayerService{
 		//ajax returns a promise return this:
 		return $.ajax({
 					method: 'PUT',
-					url: `/players/${updatedPlayer.id()}`,
+					url: `/players/${updatedPlayer.id}`,
 					contentType: 'application/json',
-					data: updatedPlayer
+					data: JSON.stringify(updatedPlayer)
 				});
 	}
 

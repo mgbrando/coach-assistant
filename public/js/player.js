@@ -30,12 +30,6 @@ class Player{
 	set id(id){
 		this._id = id;
 	}
-	get name(){
-		return this._name;
-	}
-	set name(name){
-		this._name = name;
-	}
 	get firstName(){
 		return this._firstName;
 	}
@@ -69,13 +63,13 @@ class Player{
 		return `${this._firstName} ${this._lastName}`;
 	}
 	getPlayerRow(){
-		let playerRowHtml = `<div class="row" data-playerId="${this._id}">
-								<div class="col-xs-2" contenteditable="true">${this._firstName}</div>
-								<div class="col-xs-2" contenteditable="true">${this._lastName}</div>
-								<div class="col-xs-2" contenteditable="true">${this._status}</div>
-								<div class="col-xs-2" contenteditable="true">${this._preferredPosition}</div>
-								<div class="col-xs-2"><button class="js-update-button" type="button">Update</button></div>
-								<div class="col-xs-2"><button class="js-delete-button" type="button">Delete</button></div>
+		let playerRowHtml = `<div class="row player-entry" data-playerId="${this._id}">
+								<div class="col-xs-2 player-field" data-type="firstName" contenteditable="true">${this._firstName}</div>
+								<div class="col-xs-2 player-field" data-type="lastName"contenteditable="true">${this._lastName}</div>
+								<div class="col-xs-2 player-field" data-type="status" contenteditable="true">${this._status}</div>
+								<div class="col-xs-2 player-field" data-type="preferredPosition" contenteditable="true">${this._preferredPosition}</div>
+								<div class="col-xs-2 player-field" data-type="button"><button class="js-update-button" type="button">Update</button></div>
+								<div class="col-xs-2 player-field" data-type="button"><button class="js-delete-button" type="button">Delete</button></div>
 							</div>`;
 		/*`<div class="row" data-playerId="${this._id}">
 								<div class="col-xs-5ths" contenteditable="true">${this._firstName}</div>
@@ -88,7 +82,15 @@ class Player{
 		return playerRowHtml;
 	}
 	getPlayerDraggableDiv(){
-		return `<div class="js-player-filled player-filled" data-playerId="${this._id}">${getFullName()}</div>`;
+		return `<div class="js-player-filled player-filled ui-widget-content" data-playerId="${this._id}">${this.getFullName()}</div>`;
+	}
+	getPlayerObject(){
+		return {id: this._id, 
+				firstName: this._firstName,
+				lastName: this._lastName,
+				status: this._status,
+				preferredPosition: this._preferredPosition
+				};
 	}
 	/*getHtmlRepr(){
 		return `<div class="player-row">
