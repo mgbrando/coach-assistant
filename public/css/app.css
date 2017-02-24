@@ -39,6 +39,11 @@
     font-size: 36px;
     margin-left: 50px;
 }
+.playerlist-header{
+    height: 80px;
+    /*padding-top: 13px;
+    padding-bottom: 13px*/
+}
 .player-entry{
     border: 1px solid black;
     border-bottom: none;
@@ -68,8 +73,83 @@
     width: 100%;
     height: 100%;
 }
+/*This needs to be percentage based by number of rows*/
+.roster-select-container, .formation-select-container{
+    display: inline-block;
+}
+.formation-select-container{
+    margin-left: 5px;
+}
+.js-visual-container{
+    min-height: 100vh;
+}
 .js-visual-container .row{
     height: 50px;
+}
+.visual-position{
+    text-align: center;
+    height: 100%;
+    line-height: 50px;
+}
+.layers-1{
+    height: 100%;
+}
+.layers-2{
+
+}
+.layers-3{
+    
+}
+.layers-4{
+    
+}
+.layers-5{
+    height: 20%;
+}
+.layers-6{
+    
+}
+.layers-7{
+    
+}
+.layers-8{
+    
+}
+.layers-9{
+    height:;
+}
+.layers-10{
+    height: 10%;
+}
+/* This is the left side draggable content CSS*/
+.player-positions header{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+.player-positions ul{
+    padding: 8px 32px 8px 32px;
+    width: 250px;
+}
+.position{
+    position: relative;
+    list-style: none;
+    border: 2px dotted white;
+    text-align: center;
+    margin-bottom: 5px;
+    color: white;
+}
+.player-filled{
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+.slot-filled{
+    border: 2px solid white;
 }
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 main {

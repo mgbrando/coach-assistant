@@ -9,7 +9,8 @@ const applicationState = {
 	players: {},
 	formations: {},
 	rosters: {},
-	currentRoster: "new roster"
+	currentRoster: "new roster",
+	startPosition: {}
 };
 
 function getLayers(){
@@ -305,20 +306,20 @@ function updateRosterInterfaces(method, roster){
 function getVisualLayersByRoster(roster){
 	console.log('THIS IS ROSTER FORMATION ID: '+roster.formationId);
 	const layers = applicationState.formations[roster.formationId].layers;
+	const layersLength=layers.length;
 	const playerPositions = roster.playerPositions;
 	console.log('OMGGGG '+(applicationState.formations[roster.formationId]).layers);
 	setRosterName(roster.description+' - '+applicationState.formations[roster.formationId].name);
 	let draggableHtml = '<div>';
 	let visualHtml = `<div class="js-visual-container">`;
-	for(let i = 0; i < layers.length; i++){
+	for(let i = 0; i < layersLength; i++){
 		draggableHtml+=`<div><header>Layer ${i+1}</header><ul id="${i+1}">`;
-		visualHtml+=`<div class="row" data-layer="${i+1}">`;
+		visualHtml+=`<div class="row layers-${layersLength}" data-layer="${i+1}">`;
 		const positions = layers[i];
 		const columnSize = 12/positions;
-
 		for(let j = 0; j < positions; j++) {
-			draggableHtml+=`<li class="js-position position" data-position="${j+1}">${j+1}</li>`;
-			visualHtml+=`<div class="col-xs-${columnSize}" data-position="${j+1}"></div>`;
+			draggableHtml+=`<li class="js-position ui-widget-content position ui-widget-header" data-position="${j+1}">${j+1}</li>`;
+			visualHtml+=`<div class="col-xs-${columnSize} visual-position" data-position="${j+1}">${j+1}</div>`;
 		}
 		draggableHtml+='</ul></div>';
 		visualHtml+='</div>';
@@ -347,7 +348,7 @@ function getVisualLayersByRoster(roster){
 			.append(player.getPlayerDraggableDiv());
 	}
 	for(let n = 0; n < Object.keys(applicationState.players).length; n++){
-		$('ul#bench').append(`<li class="js-position position">Bench</li>`);
+		$('ul#bench').append(`<li class="js-position position ui-widget-header">Bench</li>`);
 		if(benchedPlayers[Object.keys(benchedPlayers)[n]])
 			$(`ul#bench li:nth-child(${n+1})`).append(getPlayerItem(benchedPlayers[Object.keys(benchedPlayers)[n]]));
 	}
@@ -362,17 +363,17 @@ function getPlayerItem(player){
 function getVisualLayersByFormation(formation){
 	const layers = formation.layers;
 	setRosterName(formation.name);
+	const layersLength=layers.length;
 	let draggableHtml = '<div>';
 	let visualHtml = `<div class="js-visual-container">`;
-	for(let i = 0; i < layers.length; i++){
+	for(let i = 0; i < layersLength; i++){
 		draggableHtml+=`<div><header>Layer ${i+1}</header><ul id="${i+1}">`;
-		visualHtml+=`<div class="row" data-layer="${i+1}">`;
+		visualHtml+=`<div class="row layers-${layersLength}" data-layer="${i+1}">`;
 		const positions = layers[i];
 		const columnSize = 12/positions;
-
 		for(let j = 0; j < positions; j++) {
-			draggableHtml+=`<li class="js-position position" data-position="${j+1}">${j+1}</li>`;
-			visualHtml+=`<div class="col-xs-${columnSize}" data-position="${j+1}"></div>`;
+			draggableHtml+=`<li class="js-position position ui-widget-header" data-position="${j+1}">${j+1}</li>`;
+			visualHtml+=`<div class="col-xs-${columnSize} visual-position" data-position="${j+1}">${j+1}</div>`;
 		}
 		draggableHtml+='</ul></div>';
 		visualHtml+='</div>';
@@ -381,7 +382,7 @@ function getVisualLayersByFormation(formation){
 	draggableHtml+='<div><header>Bench</header><ul id="bench">';
 	for(let j=0; j < Object.keys(applicationState.players).length; j++){
 		const playerDiv = getPlayerItem(applicationState.players[Object.keys(applicationState.players)[j]]);
-		draggableHtml+=`<li class="js-position position">Bench ${playerDiv}</li>`;
+		draggableHtml+=`<li class="js-position position ui-widget-header">Bench ${playerDiv}</li>`;
 		//const playerDiv = getPlayerItem(applicationState.players[Object.keys(applicationState.players)[j]]);
 		console.log('Line 337: '+ applicationState.formations[Object.keys(applicationState.formations)[0]].layers);//playerDiv);
 		//$(`#bench li:nth-child(${j+1})`).append(playerDiv);
@@ -528,6 +529,12 @@ function handleInitialization(){
 		handleRosterSelectionChanges();
 		handlePlayerOperations();
 		handleDraggable();
+
+  		/*setHeight();
+  
+  		$(window).resize(function() {
+    		setHeight();
+  		});*/
 	});
 	/*A check for last roster or formation that  was up is need here to determine whether
 	to show a roster with everything places correctly or a formation with everyone on the
@@ -541,6 +548,12 @@ function handleInitialization(){
 	getRosterInterfaces(applicationState.rosters);
 	setDraggableInterface(applicationState.players);*/
 }
+
+/*function setHeight(element) {
+    windowHeight = $(window).innerHeight();
+    $(element).css('min-height', windowHeight);
+};*/
+
 function handleRosterSelectionChanges(){
 	$('#js-roster-select').on('change', function(){
 		//console.log('VALUEEEEEEE: '+this.value);
@@ -746,8 +759,51 @@ function objectsAreEqual(object1, object2){
 	
 }*/
 function handleDraggable(){
-	$(function() {
-		$('.js-player-filled').draggable({axis: "y"});
+	//$(function() {
+
+	/*$(myDroppable).droppable({
+    	drop:function(event, ui) {
+        	ui.draggable.detach().appendTo($(this));
+    	}
+	});*/
+
+	$('.js-player-filled').draggable({
+		revert : function(event, ui) {
+            $(this).data("uiDraggable").originalPosition = {
+                top : 0,
+                left : 0
+            };
+            return !event;
+        },
+		create: function(ev, ui){
+			const layer = $(this).closest('ul').attr('id');
+			const position = $(this).parent().addClass('slot-filled').attr('data-position');
+			console.log('LAYER: '+layer+' POSITION: '+position)
+			if(layer !== 'bench'){
+				$(`.row[data-layer="${layer}"] div[data-position="${position}"]`).text($(this).text());
+			}
+		},
+		stop: function(ev, ui){
+
+		},
+		axis: 'y',
+		containment: '.js-player-positions > div'
+		/*snap: '.js-position',
+		snapMode: 'inner'*/
+	});
+	//});
+
+	$('.position').droppable({
+    	drop: function(ev, ui) {
+    		const oldLayer = $(ui.draggable).closest('ul').attr('id');
+    		const oldPosition = $(ui.draggable).parent().removeClass('slot-filled').attr('data-position');
+        	$(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
+        	const layer = $(ui.draggable).closest('ul').attr('id');
+        	const position = $(ui.draggable).parent().addClass('slot-filled').attr('data-position');
+        	$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"]`).text(''+oldPosition);
+        	$(`.row[data-layer="${layer}"] div[data-position="${position}"]`).text($(ui.draggable).text());
+        	//$('.visual-position').text($(ui.draggable).text());
+    	}
 	});
 }
 function handleSideNavigation(){
