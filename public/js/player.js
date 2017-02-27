@@ -63,21 +63,21 @@ class Player{
 		return `${this._firstName} ${this._lastName}`;
 	}
 	getPlayerRow(){
-		let playerRowHtml = `<div class="row player-entry" data-playerId="${this._id}">
+		let playerRowHtml = `<tr class="player-entry" data-playerId="${this._id}">
+								<td class="player-field" data-type="firstName" contenteditable="true">${this._firstName}</td>
+								<td class=" player-field" data-type="lastName"contenteditable="true">${this._lastName}</td>
+								<td class=" player-field" data-type="status" contenteditable="true">${this._status}</td>
+								<td class=" player-field" data-type="preferredPosition" contenteditable="true">${this._preferredPosition}</td>
+								<td class=" player-field" data-type="button"><button class="js-update-button" type="button"><span class="glyphicon glyphicon-ok-sign"></span></button></td>
+								<td class=" player-field" data-type="button"><button class="js-delete-button" type="button"><span class="glyphicon glyphicon-remove-sign"></span></button></td>
+							</tr>`;
+		/*let playerRowHtml = `<div class="row player-entry" data-playerId="${this._id}">
 								<div class="col-xs-2 player-field" data-type="firstName" contenteditable="true">${this._firstName}</div>
 								<div class="col-xs-2 player-field" data-type="lastName"contenteditable="true">${this._lastName}</div>
 								<div class="col-xs-2 player-field" data-type="status" contenteditable="true">${this._status}</div>
 								<div class="col-xs-2 player-field" data-type="preferredPosition" contenteditable="true">${this._preferredPosition}</div>
 								<div class="col-xs-2 player-field" data-type="button"><button class="js-update-button" type="button">Update</button></div>
 								<div class="col-xs-2 player-field" data-type="button"><button class="js-delete-button" type="button">Delete</button></div>
-							</div>`;
-		/*`<div class="row" data-playerId="${this._id}">
-								<div class="col-xs-5ths" contenteditable="true">${this._firstName}</div>
-								<div class="col-xs-5ths" contenteditable="true">${this._lastName}</div>
-								<div class="col-xs-5ths" contenteditable="true">${this._status}</div>
-								<div class="col-xs-5ths" contenteditable="true">${this._preferredPosition}</div>
-								<div class="col-xs-5ths"><button class="js-update-button" type="button">Update</button></div>
-								<div class="col-xs-5ths"><button class="js-delete-button" type="button">Delete</button></div>
 							</div>`;*/
 		return playerRowHtml;
 	}

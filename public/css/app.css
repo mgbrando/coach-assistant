@@ -1,11 +1,21 @@
 .hidden{
     display: none;
 }
-
+.js-open-nav-tab{
+    padding-top: 45vh;
+    padding-bottom: 45vh;
+}
+.closed-nav{
+    height: 100vh;
+    line-height: 100vh;
+    margin-top: -60px;
+    /*padding-top: 28px;*/
+    color: white;
+}
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
+    width: 50px; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0;
@@ -39,11 +49,46 @@
     font-size: 36px;
     margin-left: 50px;
 }
-.playerlist-header{
+#main{
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 50px;
+}
+#main > header{
+    /*height: 40px;
+    line-height: 40px;*/
+    height: 5vh;
+    line-height: 5vh;
+    font-size: 22px;
+    font-weight: bold;
+}
+.page-options{
+    display: inline-block;
+    height: 5vh;
+    vertical-align: middle;
+}
+.page-options button:first-child{
+    float: left;
+}
+.page-options button:last-child{
+    float: right;
+}
+
+.main-visual{
+    /*background-image: url("../images/soccer-half.jpg");
+    background-repeat: no-repeat;*/
+    /*background-size:cover;*/
+    /*width: 100%;
+    height: 90vh;*/
+    margin-left: -20px;
+    margin-right: -20px;
+}
+/* Changed to table.*/
+/*.playerlist-header{
     height: 80px;
     /*padding-top: 13px;
     padding-bottom: 13px*/
-}
+/*}
 .player-entry{
     border: 1px solid black;
     border-bottom: none;
@@ -64,7 +109,7 @@
 }
 .player-entry > :last-child{
     border-right: none;
-}
+}*/
 .js-update-button{
     width: 100%;
     height: 100%;
@@ -74,6 +119,13 @@
     height: 100%;
 }
 /*This needs to be percentage based by number of rows*/
+.select-type{
+    /*line-height: 5vh;*/
+}
+.select-container{
+    height: 5vh;
+    display: inline-block;
+}
 .roster-select-container, .formation-select-container{
     display: inline-block;
 }
@@ -81,46 +133,90 @@
     margin-left: 5px;
 }
 .js-visual-container{
-    min-height: 100vh;
+    min-height: 90vh;
+    width: 100%;
+
+    background-image: url("../images/soccer-half.jpg");
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+    /*background-size:cover;*/
+    /*width: 100%;
+    height: 90vh;*/
 }
-.js-visual-container .row{
+/*.js-visual-container .row{
     height: 50px;
-}
+}*/
 .visual-position{
     text-align: center;
     height: 100%;
     line-height: 50px;
 }
-.layers-1{
-    height: 100%;
+.js-visual-container .layers-1{
+    height: 90vh;
 }
-.layers-2{
-
+.js-visual-container .layers-2{
+    height: 45vh;
 }
-.layers-3{
-    
+.js-visual-container .layers-3{
+    height: 30vh;
 }
-.layers-4{
-    
+.js-visual-container .layers-4{
+    height: 22.5vh;
 }
-.layers-5{
-    height: 20%;
+.js-visual-container .layers-5{
+    height: 18vh;
 }
-.layers-6{
-    
+.js-visual-container .layers-6{
+    height: 15vh;
 }
-.layers-7{
-    
+.js-visual-container .layers-7{
+    height: 12.85714vh;
 }
-.layers-8{
-    
+.js-visual-container .layers-8{
+    height: 11.25vh;
 }
-.layers-9{
-    height:;
+.js-visual-container .layers-9{
+    height: 10vh;
 }
-.layers-10{
-    height: 10%;
+.js-visual-container .layers-10{
+    height: 9vh;
 }
+.js-visual-container .layers-11{
+    height: 8.18.18vh;
+}
+/*.js-visual-container .layers-1{
+    height: 100vh;
+}
+.js-visual-container .layers-2{
+    height: 50vh;
+}
+.js-visual-container .layers-3{
+    height: 33.333vh;
+}
+.js-visual-container .layers-4{
+    height: 25vh;
+}
+.js-visual-container .layers-5{
+    height: 20vh;
+}
+.js-visual-container .layers-6{
+    height: 16.666vh;
+}
+.js-visual-container .layers-7{
+    height: 14.2857vh;
+}
+.js-visual-container .layers-8{
+    height: 12.5vh;
+}
+.js-visual-container .layers-9{
+    height: 11.111vh;
+}
+.js-visual-container .layers-10{
+    height: 10vh;
+}
+.js-visual-container .layers-11{
+    height: 9.09090vh;
+}*/
 /* This is the left side draggable content CSS*/
 .player-positions header{
     text-align: center;
