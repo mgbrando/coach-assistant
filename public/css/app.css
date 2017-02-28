@@ -81,6 +81,9 @@
 /*.visual-section label:last-child{
     margin-left: 5px;
 }*/
+.js-roster-list-container, .js-formation-list-container{
+    display: inline-block;
+}
 .roster-label, .formation-label{
     font-weight: bold;
 }
@@ -261,6 +264,36 @@
 .js-visual-container .layers-11{
     height: 9.09090vh;
 }*/
+/*Modal*/
+
+/*Rosters*/
+.rosters .row{
+    height: 100px;
+    /*line-height: 50px;
+    text-align: center;*/
+    margin-top: 5px;
+}
+.rosters .row > div{
+    height: 100%;
+}
+.roster{
+    height: 100%;
+    border: 1px inset black;
+    padding: 2px;
+}
+.roster div{
+    height: 100%;
+}
+/*Formations*/
+.formation-listing .row{
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    margin-top: 10px;
+}
+.formation{
+    border: 1px inset black;
+}
 /* This is the left side draggable content CSS*/
 .player-positions header{
     text-align: center;

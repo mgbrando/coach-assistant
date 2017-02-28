@@ -85,8 +85,29 @@ class Roster{
 	set notes(words){
 		this._notes = words;
 	}
+	getRosterRow(){
+		let rosterRowHtml = `<tr class="roster-entry" data-rosterId="${this._id}">
+								<td class="roster-field" data-type="firstName" contenteditable="true">${this._description}</td>
+								<td class="roster-field" data-type="lastName">${this._dateCreated}</td>
+								<td class="roster-field" data-type="status">${this._lastModified}</td>
+								<td class="roster-field" data-type="preferredPosition" contenteditable="true">${this._notes}</td>
+								<td class="roster-field" data-type="button"><button class="js-update-button" type="button"><span class="glyphicon glyphicon-ok-sign"></span></button></td>
+								<td class="roster-field" data-type="button"><button class="js-delete-button" type="button"><span class="glyphicon glyphicon-remove-sign"></span></button></td>
+							</tr>`;
+		/*let playerRowHtml = `<div class="row player-entry" data-playerId="${this._id}">
+								<div class="col-xs-2 player-field" data-type="firstName" contenteditable="true">${this._firstName}</div>
+								<div class="col-xs-2 player-field" data-type="lastName"contenteditable="true">${this._lastName}</div>
+								<div class="col-xs-2 player-field" data-type="status" contenteditable="true">${this._status}</div>
+								<div class="col-xs-2 player-field" data-type="preferredPosition" contenteditable="true">${this._preferredPosition}</div>
+								<div class="col-xs-2 player-field" data-type="button"><button class="js-update-button" type="button">Update</button></div>
+								<div class="col-xs-2 player-field" data-type="button"><button class="js-delete-button" type="button">Delete</button></div>
+							</div>`;*/
+		return rosterRowHtml;
+	}
+
 	getRosterListItemRepr(){
-		return `<option value="${this._id}">${this._description}</option>`;
+		//return `<option value="${this._id}">${this._description}</option>`;
+		return `<li class="js-roster-list-item roster-item" data-value="${this._id}"><a class="js-nav-button nav-button" href="#">${this._description}</a></li>`;
 	}
 	getHtmlRepr(){
 		return `<div class="roster">
