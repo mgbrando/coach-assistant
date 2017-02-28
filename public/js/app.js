@@ -156,7 +156,7 @@ function getRosterInterfaces(rosters){
 	//getRosterDisplay(rosters);
 }
 function getRosterDropDownList(rosters){
-	let html='<option class="js-new-roster-option new-roster-option" value="new roster">New Roster</option>';
+	let html='<option class="js-new-roster-option new-roster-option" value="new roster">New Roster -- default</option>';
 	Object.keys(rosters).forEach(function(key){
 		html+=rosters[key].getRosterListItemRepr();
 	});
@@ -849,29 +849,41 @@ function handleSideNavigation(){
 			$('.js-nav-button').removeClass('selected-nav');
 			$(this).addClass('selected-nav');
 			switch($(this).text()){
-				case "Home":
+				case "Field":
 					$('.js-visual-section').removeClass('hidden');
 					$('.js-roster-section').addClass('hidden');
 					$('.js-formations-section').addClass('hidden');
 					$('.js-team-section').addClass('hidden');
+					$('.nav-button-text').text('Field');
+					$('.js-nav-list-item').removeClass('hidden');
+					$('.js-field-item').addClass('hidden');
 					break;
 				case "Rosters":
 					$('.js-roster-section').removeClass('hidden');
 					$('.js-visual-section').addClass('hidden');
 					$('.js-formations-section').addClass('hidden');
 					$('.js-team-section').addClass('hidden');
+					$('.nav-button-text').text('Rosters');
+					$('.js-nav-list-item').removeClass('hidden');
+					$('.js-rosters-item').addClass('hidden');
 					break;
 				case "Formations":
 					$('.js-formations-section').removeClass('hidden');
 					$('.js-roster-section').addClass('hidden');
 					$('.js-visual-section').addClass('hidden');
 					$('.js-team-section').addClass('hidden');
+					$('.nav-button-text').text('Formations');
+					$('.js-nav-list-item').removeClass('hidden');
+					$('.js-formations-item').addClass('hidden');
 					break;
 				case "Team":
 					$('.js-team-section').removeClass('hidden');
 					$('.js-roster-section').addClass('hidden');
 					$('.js-formations-section').addClass('hidden');
 					$('.js-visual-section').addClass('hidden');
+					$('.nav-button-text').text('Team');
+					$('.js-nav-list-item').removeClass('hidden');
+					$('.js-team-item').addClass('hidden');
 					break;
 				default:
 					break;

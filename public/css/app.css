@@ -49,6 +49,16 @@
     font-size: 36px;
     margin-left: 50px;
 }
+.position-header{
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-bottom: 1px solid white;
+    margin-bottom: 10px;
+}
 #main{
     padding-top: 0;
     padding-bottom: 0;
@@ -64,8 +74,21 @@
 }
 .page-options{
     display: inline-block;
-    height: 5vh;
-    vertical-align: middle;
+    /*height: 5vh;
+    line-height: 5vh;*/
+    /*vertical-align: middle;*/
+}
+/*.visual-section label:last-child{
+    margin-left: 5px;
+}*/
+.roster-label, .formation-label{
+    font-weight: bold;
+}
+.formation-label{
+    margin-left: 5px;
+}
+.save-button{
+    /*margin-left: 10px;*/
 }
 .page-options button:first-child{
     float: left;
@@ -73,7 +96,11 @@
 .page-options button:last-child{
     float: right;
 }
-
+.team-section > header, .roster-section > header, .formations-section header{
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
 .main-visual{
     /*background-image: url("../images/soccer-half.jpg");
     background-repeat: no-repeat;*/
@@ -83,6 +110,23 @@
     margin-left: -20px;
     margin-right: -20px;
 }
+.nav-dropdown{
+    position: fixed;
+    top: 0;
+    right: 10px;
+    z-index: 10000;
+}
+.visual-section .dropdown{
+    display: inline-block;
+}
+.visual-section header{
+    height: 5vh;
+    line-height: 5vh;
+}
+/*.new-roster-option{
+    font-weight: bold;
+    border-bottom: 1px dotted black;
+}*/
 /* Changed to table.*/
 /*.playerlist-header{
     height: 80px;
