@@ -120,4 +120,15 @@ class Roster{
 					</div>
 				</div>`;
 	}
+	getRosterObject(){
+		return {
+			id: this._id,
+			formationId: this._formationId,
+			playerPositions: this._playerPositions,
+			dateCreated: this._dateCreated,
+			lastModified: this._lastModified,
+			description: this._description,
+			notes: this._notes
+		};
+	}
 }

@@ -178,14 +178,14 @@ function getRosterDisplay(){
 	playerList+='<ul>';
 	playerDisplay+='</div>';
 }*/
-function getRosterDisplay(){
+function getRostersDisplay(rosters){
 	let html ='<table class="table table-striped">';
-	html += '<thead class="playerlist-header"><tr><th class="">Description</th><th class="">Date Created</th><th class="">Last Modified</th></tr></thead><tbody>';
+	html += '<thead class="playerlist-header"><tr><th class="">Description</th><th class="">Date Created</th><th class="">Last Modified</th><th class="">Notes</th></tr></thead><tbody>';
 	Object.keys(rosters).forEach(function(key){
-		html+=rosters[key].getPlayerRow();
+		html+=rosters[key].getRosterRow();
 	});
 	html+='</tbody></table>';
-	$('.js-team').append(html);
+	$('.js-rosters').append(html);
 }
 function getRosterList(){
 	let html = '';
@@ -221,9 +221,6 @@ function getRosterListItem(rosters){
 	}
 	html+='</select>';
 	$('.js-rosters-list').append(html);
-}
-function getRosterDisplay(rosters){
-	let html='';
 }
 function setVisualInterface(players, rosters = null){
 	if(rosters){
@@ -585,17 +582,19 @@ function handleInitialization(){
 		getRosterInterfaces(applicationState.rosters);
 		getFormationInterfaces(applicationState.formations);
 		getPlayerInterfaces(applicationState.players);
-		$('.js-rosters').append(getRosterList());
+		getRostersDisplay(applicationState.rosters);
+		//$('.js-rosters').append(getRosterDisplay());
 		$('.js-formation-listing').append(getFormationList());
 		handleSideNavigation();
 		handleFieldOperations();
 		handlePlayerOperations();
 		handleDraggable();
   		/*setHeight();
-  
+  	
   		$(window).resize(function() {
     		setHeight();
   		});*/
+  		console.log('CURRENTROSTERID: '+applicationState.currentRosterId+' CURRENTFORMATIONID: '+applicationState.currentFormationId);
 	});
 	/*A check for last roster or formation that  was up is need here to determine whether
 	to show a roster with everything places correctly or a formation with everyone on the
@@ -634,7 +633,22 @@ function changeDropDownListView(type, id){
 		$('.formation-button-text').text(applicationState.formations[id].name);
 	}
 }
-
+function getPlayerPositions(){
+	const players = applicationState.players;
+	let playerPositions = [];
+	$('.js-player-filled').each(function(){
+		const layer = $(this).closest('ul').attr('id');
+		const position = $(this).parent().attr('data-position');
+		const playerId = $(this).attr('data-playerId');
+		playerPositions.push({layer: layer, position: position, playerId: playerId});
+	});
+	/*Object.keys(players).forEach(function(key){
+		temp$()
+		playerPositions.push();
+	});*/
+	console.log(playerPositions[0]);
+	return playerPositions;
+}
 function handleFieldOperations(){
 	applicationState.currentRosterId = "new player";
 	applicationState.currentFormationId = Object.keys(applicationState.formations)[0];
@@ -650,7 +664,9 @@ function handleFieldOperations(){
 		console.log('DATA VALUE!!! '+$(this).attr('data-value'));
 		if(rosterId === "new roster"){
 			console.log('ROSTERID 2: '+rosterId);
+			$('.js-update-roster-button').addClass('hidden');
 			$('.js-formation-list-container').removeClass('hidden');
+			$('.js-save-button').removeClass('hidden');
 			//$(`#js-formation-list li[data-value="rosterId"]`).addClass('hidden');
 			//$(`#js-roster-list li[data-value="${rosterId}"]`).addClass();
 			changeDropDownListView('roster', rosterId);
@@ -660,6 +676,8 @@ function handleFieldOperations(){
 		}
 		else{
 			$('.js-formation-list-container').addClass('hidden');
+			$('.js-save-button').addClass('hidden');
+			$('.js-update-roster-button').removeClass('hidden');
 			changeDropDownListView('roster', rosterId);
 			getVisualLayersByRoster(applicationState.rosters[rosterId]);
 			applicationState.currentRosterId = rosterId;
@@ -675,26 +693,33 @@ function handleFieldOperations(){
 		applicationState.currentFormationId = formationId;
 	});
 
-	$('js-save-button').click(function(){
-		const rosterId = applicationState.currentRosterId;
-		if(rosterId === "new roster"){
-			const roster = {
-    			id: this._id,
-    			formationId: this.formationId,
-    			playerPositions: this.playerPositions,
-    			description: this.description,
-    			notes: this.notes
-			};
-			const addRosterPromise = RosterService.addRoster(roster);
-			addRosterPromise.done(function(roster){
-				roster = new Roster(roster);
-				updateRosterInterfaces('create', roster);
-			});
-		}
-		else{
-			RosterService.updateRoster(applicationState.rosters[rosterId]);
-		}
-		
+	$('.js-save-roster-button').click(function(){
+		const roster = {
+    			formationId: applicationState.currentFormationId,
+    			playerPositions: getPlayerPositions(),
+    			description: $('#description').val(),
+    			notes: $('#notes').val()
+		};
+		const addRosterPromise = RosterService.addRoster(roster);
+		addRosterPromise.done(function(rosterObject){
+			rosterObject = new Roster(rosterObject);
+			updateRosterInterfaces('create', rosterObject);
+			$('.js-roster-list li[data-value="${rosterObject.id}"]').trigger('click');
+		});		
+	});
+
+	$('.js-update-roster-button').click(function(){
+		const roster = {
+			id: applicationState.currentRosterId,
+    		formationId: applicationState.currentFormationId,
+    		playerPositions: getPlayerPositions(),
+    		description: applicationState.rosters[applicationState.currentRosterId].description,
+    		notes: $('#notes').val()
+		};
+		const updateRosterPromise = RosterService.updateRoster(roster);
+		updateRosterPromise.done(function(){
+			updateRosterInterfaces('update', new Roster(roster));
+		});
 	});
 }
 function handleInitialization2(){

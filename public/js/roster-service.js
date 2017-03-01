@@ -11,6 +11,11 @@ class RosterService{
 
 	static addRoster(roster){
 		for(let field in roster){
+			if(field === 'playerPositions'){
+				for(let i=0; i < roster[field].length; i++){
+					console.log( typeof roster[field][i].layer+' '+typeof roster[field][i].position+' '+typeof roster[field][i].playerId);
+				}
+			}
 			console.log('ROSTER: '+roster[field]);
 		}
 		return $.ajax({
@@ -26,7 +31,7 @@ class RosterService{
 		//ajax returns a promise return this:
 		return $.ajax({
 					method: 'PUT',
-					url: `/rosters/${updatedRoster.id()}`,
+					url: `/rosters/${updatedRoster.id}`,
 					contentType: 'application/json',
 					data: updatedRoster
 				});
