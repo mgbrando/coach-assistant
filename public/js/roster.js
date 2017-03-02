@@ -79,7 +79,7 @@ class Roster{
 	}
 
 	get notes(){
-		return this._description;
+		return this._notes;
 	}
 
 	set notes(words){
@@ -87,13 +87,15 @@ class Roster{
 	}
 	getRosterRow(){
 		let rosterRowHtml = `<tr class="roster-entry" data-rosterId="${this._id}">
-								<td class="roster-field" data-type="firstName" contenteditable="true">${this._description}</td>
-								<td class="roster-field" data-type="lastName">${this._dateCreated}</td>
-								<td class="roster-field" data-type="status">${this._lastModified}</td>
-								<td class="roster-field" data-type="preferredPosition" contenteditable="true">${this._notes}</td>
-								<td class="roster-field" data-type="button"><button class="js-update-button" type="button"><span class="glyphicon glyphicon-ok-sign"></span></button></td>
-								<td class="roster-field" data-type="button"><button class="js-delete-button" type="button"><span class="glyphicon glyphicon-remove-sign"></span></button></td>
+								<td class="roster-field" data-type="description" contenteditable="true">${this._description}</td>
+								<td class="roster-field" data-type="dateCreated">${this._dateCreated}</td>
+								<td class="roster-field" data-type="lastModified">${this._lastModified}</td>
+								<td class="roster-field" data-type="notes" contenteditable="true">${this._notes}</td>
+								<td class="roster-action-field" data-type="button"><span class="glyphicon glyphicon-ok-sign js-roster-row-update-button"></span></td>
+								<td class="roster-action-field" data-type="button"><span class="glyphicon glyphicon-remove-sign js-roster-row-delete-button"></span></td>
 							</tr>`;
+							/*<div class="glyphicon glyphicon-ok-sign js-update-button"></div>
+							<div class="glyphicon glyphicon-remove-sign js-delete-button"></div>*/
 		/*let playerRowHtml = `<div class="row player-entry" data-playerId="${this._id}">
 								<div class="col-xs-2 player-field" data-type="firstName" contenteditable="true">${this._firstName}</div>
 								<div class="col-xs-2 player-field" data-type="lastName"contenteditable="true">${this._lastName}</div>

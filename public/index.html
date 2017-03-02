@@ -15,6 +15,93 @@
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
+			<div id="myModal" class="modal fade" role="dialog">
+  				<div class="modal-dialog">
+
+    				<!-- Modal content-->
+    				<div class="modal-content">
+      					<div class="modal-header">
+        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+        					<h4 class="modal-title">Save Roster...</h4>
+      					</div>
+      					<div class="modal-body">
+        					<form id="save-roster-form">
+        						<label for="description">Description:</label> <input id="description" type="text" name="description" class="form-control"><br/>
+         						<label for="notes">Notes (optional):</label> <textarea id="notes" name="notes" class="form-control"></textarea>       						
+        					</form>
+      					</div>
+      					<div class="modal-footer">
+      						<button type="button" class="btn btn-primary js-save-roster-button" data-dismiss="modal">Save</button>
+        					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      					</div>
+    				</div>
+				</div>
+			</div>
+			<div id="myNotesModal" class="modal fade" role="dialog">
+  				<div class="modal-dialog">
+
+    				<!-- Modal content-->
+    				<div class="modal-content">
+      					<div class="modal-header">
+        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+        					<h4 class="modal-title">Details</h4>
+      					</div>
+      					<div class="modal-body">
+        					<form id="save-roster-form">
+        						<label for="description">Description:</label> <input id="js-update-description" type="text" name="description" class="form-control"><br/>
+         						<label for="notes">Notes (optional):</label> <textarea id="js-update-notes" name="notes" class="form-control"></textarea>       						
+        					</form>
+      					</div>
+      					<!--<div class="modal-footer">
+      						<button type="button" class="btn btn-primary js-update-roster-details" data-dismiss="modal">Update</button>
+        					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      					</div>-->
+    				</div>
+				</div>
+			</div>	
+			<div id="myFormationModal" class="modal fade" role="dialog">
+  				<div class="modal-dialog">
+
+    				<!-- Modal content-->
+    				<div class="modal-content">
+      					<div class="modal-header">
+        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+        					<h4 class="modal-title">Add Formation...</h4>
+      					</div>
+      					<div class="modal-body">
+        					<form id="save-roster-form">
+        						<label for="description">Description:</label> <input id="description" type="text" name="description" class="form-control"><br/>
+         						<label for="notes">Notes (optional):</label> <textarea id="notes" name="notes" class="form-control"></textarea>       						
+        					</form>
+      					</div>
+      					<div class="modal-footer">
+      						<button type="button" class="btn btn-primary js-save-roster-button" data-dismiss="modal">Save</button>
+        					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      					</div>
+    				</div>
+				</div>
+			</div>
+			<div id="myDeleteModal" class="modal fade" role="dialog">
+  				<div class="modal-dialog">
+
+    				<!-- Modal content-->
+    				<div class="modal-content">
+      					<div class="modal-header">
+        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+        					<h4 class="modal-title">Delete</h4>
+      					</div>
+      					<div class="modal-body">
+      					<p>
+      						Are you sure that you would like to delete this selection?
+      					</p>
+      					</div>
+      					<div class="modal-footer">
+      						<button type="button" class="btn btn-primary js-save-roster-button" data-dismiss="modal">Save</button>
+        					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      					</div>
+    				</div>
+				</div>
+			</div>
 <!-- <div class="no-js-warning"><a href="enable-javscript.com">Enable javascript</a></div> -->
  <!--<ul id="slide-out" class="side-nav">
     <li><div class="userView">
@@ -44,11 +131,11 @@
   <!--</ul>
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
   	<div id="mySidenav" class="sidenav">
-  		<div class="js-closed-nav closed-nav">
-  			<div class="js-open-nav-tab" onclick="openNav()">
-  				Open >
+  		<!--<div class="js-closed-nav closed-nav">-->
+  			<div class="js-closed-nav closed-nav glyphicon glyphicon-chevron-right" onclick="openNav()">
+  				
   			</div>
-  		</div>
+  		<!--</div>-->
   		<div class="js-nav-components hidden">
   		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   		<header class="position-header">Player Positions</header>
@@ -141,29 +228,8 @@
 
 
 			<button type="button" class="btn btn-default btn-sm js-save-button save-button" data-toggle="modal" data-target="#myModal">Save Roster...</button>
+			<button type="button" class="btn btn-default btn-sm js-notes-button notes-button hidden" data-toggle="modal" data-target="#myNotesModal">Details</button>
 			<button type="button" class="btn btn-default btn-sm js-update-roster-button update-roster-button hidden">Update Roster</button>
-			<div id="myModal" class="modal fade" role="dialog">
-  				<div class="modal-dialog">
-
-    				<!-- Modal content-->
-    				<div class="modal-content">
-      					<div class="modal-header">
-        					<button type="button" class="close" data-dismiss="modal">&times;</button>
-        					<h4 class="modal-title">Save Roster...</h4>
-      					</div>
-      					<div class="modal-body">
-        					<form id="save-roster-form">
-        						<label for="description">Description:</label> <input id="description" type="text" name="description" class="form-control"><br/>
-         						<label for="notes">Notes (optional):</label> <textarea id="notes" name="notes" class="form-control"></textarea>       						
-        					</form>
-      					</div>
-      					<div class="modal-footer">
-      						<button type="button" class="btn btn-primary js-save-roster-button" data-dismiss="modal">Save</button>
-        					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      					</div>
-    				</div>
-				</div>
-			</div>	
 		</header>
 		<div class="js-main-visual main-visual">
 			
@@ -188,7 +254,10 @@
 		</section>
 		<section class="js-formations-section formations-section hidden">
 			<div class="js-screen-select screen-select"></div>
-			<header>Formations</header>
+			<header>Formations 			
+			<!--<button type="button" class="btn btn-default btn-sm js-add-formation-button add-formation-button" data-toggle="modal" data-target="#myModal">Add Formation...</button>
+			<button type="button" class="btn btn-default btn-sm js-delete-formations-button delete-formation-button" data-toggle="modal" data-target="#myModal">Delete Selected Formations</button>-->
+			</header>
 			<div class="js-formation-listing formation-listing container-fluid">
 			</div>
 		</section>

@@ -165,9 +165,9 @@ function getRosterDropDownList(rosters){
 	//html+='</select>';
 	$('#js-roster-list').append(html);
 }
-function getRosterDisplay(){
+/*function getRosterDisplay(){
 
-}
+}*/
 /*function getRosterInterfaces(rosters){
 	let RosterList = '<ul>';
 	let RosterDisplay = '<div>';
@@ -180,7 +180,17 @@ function getRosterDisplay(){
 }*/
 function getRostersDisplay(rosters){
 	let html ='<table class="table table-striped">';
-	html += '<thead class="playerlist-header"><tr><th class="">Description</th><th class="">Date Created</th><th class="">Last Modified</th><th class="">Notes</th></tr></thead><tbody>';
+	html += `<thead class="rosterlist-header">
+				<tr>
+					<th class="">Description</th>
+					<th class="">Date Created</th>
+					<th class="">Last Modified</th>
+					<th class="">Notes</th>
+					<th class="">Update</th>
+					<th class="">Delete</th>
+				</tr>
+			</thead>
+			<tbody>`;
 	Object.keys(rosters).forEach(function(key){
 		html+=rosters[key].getRosterRow();
 	});
@@ -250,8 +260,8 @@ function updatePlayerInterfaces(method, player){
 	//console.log('METHOD: '+method);
 	if(method==='create'){
 		applicationState.players[player.id]=player;
-		$('ul#bench').append(`<li class="js-position position">Bench</li>`);
-		$('ul#bench li:not(:has(*))').first().append(`<div class="js-player-filled player-filled" data-playerId="${player.id}">${player.name}</div>`);
+		$('ul#12').append(`<li class="js-position position">Bench</li>`);
+		$('ul#12 li:not(:has(*))').first().append(`<div class="js-player-filled player-filled" data-playerId="${player.id}">${player.name}</div>`);
 		let playerHtml = `<div class="row" data-playerId="${player.id}">`;
 		for(let field in player){
 			if(field !== 'id')
@@ -271,8 +281,9 @@ function updatePlayerInterfaces(method, player){
 		console.log('PAST IF');
 	}
 	else{
+		$(`tr.player-entry[data-playerId="${player.id}"]`).remove();
 		$(`div[data-playerId="${player.id}"]`).remove();
-		$('ul#bench li:not(:has(*))').first().remove();
+		$('ul#12 li:not(:has(*))').first().remove();
 		delete applicationState.players[player.id];
 	}
 }
@@ -306,7 +317,7 @@ function getFormationList(){
 			count++;
 		}
 		//row-xs-${(Object.keys(applicationState.formations).length)/4}
-		html+=`<div class="col-xs-4"><div class="js-formation formation" data-formationId="${formation.id}">${formation.name}</div></div>`;
+		html+=`<div class="col-xs-4 formation-container"><div class="noselect js-formation formation ui-widget-content" data-formationId="${formation.id}">${formation.name}</div></div>`;
 		count++;
 	});
 	return html+'</div>';
@@ -342,13 +353,28 @@ function updateRosterInterfaces(method, roster){
 		applicationState.rosters[roster.id] = roster;
 		$('#js-roster-list').append(roster.getRosterListItemRepr());
 		$('#js-roster-list li:last-child').trigger('click');
+		$('.js-rosters table tbody').append(roster.getRosterRow());
 	}
 	else if(method === 'update'){
-		if(applicationState.rosters[roster.id].description !== roster.description)
-			$(`div[data-playerId="${player.id}"]`).text(roster.description);
-		applicationState.rosters[roster.id]=roster;
+		/*if(applicationState.rosters[roster.id].description !== roster.description)
+			$(`div[data-playerId="${player.id}"]`).text(roster.description);*/
+		/*for(field in roster){
+			console.log('FIELD IN ROSTER: '+ roster);
+		}*/
+		applicationState.rosters[roster.id]=new Roster(roster);
+		$('.roster-button-text').text(roster.description);
+		$(`.js-roster-list-item[data-value="${roster.id}"] a`).text(roster.description);
+		$(`tr.roster-entry[data-rosterId="${roster.id}"] td`).each(function(){
+			const dataType = $(this).attr('data-type');
+			if(dataType !== "dateCreated"){
+				console.log('DATATYPE: '+dataType);
+				$(this).text(roster[dataType]);
+			}
+		});
+		//$('.js-rosters table tbody').append(roster.getRosterRow());
 	}
 	else{
+		$(`tr.roster-entry[data-rosterId="${roster.id}"]`).remove();
 		$(`#js-roster-list li[data-value="${roster.id}"]`).remove();
 		delete applicationState[roster.id];
 	}
@@ -370,28 +396,33 @@ function getVisualLayersByRoster(roster){
 		const columnSize = 12/positions;
 		for(let j = 0; j < positions; j++) {
 			draggableHtml+=`<li class="js-position ui-widget-content position ui-widget-header" data-position="${j+1}">${j+1}</li>`;
-			visualHtml+=`<div class="col-xs-${columnSize} visual-position" data-position="${j+1}">${j+1}</div>`;
+			visualHtml+=`<div class="col-xs-${columnSize} visual-position-container" data-position="${j+1}"><div class="visual-position ui-widget-header">${j+1}</div></div>`;
 		}
 		draggableHtml+='</ul></div>';
 		visualHtml+='</div>';
 	}
-	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="Goalie">
-				<div class="col-xs-12 visual-position" data-position="Goalie">Goalie</div>
+	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="11">
+				<div class="col-xs-12 visual-position-container ui-widget-header" data-position="1"><div class="visual-position ui-widget-header">Goalie</div></div>
 				</div></div>`;
-	draggableHtml+='<div><header>Goalie</header><ul id="Goalie"><li class="js-position position ui-widget-header" data-position="Goalie">Goalie</li></ul></div>';
-	draggableHtml+='<div><header>Bench</header><ul id="bench"></ul></div></div>';
+	draggableHtml+='<div><header>Goalie</header><ul id="11"><li class="js-position position ui-widget-header" data-position="1">Goalie</li></ul></div>';
+	draggableHtml+='<div><header>Bench</header><ul id="12">';
+	for(let n = 0; n < Object.keys(applicationState.players).length; n++){
+		draggableHtml+=`<li class="js-position position ui-widget-header" data-position="${n+1}">Bench</li>`;
+	}
+	draggableHtml+='</ul></div></div>'
+
 	$('.js-player-positions').empty().append(draggableHtml);
 	$('.js-main-visual').empty().append(visualHtml);
 	
-	const benchedPlayers = jQuery.extend(true, {}, applicationState.players);
-	console.log('PLAYER POSITIONS! '+playerPositions[0].layer);
+	//const benchedPlayers = jQuery.extend(true, {}, applicationState.players);
+	//console.log('PLAYER POSITIONS! '+playerPositions[0].layer);
 	//const benchedPlayers = copyObject(applicationState.players);
 	//for(let k = 0; k <= playerPositions.length; k++) {
 	  for(let k = 0; k < playerPositions.length; k++) {
 		const layer = playerPositions[k].layer;
 		const position = playerPositions[k].position;
 		const player = applicationState.players[playerPositions[k].playerId];
-		delete benchedPlayers[player.id];
+		//delete benchedPlayers[player.id];
 		
 		$(`ul#${layer} li[data-position="${k+1}"]`)
 			//.empty()
@@ -401,11 +432,11 @@ function getVisualLayersByRoster(roster){
 			//.empty()
 			.append(player.getPlayerDraggableDiv());
 	}
-	for(let n = 0; n < Object.keys(applicationState.players).length; n++){
-		$('ul#bench').append(`<li class="js-position position ui-widget-header" data-position="${n+1}">Bench</li>`);
+	/*for(let n = 0; n < Object.keys(applicationState.players).length; n++){
+		$('ul#12').append(`<li class="js-position position ui-widget-header" data-position="${n+1}">Bench</li>`);
 		if(benchedPlayers[Object.keys(benchedPlayers)[n]])
-			$(`ul#bench li:nth-child(${n+1})`).append(getPlayerItem(benchedPlayers[Object.keys(benchedPlayers)[n]]));
-	}
+			$(`ul#12 li:nth-child(${n+1})`).append(getPlayerItem(benchedPlayers[Object.keys(benchedPlayers)[n]]));
+	}*/
 
 	handleDraggable();
 }
@@ -427,16 +458,16 @@ function getVisualLayersByFormation(formation){
 		const columnSize = 12/positions;
 		for(let j = 0; j < positions; j++) {
 			draggableHtml+=`<li class="js-position position ui-widget-header" data-position="${j+1}">${j+1}</li>`;
-			visualHtml+=`<div class="col-xs-${columnSize} visual-position" data-position="${j+1}">${j+1}</div>`;
+			visualHtml+=`<div class="col-xs-${columnSize} visual-position-container" data-position="${j+1}"><div class="visual-position ui-widget-header">${j+1}</div></div>`;
 		}
 		draggableHtml+='</ul></div>';
 		visualHtml+='</div>';
 	}
-	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="Goalie">
-				<div class="col-xs-12 visual-position" data-position="Goalie">Goalie</div>
+	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="11">
+				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header">Goalie</div></div>
 				</div></div>`;
-	draggableHtml+='<div><header>Goalie</header><ul id="Goalie"><li class="js-position position ui-widget-header" data-position="Goalie">Goalie</li></ul></div>';
-	draggableHtml+='<div><header>Bench</header><ul id="bench">';
+	draggableHtml+='<div><header>Goalie</header><ul id="11"><li class="js-position position ui-widget-header" data-position="1">Goalie</li></ul></div>';
+	draggableHtml+='<div><header>Bench</header><ul id="12">';
 	for(let k=0; k < Object.keys(applicationState.players).length; k++){
 		const playerDiv = getPlayerItem(applicationState.players[Object.keys(applicationState.players)[k]]);
 		draggableHtml+=`<li class="js-position position ui-widget-header" data-position="${k+1}">Bench ${playerDiv}</li>`;
@@ -549,16 +580,35 @@ function handleInitialization(){
 				if(rosters.length === 0){
 					//console.log(applicationState.players[0].id);
 					//console.log(applicationState.formations[0].id);
+					let playerPositions = [];
+					let count=1;
+					Object.keys(applicationState.players).forEach(function(key){
+						if(count===1){
+							playerPositions.push({layer: 11, position: 1, playerId: key});
+						}
+						else if(count===2){
+							playerPositions.push({layer: 2, position: 2, playerId: key});
+						}
+						else{
+							playerPositions.push({layer: 12, position: count, playerId: key});
+						}
+						count++;
+						console.log("PP: "+playerPositions[count-1]);
+					});
 					const playerId = applicationState.players[Object.keys(applicationState.players)[0]].id;//PlayerService.getPlayers()[0].id;
 					const formationId = applicationState.formations[Object.keys(applicationState.formations)[0]].id; //FormationService.getFormations()[0].id;
-					const addRosterPromise = RosterService.addRoster({formationId: formationId, playerPositions: [{layer: 1, position: 3, playerId: playerId}], 
+					const addRosterPromise = RosterService.addRoster({formationId: formationId, playerPositions: playerPositions, 
 								description: "Roster for against the Raptors", notes: "The Raptors are the best team in the league."});
 				
 					addRosterPromise.done(function(roster){
 						roster = new Roster(roster);
 						applicationState.rosters[roster.id] = roster;
 						//$('.js-rosters').append(roster.getHtmlRepr());
+						for(field in applicationState[roster.id]){
+							console.log(field);
+						}
 					});
+					resolve('OK');
 				}
 				else{
 				//getRostersList(rosters);
@@ -588,12 +638,17 @@ function handleInitialization(){
 		handleSideNavigation();
 		handleFieldOperations();
 		handlePlayerOperations();
+		handleRosterOperations();
+		handleFormationOperations();
 		handleDraggable();
   		/*setHeight();
   	
   		$(window).resize(function() {
     		setHeight();
   		});*/
+		/*for(field in applicationState.rosters[Object.keys(applicationState.rosters)[0]]){
+			console.log(field);
+		}*/
   		console.log('CURRENTROSTERID: '+applicationState.currentRosterId+' CURRENTFORMATIONID: '+applicationState.currentFormationId);
 	});
 	/*A check for last roster or formation that  was up is need here to determine whether
@@ -618,6 +673,7 @@ function handleInitialization(){
 	const formationId = applicationState.formations[Object.keys(applicationState.formations)[0]];
 	return rosterId+formationId;
 }*/
+
 function changeDropDownListView(type, id){
 	if(type === 'roster'){
 		$(`#js-roster-list li[data-value="${applicationState.currentRosterId}"]`).removeClass('hidden');
@@ -637,10 +693,12 @@ function getPlayerPositions(){
 	const players = applicationState.players;
 	let playerPositions = [];
 	$('.js-player-filled').each(function(){
-		const layer = $(this).closest('ul').attr('id');
-		const position = $(this).parent().attr('data-position');
-		const playerId = $(this).attr('data-playerId');
-		playerPositions.push({layer: layer, position: position, playerId: playerId});
+		const layer = parseInt($(this).closest('ul').attr('id'));
+		//if(layer != '12'){
+			const position = parseInt($(this).parent().attr('data-position'));
+			const playerId = $(this).attr('data-playerId');
+			playerPositions.push({layer: layer, position: position, playerId: playerId});
+		//}
 	});
 	/*Object.keys(players).forEach(function(key){
 		temp$()
@@ -649,6 +707,8 @@ function getPlayerPositions(){
 	console.log(playerPositions[0]);
 	return playerPositions;
 }
+
+/*Field Operations*/
 function handleFieldOperations(){
 	applicationState.currentRosterId = "new player";
 	applicationState.currentFormationId = Object.keys(applicationState.formations)[0];
@@ -665,6 +725,7 @@ function handleFieldOperations(){
 		if(rosterId === "new roster"){
 			console.log('ROSTERID 2: '+rosterId);
 			$('.js-update-roster-button').addClass('hidden');
+			$('.js-notes-button').addClass('hidden');
 			$('.js-formation-list-container').removeClass('hidden');
 			$('.js-save-button').removeClass('hidden');
 			//$(`#js-formation-list li[data-value="rosterId"]`).addClass('hidden');
@@ -678,6 +739,9 @@ function handleFieldOperations(){
 			$('.js-formation-list-container').addClass('hidden');
 			$('.js-save-button').addClass('hidden');
 			$('.js-update-roster-button').removeClass('hidden');
+			$('.js-notes-button').removeClass('hidden');
+			$('#js-update-description').val(applicationState.rosters[rosterId].description);
+			$('#js-update-notes').val(applicationState.rosters[rosterId].notes);
 			changeDropDownListView('roster', rosterId);
 			getVisualLayersByRoster(applicationState.rosters[rosterId]);
 			applicationState.currentRosterId = rosterId;
@@ -706,126 +770,73 @@ function handleFieldOperations(){
 			updateRosterInterfaces('create', rosterObject);
 			$('.js-roster-list li[data-value="${rosterObject.id}"]').trigger('click');
 		});		
+		$('#description').val('');
+		$('#notes').val('');
 	});
 
 	$('.js-update-roster-button').click(function(){
 		const roster = {
 			id: applicationState.currentRosterId,
-    		formationId: applicationState.currentFormationId,
+    		formationId: applicationState.rosters[applicationState.currentRosterId].formationId,
     		playerPositions: getPlayerPositions(),
-    		description: applicationState.rosters[applicationState.currentRosterId].description,
-    		notes: $('#notes').val()
+    		lastModified: new Date().toDateString(),
+    		description: $('#js-update-description').val(),
+    		notes: $('#js-update-notes').val()
 		};
 		const updateRosterPromise = RosterService.updateRoster(roster);
 		updateRosterPromise.done(function(){
-			updateRosterInterfaces('update', new Roster(roster));
+			updateRosterInterfaces('update', roster);
 		});
 	});
 }
-function handleInitialization2(){
-	console.log('HELLO!');
-	const getPlayersPromise = PlayerService.getPlayers();
-	//console.log(players.length);
-	getPlayersPromise.done(function(results){
-		const players = results.players;
-		return new Promise((resolve, reject ) => {
-			console.log(players);
-			console.log('INSIDE THIS FUNCTION!');
-			if(players.length === 0){
-				console.log('INSIDE THIS FUNCTION!');
-				const addPlayerPromise = PlayerService.addPlayer({firstName: "John", lastName: "Doe", 
-				status: "active", preferredPosition: "Goalie"});
 
-				addPlayerPromise.done(function(player){
-					player = new Player(player);
-					applicationState.players[player.id] = player;
-					$('.js-team').append(player.getHtmlRepr());
-				});
+function handleRosterOperations(){
+	$('.js-roster-row-update-button').click(function(){
+		const rosterId = $(this).closest('tr').attr('data-rosterId');
+		const oldRoster = applicationState.rosters[rosterId].getRosterObject();
+		console.log(oldRoster.description);
+		let newRoster = {id: rosterId};
+		console.log('NEW ROSTER: '+newRoster);
+		let count = 0;
+		$(this).parent().siblings().each(function(){
+			console.log(count);
+			if(count < 4){
+				newRoster[$(this).attr('data-type')] = $(this).text();
 			}
-			else{
-				console.log(players.length);
-				for(let i = 0; i < players.length; i++){
-					console.log('I AM IN HERE!');
-					console.log(players[i]);
-					//ask if there is a performance issue declaring this inside the loop instead of outside with let
-					const player = new Player(players[i]);
-					applicationState.players[player.id] = player;
-					$('.js-team').append(player.getHtmlRepr());
-				}
-			}
-			//getInitialFormations();
-			console.log(applicationState);
-			resolve('OK');
+			//console.log('HIYA!: '+$(this).text());
+			count++;
 		});
-	})
-	.then(() => {
-		return new Promise((resolve, reject) => {
-			const getFormationsPromise = FormationService.getFormations();
-			getFormationsPromise.done(function(results){
-				const formations = results.formations;
-				if(formations.length === 0){
-					const addFormationPromise = FormationService.addFormation({layers: [3, 4, 3]});
-					addFormationPromise.done(function(formation){
-						formation = new Formation(formation);
-						applicationState.formations[formation.id] = formation;
-						$('.js-formation-listing').append(formation.getHtmlRepr(formation.id));
-					});
-				}
-				else{
-					for(let i = 0; i < formations.length; i++){
-						//ask if there is a performance issue declaring this inside the loop instead of outside with let
-						const formation = new Formation(formations[i]);
-						applicationState.formations[formation.id] = formation;
-						console.log('THIS IS HTML: '+formation.getHtmlRepr(i));
-						$('.js-formation-listing').append(formation.getHtmlRepr(formation.id));
-					}
-				//$('select').material_select();
-				resolve('OK');
-				}
+		/*for(let field in newPlayer){
+			console.log('OLDPLAYER: '+oldPlayer[field]);
+			console.log('NEWPLAYER: '+newPlayer[field]);
+
+		}
+		console.log(objectsAreEqual(oldPlayer, newPlayer));*/
+		if(!objectsAreEqual(oldRoster, newRoster)){
+			const updateRosterPromise = RosterService.updateRoster(newRoster);
+			updateRosterPromise.done(function(){
+				//applicationState.players[playerId] = new Player(newPlayer);
+				updateRosterInterfaces('update', newRoster);
 			});
-		});
-	})
-	.then(() => {
-		console.log('RAWR!!!!!!');
-		const getRostersPromise = RosterService.getRosters();
-		getRostersPromise.done(function(results){
-			const rosters = results.rosters;
-			if(rosters.length === 0){
-				console.log(applicationState.players[0].id);
-				console.log(applicationState.formations[0].id);
-				const playerId = applicationState.players[0].id;//PlayerService.getPlayers()[0].id;
-				const formationId = applicationState.formations[0].id; //FormationService.getFormations()[0].id;
-				const addRosterPromise = RosterService.addRoster({formationId: formationId, playerPositions: [{layer: 1, position: 3, playerId: playerId}], 
-								description: "Roster for against the Raptors", notes: "The Raptors are the best team in the league."});
-				
-				addRosterPromise.done(function(roster){
-					roster = new Roster(roster);
-					applicationState.rosters[roster.id] = roster;
-					$('.js-rosters').append(roster.getHtmlRepr());
-				});
-			}
-			else{
-			//getRostersList(rosters);
-				for(let i = 0; i < rosters.length; i++){
-					//ask if there is a performance issue declaring this inside the loop instead of outside with let
-					const roster = new Roster(rosters[i]);
-					applicationState.rosters[roster.id] = roster;
-					$('.js-rosters').append(roster.getHtmlRepr());
-				}
-				console.log(applicationState);
-			}
-		});
+		}
 	});
-	/*A check for last roster or formation that  was up is need here to determine whether
-	to show a roster with everything places correctly or a formation with everyone on the
-	bench or possibly in the positions they were last in.
-	if()*/
-	//if(applicationState.currentRoster === "new roster")
-	//getPlayerInterfaces(applicationState.players);
-	getPlayerInterfaces(applicationState.players, applicationState.rosters[0].playerPositions); //, applicationState.formations[Object.keys(applicationState.formations)[0]]);
-	getFormationInterfaces(applicationState.formations);
-	getRosterInterfaces(applicationState.rosters);
-	setDraggableInterface(applicationState.players);
+
+	$('.js-roster-row-delete-button').click(function(){
+		const rosterId = $(this).closest('tr').attr('data-rosterId');
+		const roster = applicationState.rosters[rosterId];
+		if(confirm(`Permanently delete Roster: ${applicationState.rosters[rosterId].description}?`)){
+			const deleteRosterPromise = RosterService.deleteRoster(rosterId);
+			deleteRosterPromise.done(function(){
+				updateRosterInterfaces('delete', roster);
+			});
+		}
+	});
+}
+
+function handleFormationOperations(){
+	$('.js-formation-listing').bind( "mousedown", function (e){
+    	e.metaKey = true;
+	}).selectable({filter: ".js-formation"});
 }
 
 function handleMainScreenEvents(){
@@ -931,7 +942,7 @@ function handleDraggable(){
 			const layer = $(this).closest('ul').attr('id');
 			const position = $(this).parent().addClass('slot-filled').attr('data-position');
 			console.log('LAYER: '+layer+' POSITION: '+position)
-			if(layer !== 'bench'){
+			if(layer !== '12'){
 				$(`.row[data-layer="${layer}"] div[data-position="${position}"]`).text($(this).text());
 			}
 		},
@@ -956,9 +967,9 @@ function handleDraggable(){
         	const layer = $(ui.draggable).closest('ul').attr('id');
         	const position = $(ui.draggable).parent().addClass('slot-filled').attr('data-position');
         	console.log('LP: '+layer + position);
-        	$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"]`).text(''+oldPosition);
-        	if(layer != 'bench')
-        		$(`.row[data-layer="${layer}"] div[data-position="${position}"]`).text($(ui.draggable).text());
+        	$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"] div.visual-position`).text(''+oldPosition);
+        	if(layer != '12')
+        		$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(ui.draggable).text());
         	//$('.visual-position').text($(ui.draggable).text());
     	}
 	});

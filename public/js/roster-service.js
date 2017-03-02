@@ -33,7 +33,7 @@ class RosterService{
 					method: 'PUT',
 					url: `/rosters/${updatedRoster.id}`,
 					contentType: 'application/json',
-					data: updatedRoster
+					data: JSON.stringify(updatedRoster)
 				});
 	}
 

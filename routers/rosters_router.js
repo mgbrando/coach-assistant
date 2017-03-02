@@ -87,7 +87,8 @@ router.put('/:id', jsonParser, (req, res) => {
  		if(field in req.body)
  			toUpdate[field] = req.body[field];
  	});
- 	toUpdate['lastModified'] = new Date().toDateString();
+ 	if(!toUpdate['lastModified'])
+ 		toUpdate['lastModified'] = new Date().toDateString();
 
  	Roster
  		.findByIdAndUpdate(req.params.id, {$set: toUpdate})

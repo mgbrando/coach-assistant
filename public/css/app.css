@@ -1,17 +1,26 @@
 .hidden{
     display: none;
 }
-.js-open-nav-tab{
-    padding-top: 45vh;
-    padding-bottom: 45vh;
-}
 .closed-nav{
-    height: 100vh;
+    /*height: 100%;
+    line-height: 100vh;*/
+    position: fixed;
+    padding-top: 47vh;
+    text-align: center;
+    width: 50px;
+    height: 100%;
+    font-size: 18px;
+    color: white;
+    /*padding-top: 25%;*/
+    /*margin-top: -60px;*/
+}
+/*.closed-nav{
+    height: 50vh;
     line-height: 100vh;
     margin-top: -60px;
-    /*padding-top: 28px;*/
+    padding-top: 28px;
     color: white;
-}
+}*/
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
@@ -157,14 +166,43 @@
 .player-entry > :last-child{
     border-right: none;
 }*/
-.js-update-button{
+/*For updating and deleting lists*/
+/*.js-update-button{
     width: 100%;
     height: 100%;
+    line-height: 100%;
 }
 .js-delete-button{
     width: 100%;
     height: 100%;
+    line-height: 100%;
+}*/
+/*.roster-action-field{
+   line-height: 100%; 
 }
+.table>tbody>tr>td.roster-action-field{
+    line-height: 100%; 
+}*/
+/*.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}*/
+.table tbody>tr>td{
+    vertical-align: middle;
+}
+.player-action-field, .roster-action-field{
+    text-align: center;
+    font-size: 22px;
+}
+.js-update-button, .js-delete-button, .js-roster-row-update-button, .js-roster-row-delete-button{
+    cursor: pointer;
+}
+.js-update-button, .js-roster-row-update-button{
+    color: green;
+}
+.js-delete-button, .js-roster-row-delete-button{
+    color: red;
+}
+
 /*This needs to be percentage based by number of rows*/
 .select-type{
     /*line-height: 5vh;*/
@@ -193,10 +231,16 @@
 /*.js-visual-container .row{
     height: 50px;
 }*/
-.visual-position{
+.visual-position-container{
     text-align: center;
     height: 100%;
     line-height: 50px;
+    padding-top: 5px;
+}
+.visual-position{
+    border-radius: 50px;
+    width: 50%;
+    margin: 0 auto;
 }
 .js-visual-container .layers-1{
     height: 90vh;
@@ -265,7 +309,9 @@
     height: 9.09090vh;
 }*/
 /*Modal*/
-
+.modal{
+    z-index: 10001;
+}
 /*Rosters*/
 .rosters .row{
     height: 100px;
@@ -294,6 +340,19 @@
 .formation{
     border: 1px inset black;
 }
+.js-formation-listing .ui-selecting { background: #FECA40; }
+.js-formation-listing .ui-selected { background: #F39814; color: white; }
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+/*This is the field position CSS*/
+
 /* This is the left side draggable content CSS*/
 .player-positions header{
     text-align: center;

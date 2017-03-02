@@ -64,8 +64,8 @@ formationSchema.methods.formationRepr = function() {
 const rosterSchema = mongoose.Schema({
   formationId: {type: String, required: true},
   playerPositions: [{
-    layer: {type: String, required: true},
-    position: {type: String, required: true},
+    layer: {type: Number, required: true},
+    position: {type: Number, required: true},
     playerId: {type: String, required: true}
     }],
   dateCreated: {type: String, default: new Date().toDateString()},

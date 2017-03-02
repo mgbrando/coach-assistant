@@ -68,8 +68,8 @@ class Player{
 								<td class=" player-field" data-type="lastName"contenteditable="true">${this._lastName}</td>
 								<td class=" player-field" data-type="status" contenteditable="true">${this._status}</td>
 								<td class=" player-field" data-type="preferredPosition" contenteditable="true">${this._preferredPosition}</td>
-								<td class=" player-field" data-type="button"><button class="js-update-button" type="button"><span class="glyphicon glyphicon-ok-sign"></span></button></td>
-								<td class=" player-field" data-type="button"><button class="js-delete-button" type="button"><span class="glyphicon glyphicon-remove-sign"></span></button></td>
+								<td class=" player-action-field" data-type="button"><span class="glyphicon glyphicon-ok-sign js-update-button"></span></td>
+								<td class=" player-action-field" data-type="button"><span class="glyphicon glyphicon-remove-sign js-delete-button"></span></td>
 							</tr>`;
 		/*let playerRowHtml = `<div class="row player-entry" data-playerId="${this._id}">
 								<div class="col-xs-2 player-field" data-type="firstName" contenteditable="true">${this._firstName}</div>
