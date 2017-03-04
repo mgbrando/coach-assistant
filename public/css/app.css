@@ -312,6 +312,9 @@
 .modal{
     z-index: 10001;
 }
+#myFormationModal h5, .layer-dropdown{
+    display: inline-block;
+}
 /*Rosters*/
 .rosters .row{
     height: 100px;

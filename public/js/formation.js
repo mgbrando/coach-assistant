@@ -50,7 +50,10 @@ class Formation{
 		//return `<option value="${this._id}">${this._name}</option>`;
 		return `<li class="js-formation-list-item js-formation-item" data-value="${this._id}"><a class="js-nav-button nav-button" href="#">${this._name}</a></li>`;
 	}
-	getHtmlRepr(elementNumber){
+	getHtmlRepr(){
+		return `<div class="col-xs-4 formation-container"><div class="noselect js-formation formation ui-widget-content" data-formationId="${this._id}">${this._name}</div></div>`;
+	}
+	/*getHtmlRepr(elementNumber){
 		elementNumber = elementNumber || '';
 		let html = `<div class="formation" data-elementNumber="${elementNumber}">
 						<header class="formation-header">
@@ -69,7 +72,7 @@ class Formation{
 				<footer class="formation-footer"></footer>
 				</div>`;
 		return html;		
-	}
+	}*/
 }
 
 //module.exports = Formation;

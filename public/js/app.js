@@ -327,14 +327,15 @@ function getFormationList(){
 function updateFormationInterfaces(method, formation){
 	if(method==='create'){
 		applicationState.formations[formation.id] = formation;
-		if($('.js-formation-listing div.row:last-child div').length === 4){
+		if($('.js-formation-listing div.row:last-child > div').length === 3){
 			$('.js-formation-listing')
-				.append(`<div class="row">${formation.getFormationPageHtmlRepr()}</div>`);
+				.append(`<div class="row">${formation.getHtmlRepr()}</div>`);
 		}
 		else{
 			$('.js-formation-listing div.row:last-child')
-				.append(formation.getFormationPageHtmlRepr());
+				.append(formation.getHtmlRepr());
 		}
+		$('#js-formation-list').append(formation.getFormationListItemRepr());
 	}
 	else{
 		//$('.js-formation-listing div.)
@@ -858,7 +859,123 @@ function handleFormationOperations(){
 	$('.js-formation-listing').bind( "mousedown", function (e){
     	e.metaKey = true;
 	}).selectable({filter: ".js-formation"});
+
+	$('#js-layers-list').on('click', 'li a', function(){
+		const layers = parseInt($(this).text());
+		let layersHtml = '';
+		$('#layer-dropdown .layers-button-text').text(layers+'');
+		$('#js-layers-list li').removeClass('hidden');
+		$(this).parent().addClass('hidden');
+		for(let i = 0; i < layers; i++){
+			layersHtml+=`<label for="positions-dropdown${i+1}">Layer ${i+1} Positions: </label> 
+			             <div class="dropdown positions-dropdown${i+1}">
+  							<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="positions-dropdown${i+1}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    							<span class="positions-button-text">1</span>
+    							<span class="caret"></span>
+  							</button>
+  							<ul id="js-positions-list${i+1}" class="dropdown-menu positions-dropdown" aria-labelledby="positions-dropdown${i+1}">
+  								<li class="js-position-list-item hidden"><a class="js-layer-button layer-button" href="#">1</a></li>
+    							<li class="js-position-list-item"><a class="js-position-button position-button" href="#">2</a></li>
+    							<li class="js-position-list-item"><a class="js-position-button position-button" href="#">3</a></li>
+    							<li class="js-position-list-item"><a class="js-position-button position-button" href="#">4</a></li>
+  								<li class="js-position-list-item"><a class="js-position-button position-button" href="#">5</a></li>
+    							<li class="js-position-list-item"><a class="js-position-button position-button" href="#">6</a></li>
+    							<li class="js-position-list-item"><a class="js-position-button position-button" href="#">7</a></li>
+    							<li class="js-position-list-item"><a class="js-position-button position-button" href="#">8</a></li>
+    							<li class="js-position-list-item"><a class="js-position-button position-button" href="#">9</a></li>
+    							<li class="js-position-list-item"><a class="js-position-button position-button" href="#">10</a></li>
+  							</ul>
+						</div></br>`;
+		}
+		$('#myFormationModal .modal-body').html(layersHtml);
+		//bindPositionDropdownList();
+	});
+
+	$('#myFormationModal .modal-body').on('click', '.positions-dropdown li a', function(){
+		const layer = parseInt($(this));
+		const positions = parseInt($(this).text());
+		let positionsHtml = '';
+		console.log($(this).parents('ul').html());
+		$(this).parents('ul').siblings('button').children('.positions-button-text').text(positions+'');
+		$(this).parents('ul').children().removeClass('hidden');
+		$(this).parent().addClass('hidden');
+
+		/*let positionsFilled = 0;
+		$('button[id*="positions-dropdown"]').each(function(){
+			positionsFilled+=parseInt($(this).text());
+		});
+
+		const positionsLeft = 10 - positionsFilled;*/
+	});
+
+	$('.js-save-formation-button').click(function(){
+		let positionsFilled = 0;
+		let layers = [];
+		$('[id^="positions-dropdown"] .positions-button-text').each(function(){
+			const layerPositions = parseInt($(this).text());
+			positionsFilled+=layerPositions;
+			layers.push(layerPositions);
+		});
+
+		/*let name = '';
+		for(let i = 0; i < layers.length; i++){
+			if(i === 0)
+				name+=layers[i];
+			else
+				name+='-'+layers[i];
+		}*/
+
+		let formationExists = false;
+		Object.keys(applicationState.formations).forEach(function(key){
+			if(JSON.stringify(applicationState.formations[key].layers) === JSON.stringify(layers)){
+				formationExists = true;
+			}
+		});
+
+		if(positionsFilled === 10 && !formationExists){
+			const addFormationPromise = FormationService.addFormation({layers: layers});
+			addFormationPromise.done(function(formation){
+				updateFormationInterfaces('create', new Formation(formation));
+			});
+		}
+		else if(formationExists){
+			console.log('This formation already exists');
+		}
+		else{
+			//Need a popup stating that there can be no more than 10 positions in total.
+		}
+	});
+
+	$('.js-delete-formations-button').click(function(){
+		let formationKeys = [];
+		$('.js-formation-listing .ui-selected').each(function(){
+			formationKeys.push($(this).attr('data-formationId'));
+		})
+		const deleteFormationPromise = FormationService.deleteFormation();
+		deleteFormationPromise.done(function(){
+			//NEEDS TO BE IMPLEMENTED
+			//updateFormationInterfaces('delete', );
+		});
+	});
+	//bindPositionDropdownList();
 }
+
+/*function bindPositionDropdownList(){
+	$('.positions-dropdown').on('click', 'li a', function(){
+		const positions = parseInt($(this).text());
+		let positionsHtml = '';
+		$('#positions-dropdown${positions} .positions-button-text').text(positions+'');
+		$('#js-positions-list${positions} li').removeClass('hidden');
+		$(this).parent().addClass('hidden');
+
+		let positionsFilled = 0;
+		$('button[id*="positions-dropdown"]').each(function(){
+			positionsFilled+=parseInt($(this).text());
+		});
+
+		const positionsLeft = 10 - positionsFilled;
+	});
+}*/
 
 function handleMainScreenEvents(){
 	$('#js-type-select').change(function(){ 
