@@ -260,16 +260,16 @@ function updatePlayerInterfaces(method, player){
 	//console.log('METHOD: '+method);
 	if(method==='create'){
 		applicationState.players[player.id]=player;
-		$('ul#12').append(`<li class="js-position position">Bench</li>`);
-		$('ul#12 li:not(:has(*))').first().append(`<div class="js-player-filled player-filled" data-playerId="${player.id}">${player.name}</div>`);
-		let playerHtml = `<div class="row" data-playerId="${player.id}">`;
+		$('ul#12').append(`<li class="js-position position ui-widget-header">Bench</li>`);
+		$('ul#12 li:not(:has(*))').first().append(player.getPlayerDraggableDiv());
+		/*let playerHtml = `<div class="row" data-playerId="${player.id}">`;
 		for(let field in player){
 			if(field !== 'id')
 				playerHtml+=`<div class="col-xs-5ths" contenteditable="true">${player[field]}</div>`;
 		}
-		playerHtml+='<div class="col-xs-5ths"><button>Update</button></div><div class="col-xs-5ths"><button type="button">Delete</button></div></div>';
-		$('.js-team')
-			.append(playerHtml);
+		playerHtml+='<div class="col-xs-5ths"><button>Update</button></div><div class="col-xs-5ths"><button type="button">Delete</button></div></div>';*/
+		$('.js-team table tbody').append(player.getPlayerRow());
+		handleDraggable();
 	}
 	else if(method === 'update'){
 		console.log('IN UPDATE');
@@ -361,19 +361,25 @@ function updateRosterInterfaces(method, roster){
 		/*for(field in roster){
 			console.log('FIELD IN ROSTER: '+ roster);
 		}*/
+		const oldRoster = applicationState.rosters[roster.id];
 		applicationState.rosters[roster.id]=new Roster(roster);
-		$('.roster-button-text').text(roster.description);
+		if(oldRoster.description === $('.roster-button-text').text())
+			$('.roster-button-text').text(roster.description);
 		$(`.js-roster-list-item[data-value="${roster.id}"] a`).text(roster.description);
 		$(`tr.roster-entry[data-rosterId="${roster.id}"] td`).each(function(){
 			const dataType = $(this).attr('data-type');
-			if(dataType !== "dateCreated"){
+			if(dataType !== "dateCreated" && dataType !== "button"){
 				console.log('DATATYPE: '+dataType);
 				$(this).text(roster[dataType]);
 			}
 		});
+		$('#js-update-description').val(roster.description);
+		$('#js-update-notes').val(roster.notes);
 		//$('.js-rosters table tbody').append(roster.getRosterRow());
 	}
 	else{
+		if(applicationState.rosters[roster.id].description === $('.roster-button-text').text())
+			$('#js-roster-list li[data-value="new roster"]').trigger('click');
 		$(`tr.roster-entry[data-rosterId="${roster.id}"]`).remove();
 		$(`#js-roster-list li[data-value="${roster.id}"]`).remove();
 		delete applicationState[roster.id];
@@ -402,7 +408,7 @@ function getVisualLayersByRoster(roster){
 		visualHtml+='</div>';
 	}
 	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="11">
-				<div class="col-xs-12 visual-position-container ui-widget-header" data-position="1"><div class="visual-position ui-widget-header">Goalie</div></div>
+				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header">Goalie</div></div>
 				</div></div>`;
 	draggableHtml+='<div><header>Goalie</header><ul id="11"><li class="js-position position ui-widget-header" data-position="1">Goalie</li></ul></div>';
 	draggableHtml+='<div><header>Bench</header><ul id="12">';
@@ -424,13 +430,13 @@ function getVisualLayersByRoster(roster){
 		const player = applicationState.players[playerPositions[k].playerId];
 		//delete benchedPlayers[player.id];
 		
-		$(`ul#${layer} li[data-position="${k+1}"]`)
+		$(`ul#${layer} li[data-position="${position}"]`)
 			//.empty()
 			.append(player.getPlayerDraggableDiv());
 
-		$(`div[data-layer="${k+1}"] li[data-position="${position}"]`)
+		//$(`div[data-layer="${layer}"] li[data-position="${position}"]`)
 			//.empty()
-			.append(player.getPlayerDraggableDiv());
+		//	.append(player.getPlayerDraggableDiv());
 	}
 	/*for(let n = 0; n < Object.keys(applicationState.players).length; n++){
 		$('ul#12').append(`<li class="js-position position ui-widget-header" data-position="${n+1}">Bench</li>`);
@@ -779,6 +785,7 @@ function handleFieldOperations(){
 			id: applicationState.currentRosterId,
     		formationId: applicationState.rosters[applicationState.currentRosterId].formationId,
     		playerPositions: getPlayerPositions(),
+    		dateCreated: applicationState.rosters[applicationState.currentRosterId].dateCreated,
     		lastModified: new Date().toDateString(),
     		description: $('#js-update-description').val(),
     		notes: $('#js-update-notes').val()
@@ -794,14 +801,27 @@ function handleRosterOperations(){
 	$('.js-roster-row-update-button').click(function(){
 		const rosterId = $(this).closest('tr').attr('data-rosterId');
 		const oldRoster = applicationState.rosters[rosterId].getRosterObject();
+		/*delete oldRoster['formationId'];
+		delete oldRoster['playerPositions'];
+		delete oldRoster['dateCreated'];
+		delete oldRoster['lastModified'];*/
 		console.log(oldRoster.description);
-		let newRoster = {id: rosterId};
+		let newRoster = {
+			id: rosterId,
+			formationId: applicationState.rosters[rosterId].formationId,
+			playerPositions: applicationState.rosters[rosterId].playerPositions
+		};
 		console.log('NEW ROSTER: '+newRoster);
 		let count = 0;
 		$(this).parent().siblings().each(function(){
 			console.log(count);
+			const field = $(this).attr('data-type');
+			//if(field === 'description' || field === 'notes'){
 			if(count < 4){
 				newRoster[$(this).attr('data-type')] = $(this).text();
+			}
+			else{
+				return false;
 			}
 			//console.log('HIYA!: '+$(this).text());
 			count++;
@@ -813,6 +833,7 @@ function handleRosterOperations(){
 		}
 		console.log(objectsAreEqual(oldPlayer, newPlayer));*/
 		if(!objectsAreEqual(oldRoster, newRoster)){
+			newRoster['lastModified'] = new Date().toDateString();
 			const updateRosterPromise = RosterService.updateRoster(newRoster);
 			updateRosterPromise.done(function(){
 				//applicationState.players[playerId] = new Player(newPlayer);
@@ -863,7 +884,27 @@ function handleMainScreenEvents(){
 		RosterService.addRoster({});
 	});
 }
+function clearPlayerFields(){
+	$('#firstName').val('');
+	$('#lastName').val('');
+	$('#status').val('');
+	$('#preferredPosition').val('');
+}
 function handlePlayerOperations(){
+	$('.js-save-player-button').click(function(){
+		const player = {
+			firstName: $('#firstName').val(),
+			lastName: $('#lastName').val(),
+			status: $('#status').val(),
+			preferredPosition: $('#preferredPosition').val()
+		};
+		const addPlayerPromise = PlayerService.addPlayer(player);
+		addPlayerPromise.done(function(player){
+			updatePlayerInterfaces('create', new Player(player));
+			clearPlayerFields();
+		});
+	});
+
 	$('.js-update-button').click(function(){
 		const playerId = $(this).closest('tr').attr('data-playerId');
 		const oldPlayer = applicationState.players[playerId].getPlayerObject();
@@ -909,7 +950,13 @@ function objectsAreEqual(object1, object2){
 	if(typeof object1 === 'object' && typeof object2 === 'object'){
 		if(Object.keys(object1).length === Object.keys(object2).length){
 			for(let field in object1){
-				if(object1[field].trim() !== object2[field].trim())
+				if(Array.isArray(object1[field])){
+					for(let i = 0; i < object1[field].length; i++){
+						if(JSON.stringify(object1[field][i]) !== JSON.stringify(object2[field][i]))
+							return false;
+					}
+				}
+				else(object1[field].trim() !== object2[field].trim())
 					return false;
 			}
 			return true;
@@ -943,7 +990,7 @@ function handleDraggable(){
 			const position = $(this).parent().addClass('slot-filled').attr('data-position');
 			console.log('LAYER: '+layer+' POSITION: '+position)
 			if(layer !== '12'){
-				$(`.row[data-layer="${layer}"] div[data-position="${position}"]`).text($(this).text());
+				$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(this).text());
 			}
 		},
 		stop: function(ev, ui){
