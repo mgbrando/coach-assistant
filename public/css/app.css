@@ -29,7 +29,8 @@
     height: 100%; /* 100% Full-height */
     width: 50px; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    /*z-index: 1;*/ /* Stay on top */
+    z-index: 20000;
     top: 0;
     left: 0;
     background-color: #111; /* Black*/
@@ -420,7 +421,10 @@ main {
     width: 250px;
 }
 #main.screenAdjust{
-    margin-left: 50px;
+    margin-left: 250px;
+}
+.hamburger-button{
+    display: none;
 }
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
@@ -428,11 +432,31 @@ main {
     .sidenav a {font-size: 18px;}
 }
 @media (max-width: 686px){
+    #mySidenav.sidenav, .closed-nav{
+        width: 0px;
+    }
     #mySidenav.sidenav.screenAdjust{
         width: 100%;
     }
-    #main .screenAdjust{
+    #main .screenAdjust, #main{
         margin-left: 0;
+    }
+    #mySidenav.sidenav ul{
+        margin: 0 auto;
+    }
+    .hamburger-button{
+        display: block;
+        position: fixed;
+        bottom: 5px;
+        left: 10px;
+        z-index: 19999;
+    }
+    .navbar-toggle{
+        background-color: black;
+        border-color: white;
+    }
+    .navbar-toggle .icon-bar{
+        background-color: #cccccc;
     }
 }
 @media (min-width: 768px) {
