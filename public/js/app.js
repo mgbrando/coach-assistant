@@ -35,16 +35,20 @@ getRosterDropdownList(){
 
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
+	$('#mySidenav.sidenav').addClass('screenAdjust');
+	$('#main').addClass('screenAdjust');
+    //document.getElementById("mySidenav").style.width = "250px";
+    //document.getElementById("main").style.marginLeft = "250px";
     $('.js-closed-nav').addClass('hidden');
     $('.js-nav-components').removeClass('hidden');
 }
 
 /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "50px";
-    document.getElementById("main").style.marginLeft = "50px";
+	$('#mySidenav.sidenav').removeClass('screenAdjust');
+	$('#main').removeClass('screenAdjust');
+    //document.getElementById("mySidenav").style.width = "50px";
+    //document.getElementById("main").style.marginLeft = "50px";
     $('.js-closed-nav').removeClass('hidden');
     $('.js-nav-components').addClass('hidden');
 }
@@ -97,13 +101,18 @@ function getPlayersListItem(player){
 	return html;
 }*/
 function getPlayersDisplay(players){
-	let html ='<table class="table table-striped">';
-	html += '<thead class="playerlist-header"><tr><th class="">First Name</th><th class="">Last Name</th><th class="">Status</th><th class="">Preferred Position</th><th class="">Update</th><th class="">Delete</th></tr></thead><tbody>';
+	let html ='<table id="team-table" class="table table-striped">';
+	html += '<thead class="playerlist-header"><tr><th class="">First Name</th><th class="">Last Name</th><th class="">Status</th><th class="">Preferred Position</th><th class="center-text no-sort">Update</th><th class="center-text no-sort">Delete</th></tr></thead><tbody>';
 	Object.keys(players).forEach(function(key){
 		html+=players[key].getPlayerRow();
 	});
 	html+='</tbody></table>';
 	$('.js-team').append(html);
+	$('#team-table').DataTable({
+		columnDefs: [
+  			{ targets: 'no-sort', orderable: false }
+		]
+	});
 }
 /*function getPlayersDisplay(players){
 	let html = '<div class="row playerlist-header"><div class="col-xs-2">First Name</div><div class="col-xs-2">Last Name</div><div class="col-xs-2">Status</div><div class="col-xs-2">Preferred Position</div><div class="col-xs-2">Update</div><div class="col-xs-2">Delete</div></div>';
@@ -179,15 +188,15 @@ function getRosterDropDownList(rosters){
 	playerDisplay+='</div>';
 }*/
 function getRostersDisplay(rosters){
-	let html ='<table class="table table-striped">';
+	let html ='<table id="roster-table" class="table table-striped">';
 	html += `<thead class="rosterlist-header">
 				<tr>
 					<th class="">Description</th>
 					<th class="">Date Created</th>
 					<th class="">Last Modified</th>
 					<th class="">Notes</th>
-					<th class="">Update</th>
-					<th class="">Delete</th>
+					<th class="center-text no-sort">Update</th>
+					<th class="center-text no-sort">Delete</th>
 				</tr>
 			</thead>
 			<tbody>`;
@@ -196,6 +205,11 @@ function getRostersDisplay(rosters){
 	});
 	html+='</tbody></table>';
 	$('.js-rosters').append(html);
+	$('#roster-table').DataTable({
+		columnDefs: [
+  			{ targets: 'no-sort', orderable: false }
+		]
+	});
 }
 function getRosterList(){
 	let html = '';
@@ -323,6 +337,16 @@ function getFormationList(){
 	return html+'</div>';
 }
 
+function formationUsedInRoster(formationId){
+	let formationExistsInRoster = {exists: false, rosters: []};
+	Object.keys(applicationState.rosters).forEach(function(key){
+		if(applicationState.rosters[key].formationId === formationId){
+			formationExistsInRoster.exists = true;
+			formationExistsInRoster.rosters.push(applicationState.rosters[key].description);
+		}
+	});
+	return formationExistsInRoster;
+}
 //create and delete only for formations
 function updateFormationInterfaces(method, formation){
 	if(method==='create'){
@@ -339,12 +363,20 @@ function updateFormationInterfaces(method, formation){
 	}
 	else{
 		//$('.js-formation-listing div.)
-		$(`#js-formation-list li[data-value="${formation.id}"]`).remove();
+		for(let i = 0; i < formation.length; i++){
+				if(applicationState.formations[formation[i]].name === $('#formations-dropdown .formation-button-text').text())
+					$('#js-formation-list li:first-child a').trigger('click');
+				delete applicationState.formations[formation[i]];
+		}
+		$('.js-formation-listing').html(getFormationList());
+		$('#js-formation-list').empty();
+		getFormationDropDownList(applicationState.formations);
+		//$(`#js-formation-list li[data-value="${formation.id}"]`).remove();
 
 		//NEEDED
 		//$('.js-formation-listing').append(getFormationList());
 		//$(`.js-formation-listing div.row`).children(`div[data-formationId="${formation.id}"]`).remove().end().		
-		delete applicationState.formations[formation.id];
+		//delete applicationState.formations[formation.id];
 	}
 }
 
@@ -947,14 +979,53 @@ function handleFormationOperations(){
 	});
 
 	$('.js-delete-formations-button').click(function(){
-		let formationKeys = [];
+		let formationsToDelete = [];
+		let formationsToKeep = [];
+
+		if((Object.keys(applicationState.formations).length - $('.js-formation-listing .ui-selected').length) === 0){
+			$('#myErrorModal .modal-body').empty().append('<p>There must be at least 1 formation left to be available for rosters.</p>');
+			$('#myErrorModal').modal('show');	
+			return;
+		}
+
 		$('.js-formation-listing .ui-selected').each(function(){
-			formationKeys.push($(this).attr('data-formationId'));
-		})
-		const deleteFormationPromise = FormationService.deleteFormation();
+			const formationId = $(this).attr('data-formationId');
+			const formationInUse = formationUsedInRoster(formationId);
+			if(!formationInUse.exists)
+				formationsToDelete.push(formationId);
+			else
+				formationsToKeep.push({
+					formation: applicationState.formations[formationId].name,
+					rosters: formationInUse.rosters
+				});
+		});
+		console.log(formationsToDelete);
+		const deleteFormationPromise = FormationService.deleteFormations(formationsToDelete);
 		deleteFormationPromise.done(function(){
+			updateFormationInterfaces('bulk-delete', formationsToDelete);
 			//NEEDS TO BE IMPLEMENTED
 			//updateFormationInterfaces('delete', );
+			let couldNotDeleteHtml = '<p>Could not delete the following formations because there are rosters using them: ';
+			for(let i = 0; i < formationsToKeep.length; i++){
+				for(let j = 0; j < formationsToKeep[i].rosters.length; j++){
+					console.log(formationsToKeep[i].rosters[j]);
+					if(formationsToKeep[i].rosters.length === 1)
+						couldNotDeleteHtml+=`<div>Roster <${formationsToKeep[i].rosters[j]}> is using Formation <${formationsToKeep[i].formation}>.</div>`;
+					else{
+						if(j === 0){
+							console.log(formationsToKeep[i].rosters[j]);
+							couldNotDeleteHtml+=`<div>Rosters &lt;${formationsToKeep[i].rosters[j]}&gt;`;
+						}
+						else if(j !== formationsToKeep[i].rosters.length-1)
+							couldNotDeleteHtml+=`, &lt;${formationsToKeep[i].rosters[j]}&gt;`;
+						else
+							couldNotDeleteHtml+=`, and &lt;${formationsToKeep[i].rosters[j]}&gt; are using Formation <${formationsToKeep[i].formation}>.</div>`
+					}
+				}
+			}
+			couldNotDeleteHtml+='<br/><div>You must delete the rosters using these formations in order to delete them.</div></p>';
+			$('#myWarningModal .modal-body').empty().append(couldNotDeleteHtml);
+			$('#myWarningModal').modal('show');
 		});
 	});
 	//bindPositionDropdownList();

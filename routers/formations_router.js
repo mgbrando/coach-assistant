@@ -124,6 +124,26 @@ router.put('/:id', jsonParser, (req, res) => {
  		});
 });
 
+router.delete('/bulk-delete', jsonParser, (req, res) => {
+	//const formationsArray
+	//console.log(req.body);
+	const formationsArray = req.body.formationsArray;
+	//console.log(formationsArray[0] + formationsArray[1]);
+	//res.json({formation1: formationsArray[0], formation2: formationsArray[1]});
+	/*Formation
+		.findByIdAndRemove*/
+	Formation
+		.remove({_id: {$in: formationsArray}})
+		.exec()
+		.then(() => {
+			res.status(204).end();
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(500).json({message: 'Internal Service Error: '+err});
+		});
+});
+
 //Method that deletes a fomration's information
 router.delete('/:id', (req,res) => {
 	Formation

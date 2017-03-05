@@ -10,7 +10,8 @@
     <link type="text/css" rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.structure.min.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.theme.min.css" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" media="screen,projection"/>  
+    <link type="text/css" rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" media="screen,projection"/> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
     <!--<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>-->
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
@@ -133,7 +134,7 @@
       					</p>
       					</div>
       					<div class="modal-footer">
-      						<button type="button" class="btn btn-primary js-save-roster-button" data-dismiss="modal">Save</button>
+      						<button type="button" class="btn btn-primary js-delete-formations-button" data-dismiss="modal">Delete</button>
         					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       					</div>
     				</div>
@@ -154,7 +155,7 @@
       					</p>
       					</div>
       					<div class="modal-footer">
-      						<button type="button" class="btn btn-primary js-save-roster-button" data-dismiss="modal">Save</button>
+      						<button type="button" class="btn btn-primary js-delete-roster-button" data-dismiss="modal">Save</button>
         					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       					</div>
     				</div>
@@ -203,6 +204,42 @@
       						<button type="button" class="btn btn-primary js-save-player-button">Save</button>
         					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       					</div>
+    				</div>
+				</div>
+			</div>
+			<div id="myWarningModal" class="modal fade" role="dialog">
+  				<div class="modal-dialog">
+
+    				<!-- Modal content-->
+    				<div class="modal-content">
+      					<div class="modal-header">
+        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+        					<h4 class="modal-title">Warning</h4>
+      					</div>
+      					<div class="modal-body">
+
+      					</div>
+      					<!--<div class="modal-footer">
+        					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      					</div>-->
+    				</div>
+				</div>
+			</div>
+			<div id="myErrorModal" class="modal fade" role="dialog">
+  				<div class="modal-dialog">
+
+    				<!-- Modal content-->
+    				<div class="modal-content">
+      					<div class="modal-header">
+        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+        					<h4 class="modal-title">Error</h4>
+      					</div>
+      					<div class="modal-body">
+
+      					</div>
+      					<!--<div class="modal-footer">
+        					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      					</div>-->
     				</div>
 				</div>
 			</div>
@@ -349,7 +386,7 @@
 		<section class="js-team-section team-section hidden">
 			<div class="js-screen-select screen-select">
 			</div>
-			<header>Team <button type="button" class="btn btn-default btn-sm js-save-player-button save-player-button" data-toggle="modal" data-target="#myPlayerModal">Add Player...</button></header>
+			<header>Team <button type="button" class="btn btn-default btn-sm js-add-player-button add-player-button" data-toggle="modal" data-target="#myPlayerModal">Add Player...</button></header>
 			<div class="js-team team container-fluid">	
 				<!--<table class="table table-striped">
   				
@@ -360,7 +397,7 @@
 			<div class="js-screen-select screen-select"></div>
 			<header>Formations 		
 			<button type="button" class="btn btn-default btn-sm js-add-formation-button add-formation-button" data-toggle="modal" data-target="#myFormationModal">Add Formation...</button>
-			<button type="button" class="btn btn-default btn-sm js-delete-formations-button delete-formations-button" data-toggle="modal" data-target="#myDeleteFormationModal">Delete Selected Formations</button>
+			<button type="button" class="btn btn-default btn-sm js-delete-selected-formations-button delete-selected-formations-button" data-toggle="modal" data-target="#myDeleteFormationModal">Delete Selected Formations</button>
 			</header>
 			<div class="js-formation-listing formation-listing container-fluid">
 			</div>
@@ -369,6 +406,7 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
 	<!--<script type="text/javascript" src="materialize/js/materialize.min.js"></script>-->
 	<script src="js/player.js"></script>
 	<script src="js/formation.js"></script>

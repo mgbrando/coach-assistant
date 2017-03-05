@@ -1,6 +1,9 @@
 .hidden{
     display: none;
 }
+.center-text{
+    text-align: center;
+}
 .closed-nav{
     /*height: 100%;
     line-height: 100vh;*/
@@ -315,14 +318,20 @@
 #myFormationModal h5, .layer-dropdown{
     display: inline-block;
 }
-/*Rosters*/
-.rosters .row{
-    height: 100px;
-    /*line-height: 50px;
-    text-align: center;*/
-    margin-top: 5px;
+#myWarningModal .modal-header{
+    background-color: yellow;
 }
-.rosters .row > div{
+#myErrorModal .modal-header{
+    background-color: red;
+}
+/*Rosters*/
+/*.rosters .row{
+    height: 100px;
+    line-height: 50px;
+    text-align: center;
+    margin-top: 5px;
+}*/
+/*.rosters .row > div{
     height: 100%;
 }
 .roster{
@@ -332,7 +341,7 @@
 }
 .roster div{
     height: 100%;
-}
+}*/
 /*Formations*/
 .formation-listing .row{
     height: 100px;
@@ -406,12 +415,26 @@ main {
     width: 20%;
     float: left;
 }
+
+#mySidenav.sidenav.screenAdjust{
+    width: 250px;
+}
+#main.screenAdjust{
+    margin-left: 50px;
+}
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
-
+@media (max-width: 686px){
+    #mySidenav.sidenav.screenAdjust{
+        width: 100%;
+    }
+    #main .screenAdjust{
+        margin-left: 0;
+    }
+}
 @media (min-width: 768px) {
     .col-sm-5ths {
         width: 20%;

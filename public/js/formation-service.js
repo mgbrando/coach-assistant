@@ -34,6 +34,14 @@ class FormationService{
 			url: `/formations/${id}`
 		});
 	}
+	static deleteFormations(formationsArray){
+		return $.ajax({
+			method: 'DELETE',
+			url: '/formations/bulk-delete',
+			contentType: 'application/json',
+			data: JSON.stringify({formationsArray: formationsArray})
+		});
+	}
 }
 
 //module.exports = FormationService;
