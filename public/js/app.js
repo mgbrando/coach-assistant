@@ -285,7 +285,9 @@ function updatePlayerInterfaces(method, player){
 				playerHtml+=`<div class="col-xs-5ths" contenteditable="true">${player[field]}</div>`;
 		}
 		playerHtml+='<div class="col-xs-5ths"><button>Update</button></div><div class="col-xs-5ths"><button type="button">Delete</button></div></div>';*/
-		$('.js-team table tbody').append(player.getPlayerRow());
+		//$('.js-team table tbody').append(player.getPlayerRow());
+		applicationState.teamTable.row.add($(player.getPlayerRow())[0]).draw();
+		bindPlayerRowEvents(`.player-entry[data-playerId="${player.id}"]`);
 		handleDraggable();
 	}
 	else if(method === 'update'){
@@ -390,7 +392,8 @@ function updateRosterInterfaces(method, roster){
 		$('#js-roster-list').append(roster.getRosterListItemRepr());
 		$('#js-roster-list li:last-child').trigger('click');
 		//$('.js-rosters table tbody').append(roster.getRosterRow());
-		applicationState.rostersTable.row.add( $(roster.getRosterRow())[0] ).draw();
+		applicationState.rostersTable.row.add( $(roster.getRosterRow())[0]).draw();
+		bindRosterRowEvents(`.roster-entry[data-rosterId="${roster.id}"]`);
 	}
 	else if(method === 'update'){
 		/*if(applicationState.rosters[roster.id].description !== roster.description)
@@ -875,12 +878,15 @@ function handleFieldOperations(){
 	});
 }
 function bindRosterRowEvents(row){
-
+	$(`${row} .js-roster-row-update-button`).click(function(){
+		updateRosterRow($(this));
+	});
+	$(`${row} .js-roster-row-delete-button`).click(function(){
+		deleteRosterRow($(this));
+	});
 }
-function handleRosterOperations(row = null){
-
-	$('.js-roster-row-update-button').click(function(){
-		const rosterId = $(this).closest('tr').attr('data-rosterId');
+function updateRosterRow(currentSelection){
+		const rosterId = currentSelection.closest('tr').attr('data-rosterId');
 		const oldRoster = applicationState.rosters[rosterId].getRosterObject();
 		/*delete oldRoster['formationId'];
 		delete oldRoster['playerPositions'];
@@ -894,7 +900,7 @@ function handleRosterOperations(row = null){
 		};
 		console.log('NEW ROSTER: '+newRoster);
 		let count = 0;
-		$(this).parent().siblings().each(function(){
+		currentSelection.parent().siblings().each(function(){
 			console.log(count);
 			const field = $(this).attr('data-type');
 			//if(field === 'description' || field === 'notes'){
@@ -921,10 +927,10 @@ function handleRosterOperations(row = null){
 				updateRosterInterfaces('update', newRoster);
 			});
 		}
-	});
+}
 
-	$('.js-roster-row-delete-button').click(function(){
-		const rosterId = $(this).closest('tr').attr('data-rosterId');
+function deleteRosterRow(currentSelection){
+		const rosterId = currentSelection.closest('tr').attr('data-rosterId');
 		const roster = applicationState.rosters[rosterId];
 		if(confirm(`Permanently delete Roster: ${applicationState.rosters[rosterId].description}?`)){
 			const deleteRosterPromise = RosterService.deleteRoster(rosterId);
@@ -932,7 +938,17 @@ function handleRosterOperations(row = null){
 				updateRosterInterfaces('delete', roster);
 			});
 		}
+}
+function handleRosterOperations(){
+
+	$('.js-roster-row-update-button').click(function(){
+		updateRosterRow($(this));
 	});
+
+	$('.js-roster-row-delete-button').click(function(){
+		deleteRosterRow($(this));
+	});
+
 }
 
 function handleFormationOperations(){
@@ -1133,34 +1149,24 @@ function clearPlayerFields(){
 	$('#status').val('');
 	$('#preferredPosition').val('');
 }
-function handlePlayerOperations(){
-	$('#save-player-form').submit(function(event){
-		event.preventDefault();
-		const player = {
-			firstName: $('#firstName').val(),
-			lastName: $('#lastName').val(),
-			status: $('#status').val(),
-			preferredPosition: $('#preferredPosition').val()
-		};
-		const addPlayerPromise = PlayerService.addPlayer(player);
-		addPlayerPromise.done(function(player){
-			updatePlayerInterfaces('create', new Player(player));
-			clearPlayerFields();
-		});
+
+function bindPlayerRowEvents(row){
+	$(`${row} .js-update-button`).click(function(){
+		updatePlayerRow($(this));
 	});
+	$(`${row} .js-delete-button`).click(function(){
+		deletePlayerRow($(this));
+	});
+}
 
-	/*$('.js-save-player-button').click(function(){
-		$('#save-player-form').trigger('submit');
-	});*/
-
-	$('.js-update-button').click(function(){
-		const playerId = $(this).closest('tr').attr('data-playerId');
+function updatePlayerRow(currentSelection){
+		const playerId = currentSelection.closest('tr').attr('data-playerId');
 		const oldPlayer = applicationState.players[playerId].getPlayerObject();
 		console.log(oldPlayer.status);
 		let newPlayer = {id: playerId};
 		console.log('NEW PLAYER: '+newPlayer);
 		let count = 0;
-		$(this).parent().siblings().each(function(){
+		currentSelection.parent().siblings().each(function(){
 			console.log(count);
 			if(count < 4){
 				newPlayer[$(this).attr('data-type')] = $(this).text();
@@ -1181,10 +1187,10 @@ function handlePlayerOperations(){
 				updatePlayerInterfaces('update', new Player(newPlayer));
 			});
 		}
-	});
+}
 
-	$('.js-delete-button').click(function(){
-		const playerId = $(this).closest('tr').attr('data-playerId');
+function deletePlayerRow(currentSelection){
+		const playerId = currentSelection.closest('tr').attr('data-playerId');
 		const player = applicationState.players[playerId];
 		if(confirm(`Permanently delete Player: ${applicationState.players[playerId].getFullName()}?`)){
 			const deletePlayerPromise = PlayerService.deletePlayer(playerId);
@@ -1192,7 +1198,36 @@ function handlePlayerOperations(){
 				updatePlayerInterfaces('delete', player);
 			});
 		}
+}
+
+function handlePlayerOperations(){
+
+	$('.js-update-button').click(function(){
+		updatePlayerRow($(this));
 	});
+
+	$('.js-delete-button').click(function(){
+		deletePlayerRow($(this));
+	});
+
+	$('#save-player-form').submit(function(event){
+		event.preventDefault();
+		const player = {
+			firstName: $('#firstName').val(),
+			lastName: $('#lastName').val(),
+			status: $('#status').val(),
+			preferredPosition: $('#preferredPosition').val()
+		};
+		const addPlayerPromise = PlayerService.addPlayer(player);
+		addPlayerPromise.done(function(player){
+			updatePlayerInterfaces('create', new Player(player));
+			clearPlayerFields();
+		});
+	});
+
+	/*$('.js-save-player-button').click(function(){
+		$('#save-player-form').trigger('submit');
+	});*/
 }
 function objectsAreEqual(object1, object2){
 	if(typeof object1 === 'object' && typeof object2 === 'object'){

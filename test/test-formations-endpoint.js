@@ -184,7 +184,7 @@ describe('formations api', () => {
     	});
 	});
 
-	describe('DELETE endpoint', () => {
+	describe('DELETE endpoints', () => {
     	
     	it('should delete a formation given an id', () => {
 
@@ -203,6 +203,34 @@ describe('formations api', () => {
         		})
         		.then(_formation => {
           			should.not.exist(_formation);
+        		});
+    	});
+
+    	it('should delete multiple formations given an object with a sole field containing an array of ids', () => {
+
+      		let formations;
+      		let formationIds = [];
+
+      		return Formation
+        		.find()
+        		.limit(3)
+        		.exec()
+        		.then(_formations => {
+          			formations = _formations;
+          			for(let i = 0; i < formations.length; i++){
+          				formationIds.push(formations[i].id);
+          			}
+
+          			return chai.request(app).delete('/formations/bulk-delete').set('content-type', 'application/json').send(JSON.stringify({formationsArray: formationIds}));
+        		})
+        		.then(res => {
+          			res.should.have.status(204);
+          			return Formation
+          				.find({_id: {$in: formationIds}});
+        		})
+        		.then(_formations => {
+          			_formations.should.be.a('array');
+          			_formations.should.have.length.of(0);
         		});
     	});
 	});
