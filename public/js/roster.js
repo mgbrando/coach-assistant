@@ -85,6 +85,12 @@ class Roster{
 	set notes(words){
 		this._notes = words;
 	}
+	getFormattedDate(dateString){
+		let parsedDate = dateString.trim().split(' ');
+	}
+	getNumericalMonth(){
+		
+	}
 	getRosterRow(){
 		let rosterRowHtml = `<tr class="roster-entry" data-rosterId="${this._id}">
 								<td class="roster-field" data-type="description" contenteditable="true">${this._description}</td>

@@ -11,7 +11,9 @@ const applicationState = {
 	rosters: {},
 	currentRosterId: "",
 	currentFormationId: "",
-	startPosition: {}
+	startPosition: {},
+	rostersTable: null, 
+	teamTable: null
 };
 
 function getLayers(){
@@ -108,7 +110,7 @@ function getPlayersDisplay(players){
 	});
 	html+='</tbody></table>';
 	$('.js-team').append(html);
-	$('#team-table').DataTable({
+	applicationState.teamTable = $('#team-table').DataTable({
 		columnDefs: [
   			{ targets: 'no-sort', orderable: false }
 		]
@@ -205,7 +207,8 @@ function getRostersDisplay(rosters){
 	});
 	html+='</tbody></table>';
 	$('.js-rosters').append(html);
-	$('#roster-table').DataTable({
+	$.fn.dataTable.moment('ddd MMM DD YYYY');
+	applicationState.rostersTable = $('#roster-table').DataTable({
 		columnDefs: [
   			{ targets: 'no-sort', orderable: false }
 		]
@@ -386,7 +389,8 @@ function updateRosterInterfaces(method, roster){
 		applicationState.rosters[roster.id] = roster;
 		$('#js-roster-list').append(roster.getRosterListItemRepr());
 		$('#js-roster-list li:last-child').trigger('click');
-		$('.js-rosters table tbody').append(roster.getRosterRow());
+		//$('.js-rosters table tbody').append(roster.getRosterRow());
+		applicationState.rostersTable.row.add( $(roster.getRosterRow())[0] ).draw();
 	}
 	else if(method === 'update'){
 		/*if(applicationState.rosters[roster.id].description !== roster.description)
@@ -413,7 +417,8 @@ function updateRosterInterfaces(method, roster){
 	else{
 		if(applicationState.rosters[roster.id].description === $('.roster-button-text').text())
 			$('#js-roster-list li[data-value="new roster"]').trigger('click');
-		$(`tr.roster-entry[data-rosterId="${roster.id}"]`).remove();
+		//$(`tr.roster-entry[data-rosterId="${roster.id}"]`).remove();
+		applicationState.rostersTable.row($(`tr.roster-entry[data-rosterId="${roster.id}"]`)).remove().draw();
 		$(`#js-roster-list li[data-value="${roster.id}"]`).remove();
 		delete applicationState[roster.id];
 	}
@@ -434,19 +439,35 @@ function getVisualLayersByRoster(roster){
 		const positions = layers[i];
 		const columnSize = 12/positions;
 		for(let j = 0; j < positions; j++) {
-			draggableHtml+=`<li class="js-position ui-widget-content position ui-widget-header" data-position="${j+1}">${j+1}</li>`;
-			visualHtml+=`<div class="col-xs-${columnSize} visual-position-container" data-position="${j+1}"><div class="visual-position ui-widget-header">${j+1}</div></div>`;
+			draggableHtml+=`<li class="js-position ui-widget-content position ui-widget-header noselect" data-position="${j+1}">${j+1}</li>`;
+			if(positions === 5){
+				visualHtml+=`<div class="col-xs-2 visual-position-container five-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else if(positions === 7){
+				visualHtml+=`<div class="col-xs-1 visual-position-container seven-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else if(positions === 8){
+				visualHtml+=`<div class="col-xs-1 visual-position-container eight-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else if(positions === 9){
+				visualHtml+=`<div class="col-xs-1 visual-position-container nine-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else if(positions === 10){
+				visualHtml+=`<div class="col-xs-1 visual-position-container ten-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else
+				visualHtml+=`<div class="col-xs-${columnSize} visual-position-container" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
 		}
 		draggableHtml+='</ul></div>';
 		visualHtml+='</div>';
 	}
 	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="11">
-				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header">Goalie</div></div>
+				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header noselect">Goalie</div></div>
 				</div></div>`;
-	draggableHtml+='<div><header>Goalie</header><ul id="11"><li class="js-position position ui-widget-header" data-position="1">Goalie</li></ul></div>';
+	draggableHtml+='<div><header>Goalie</header><ul id="11"><li class="js-position position ui-widget-header noselect" data-position="1">Goalie</li></ul></div>';
 	draggableHtml+='<div><header>Bench</header><ul id="12">';
 	for(let n = 0; n < Object.keys(applicationState.players).length; n++){
-		draggableHtml+=`<li class="js-position position ui-widget-header" data-position="${n+1}">Bench</li>`;
+		draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${n+1}">Bench</li>`;
 	}
 	draggableHtml+='</ul></div></div>'
 
@@ -481,7 +502,7 @@ function getVisualLayersByRoster(roster){
 }
 
 function getPlayerItem(player){
-	return `<div class="js-player-filled player-filled ui-widget-content" data-playerId="${player.id}">${player.getFullName()}</div>`;
+	return `<div class="js-player-filled player-filled ui-widget-content noselect" data-playerId="${player.id}">${player.getFullName()}</div>`;
 }
 
 function getVisualLayersByFormation(formation){
@@ -494,22 +515,39 @@ function getVisualLayersByFormation(formation){
 		draggableHtml+=`<div><header>Layer ${i+1}</header><ul id="${i+1}">`;
 		visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="${i+1}">`;
 		const positions = layers[i];
+		//if()
 		const columnSize = 12/positions;
 		for(let j = 0; j < positions; j++) {
-			draggableHtml+=`<li class="js-position position ui-widget-header" data-position="${j+1}">${j+1}</li>`;
-			visualHtml+=`<div class="col-xs-${columnSize} visual-position-container" data-position="${j+1}"><div class="visual-position ui-widget-header">${j+1}</div></div>`;
+			draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${j+1}">${j+1}</li>`;
+			if(positions === 5){
+				visualHtml+=`<div class="col-xs-2 visual-position-container five-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else if(positions === 7){
+				visualHtml+=`<div class="col-xs-1 visual-position-container seven-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else if(positions === 8){
+				visualHtml+=`<div class="col-xs-1 visual-position-container eight-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else if(positions === 9){
+				visualHtml+=`<div class="col-xs-1 visual-position-container nine-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else if(positions === 10){
+				visualHtml+=`<div class="col-xs-1 visual-position-container ten-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else
+				visualHtml+=`<div class="col-xs-${columnSize} visual-position-container" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
 		}
 		draggableHtml+='</ul></div>';
 		visualHtml+='</div>';
 	}
 	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="11">
-				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header">Goalie</div></div>
+				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header noselect">Goalie</div></div>
 				</div></div>`;
-	draggableHtml+='<div><header>Goalie</header><ul id="11"><li class="js-position position ui-widget-header" data-position="1">Goalie</li></ul></div>';
+	draggableHtml+='<div><header>Goalie</header><ul id="11"><li class="js-position position ui-widget-header noselect" data-position="1">Goalie</li></ul></div>';
 	draggableHtml+='<div><header>Bench</header><ul id="12">';
 	for(let k=0; k < Object.keys(applicationState.players).length; k++){
 		const playerDiv = getPlayerItem(applicationState.players[Object.keys(applicationState.players)[k]]);
-		draggableHtml+=`<li class="js-position position ui-widget-header" data-position="${k+1}">Bench ${playerDiv}</li>`;
+		draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${k+1}">Bench ${playerDiv}</li>`;
 		//const playerDiv = getPlayerItem(applicationState.players[Object.keys(applicationState.players)[j]]);
 		console.log('Line 337: '+ applicationState.formations[Object.keys(applicationState.formations)[0]].layers);//playerDiv);
 		//$(`#bench li:nth-child(${j+1})`).append(playerDiv);
@@ -680,6 +718,7 @@ function handleInitialization(){
 		handleRosterOperations();
 		handleFormationOperations();
 		handleDraggable();
+		handleErrorMessages();
   		/*setHeight();
   	
   		$(window).resize(function() {
@@ -796,7 +835,8 @@ function handleFieldOperations(){
 		applicationState.currentFormationId = formationId;
 	});
 
-	$('.js-save-roster-button').click(function(){
+	$('#save-roster-form').submit(function(event){
+		event.preventDefault();
 		const roster = {
     			formationId: applicationState.currentFormationId,
     			playerPositions: getPlayerPositions(),
@@ -808,10 +848,15 @@ function handleFieldOperations(){
 			rosterObject = new Roster(rosterObject);
 			updateRosterInterfaces('create', rosterObject);
 			$('.js-roster-list li[data-value="${rosterObject.id}"]').trigger('click');
+			$('#description').val('');
+			$('#notes').val('');
+			$('#myModal').modal('hide');
 		});		
-		$('#description').val('');
-		$('#notes').val('');
 	});
+
+	/*$('.js-save-roster-button').click(function(){
+		$('#save-roster-form').trigger('submit');
+	});*/
 
 	$('.js-update-roster-button').click(function(){
 		const roster = {
@@ -829,8 +874,11 @@ function handleFieldOperations(){
 		});
 	});
 }
+function bindRosterRowEvents(row){
 
-function handleRosterOperations(){
+}
+function handleRosterOperations(row = null){
+
 	$('.js-roster-row-update-button').click(function(){
 		const rosterId = $(this).closest('tr').attr('data-rosterId');
 		const oldRoster = applicationState.rosters[rosterId].getRosterObject();
@@ -919,7 +967,7 @@ function handleFormationOperations(){
   							</ul>
 						</div></br>`;
 		}
-		$('#myFormationModal .modal-body').html(layersHtml);
+		$('#myFormationModal #save-formation-form').html(layersHtml);
 		//bindPositionDropdownList();
 	});
 
@@ -965,15 +1013,22 @@ function handleFormationOperations(){
 		});
 
 		if(positionsFilled === 10 && !formationExists){
+			if(!$('#myFormationModal .modal-body .error-message').hasClass('hidden'))
+				$('#myFormationModal .modal-body .error-message').addClass('hidden');
 			const addFormationPromise = FormationService.addFormation({layers: layers});
 			addFormationPromise.done(function(formation){
 				updateFormationInterfaces('create', new Formation(formation));
+				$('#myFormationModal').modal('hide');
 			});
 		}
 		else if(formationExists){
+			console.log($('#saveFormationForm p:first-child').text());
+			$('#myFormationModal .modal-body .formation-error-message').html('<p>This formation already exists.</p>').removeClass('hidden');
+			//$('#myFormationModal .modal-body .formation-error-message').text('This formation already exists.');
 			console.log('This formation already exists');
 		}
 		else{
+			$('.formation-error-message').html('<p>There must be a total of 11 positions amongst all of the layers.</p>').removeClass('hidden');
 			//Need a popup stating that there can be no more than 10 positions in total.
 		}
 	});
@@ -1079,7 +1134,8 @@ function clearPlayerFields(){
 	$('#preferredPosition').val('');
 }
 function handlePlayerOperations(){
-	$('.js-save-player-button').click(function(){
+	$('#save-player-form').submit(function(event){
+		event.preventDefault();
 		const player = {
 			firstName: $('#firstName').val(),
 			lastName: $('#lastName').val(),
@@ -1092,6 +1148,10 @@ function handlePlayerOperations(){
 			clearPlayerFields();
 		});
 	});
+
+	/*$('.js-save-player-button').click(function(){
+		$('#save-player-form').trigger('submit');
+	});*/
 
 	$('.js-update-button').click(function(){
 		const playerId = $(this).closest('tr').attr('data-playerId');
@@ -1210,6 +1270,16 @@ function handleDraggable(){
 	});
 
 	//$('.position').selectable();
+}
+function handleErrorMessages(){
+	$('.close-button').click(function(){
+		if(!$('.error-message').hasClass('hidden'))
+			$('.error-message').addClass('hidden');
+	});
+	$('.cancel-button').click(function(){
+		if(!$('.error-message').hasClass('hidden'))
+			$('.error-message').addClass('hidden');
+	});
 }
 function handleSideNavigation(){
 	//$(".button-collapse").sideNav();

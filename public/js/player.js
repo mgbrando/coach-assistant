@@ -82,7 +82,7 @@ class Player{
 		return playerRowHtml;
 	}
 	getPlayerDraggableDiv(){
-		return `<div class="js-player-filled player-filled ui-widget-content" data-playerId="${this._id}">${this.getFullName()}</div>`;
+		return `<div class="js-player-filled player-filled ui-widget-content noselect" data-playerId="${this._id}">${this.getFullName()}</div>`;
 	}
 	getPlayerObject(){
 		return {id: this._id, 

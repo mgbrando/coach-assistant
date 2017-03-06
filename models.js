@@ -68,6 +68,7 @@ const rosterSchema = mongoose.Schema({
     position: {type: Number, required: true},
     playerId: {type: String, required: true}
     }],
+    //dateCreated: { type: Date, default: Date.now}
   dateCreated: {type: String, default: new Date().toDateString()},
   lastModified: {type: String, default: ''},
   description: {type: String, default: ''},

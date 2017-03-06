@@ -25,16 +25,17 @@
         					<button type="button" class="close" data-dismiss="modal">&times;</button>
         					<h4 class="modal-title">Save Roster...</h4>
       					</div>
+      					<form id="save-roster-form">
       					<div class="modal-body">
-        					<form id="save-roster-form">
-        						<label for="description">Description:</label> <input id="description" type="text" name="description" class="form-control"><br/>
-         						<label for="notes">Notes (optional):</label> <textarea id="notes" name="notes" class="form-control"></textarea>       						
-        					</form>
+        						<label for="description">Description:</label> <input id="description" type="text" name="description" class="form-control" required><br/>
+         						<label for="notes">Notes (optional):</label> <textarea id="notes" name="notes" class="form-control"></textarea>
       					</div>
       					<div class="modal-footer">
-      						<button type="button" class="btn btn-primary js-save-roster-button" data-dismiss="modal">Save</button>
+      						<input type="submit" class="btn btn-primary js-save-roster-button" value="Save">
+      						<!--<button type="button" class="btn btn-primary js-save-roster-button" data-dismiss="modal">Save</button>-->
         					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       					</div>
+      					</form>
     				</div>
 				</div>
 			</div>
@@ -66,7 +67,7 @@
     				<!-- Modal content-->
     				<div class="modal-content">
       					<div class="modal-header">
-        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+        					<button type="button" class="close close-button" data-dismiss="modal">&times;</button>
         					<h4 class="modal-title">Add Formation</h4>
         					<h5>Layers: </h5>
 							<div class="dropdown layer-dropdown">
@@ -89,6 +90,7 @@
 							</div>
       					</div>
       					<div class="modal-body">
+      						<div class="error-message formation-error-message hidden"></div>
         					<form id="save-formation-form">
         						<label for="positions-dropdown1">Layer 1 Positions:</label> 
 			             		<div class="dropdown positions-dropdown1">
@@ -113,8 +115,8 @@
          					</form>
       					</div>
       					<div class="modal-footer">
-      						<button type="button" class="btn btn-primary js-save-formation-button" data-dismiss="modal">Save</button>
-        					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      						<button type="button" class="btn btn-primary js-save-formation-button">Save</button>
+        					<button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancel</button>
       					</div>
     				</div>
 				</div>
@@ -191,19 +193,20 @@
         					<button type="button" class="close" data-dismiss="modal">&times;</button>
         					<h4 class="modal-title">Add Player</h4>
       					</div>
+      					<form id="save-player-form">
       					<div class="modal-body">
-        					<form id="save-player-form">
-        						<label for="firstName">First Name:</label> <input id="firstName" type="text" name="firstName" class="form-control"><br/>
-         						<label for="lastName">Last Name:</label> <input id="lastName" type="text" name="lastName" class="form-control"><br/>
+        						<label for="firstName">First Name:</label> <input id="firstName" type="text" name="firstName" class="form-control" required><br/>
+         						<label for="lastName">Last Name:</label> <input id="lastName" type="text" name="lastName" class="form-control" required><br/>
          						<label for="status">Status (optional):</label> <input id="status" type="text" name="status" class="form-control">
          						<br/>
          						<label for="preferredPosition">Preferred Position (optional):</label> <input id="preferredPosition" type="text" name="preferredPosition" class="form-control">
-        					</form>
       					</div>
       					<div class="modal-footer">
-      						<button type="button" class="btn btn-primary js-save-player-button">Save</button>
+      						<input type="submit" class="btn btn-primary" value="Save">
+      						<!--<button type="button" class="btn btn-primary js-save-player-button">Save</button>-->
         					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       					</div>
+      					</form>
     				</div>
 				</div>
 			</div>
@@ -417,7 +420,11 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+	<script src="https://cdn.datatables.net/plug-ins/1.10.13/sorting/datetime-moment.js"></script>
+	
 	<!--<script type="text/javascript" src="materialize/js/materialize.min.js"></script>-->
 	<script src="js/player.js"></script>
 	<script src="js/formation.js"></script>
