@@ -497,14 +497,41 @@ main {
 #main.screenAdjust{
     margin-left: 250px;
 }
-#main{
-    background-image: url("../images/soccer-banner-2.jpeg");
-    /*background-position: 0 -80px;*/
+/*#main{
+    position: relative;
+    z-index: 5;
+}*/
+/*#main{
+    background-image: url("../images/soccer-banner-3.jpeg");
+    background-position: 0 -80px;
     background-repeat: no-repeat;
-    background-size: 100% 9vh;
+    background-size: 100% 10vh;
+    background-size: cover;
+}*/
+.header-banner{
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 10vh;
+    background-size: cover;
+    background-image: url("../images/soccer_ball.jpg");
+    background-color: black;
+    opacity: .5;
+    /*background-position: 0 -80px;*/
+   /* background-repeat: no-repeat; */
+}
+#main header{
+    position: relative;
+    z-index: 2;
+    /*background-color: black;
+    opacity: .5;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;*/
 }
 .main-header-text, .roster-label, .formation-label{
-    color: white;
+    color: black;
 }
 .hamburger-button{
     display: none;
