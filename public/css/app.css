@@ -497,6 +497,15 @@ main {
 #main.screenAdjust{
     margin-left: 250px;
 }
+#main{
+    background-image: url("../images/soccer-banner-2.jpeg");
+    /*background-position: 0 -80px;*/
+    background-repeat: no-repeat;
+    background-size: 100% 9vh;
+}
+.main-header-text, .roster-label, .formation-label{
+    color: white;
+}
 .hamburger-button{
     display: none;
 }
@@ -528,6 +537,9 @@ main {
     }
     #mySidenav.sidenav ul{
         margin: 0 auto;
+    }
+    .closed-nav.glyphicon{
+        display: none;
     }
     .hamburger-button{
         display: block;
