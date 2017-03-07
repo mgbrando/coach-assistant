@@ -103,12 +103,12 @@ function getPlayersListItem(player){
 	return html;
 }*/
 function getPlayersDisplay(players){
-	let html ='<table id="team-table" class="table table-striped">';
+	let html ='<div class="table-container-div table-responsive"><table id="team-table" class="table table-striped">';
 	html += '<thead class="playerlist-header"><tr><th class="">First Name</th><th class="">Last Name</th><th class="">Status</th><th class="">Preferred Position</th><th class="center-text no-sort">Update</th><th class="center-text no-sort">Delete</th></tr></thead><tbody>';
 	Object.keys(players).forEach(function(key){
 		html+=players[key].getPlayerRow();
 	});
-	html+='</tbody></table>';
+	html+='</tbody></table></div>';
 	$('.js-team').append(html);
 	applicationState.teamTable = $('#team-table').DataTable({
 		columnDefs: [
@@ -164,12 +164,17 @@ function getFormationDisplay(formations){
 }*/
 
 function getRosterInterfaces(rosters){
+		console.log(`RAPROS: ${rosters[Object.keys(rosters)[0]].id} ${rosters[Object.keys(rosters)[0]].description} 
+				${rosters[Object.keys(rosters)[0]].formationId} ${rosters[Object.keys(rosters)[0]].playerPositions}`);
 	getRosterDropDownList(rosters);
+	getRostersDisplay(rosters);
 	//getRosterDisplay(rosters);
 }
 function getRosterDropDownList(rosters){
 	let html='<li class="js-roster-list-item roster-item" data-value="new roster"><a class="js-nav-button nav-button" href="#">New Roster</a></li>';
 	html+='<li class="divider"></li>';
+	console.log(`RAPROS: ${rosters[Object.keys(rosters)[0]].id} ${rosters[Object.keys(rosters)[0]].description} 
+				${rosters[Object.keys(rosters)[0]].formationId} ${rosters[Object.keys(rosters)[0]].playerPositions}`);
 	Object.keys(rosters).forEach(function(key){
 		html+=rosters[key].getRosterListItemRepr();
 	});
@@ -190,7 +195,7 @@ function getRosterDropDownList(rosters){
 	playerDisplay+='</div>';
 }*/
 function getRostersDisplay(rosters){
-	let html ='<table id="roster-table" class="table table-striped">';
+	let html ='<div class="table-container-div table-responsive"><table id="roster-table" class="table table-striped table-responsive">';
 	html += `<thead class="rosterlist-header">
 				<tr>
 					<th class="">Description</th>
@@ -205,9 +210,9 @@ function getRostersDisplay(rosters){
 	Object.keys(rosters).forEach(function(key){
 		html+=rosters[key].getRosterRow();
 	});
-	html+='</tbody></table>';
+	html+='</tbody></table></div>';
 	$('.js-rosters').append(html);
-	$.fn.dataTable.moment('ddd MMM DD YYYY');
+	//$.fn.dataTable.moment('ddd MMM DD YYYY');
 	applicationState.rostersTable = $('#roster-table').DataTable({
 		columnDefs: [
   			{ targets: 'no-sort', orderable: false }
@@ -392,7 +397,7 @@ function updateRosterInterfaces(method, roster){
 		$('#js-roster-list').append(roster.getRosterListItemRepr());
 		$('#js-roster-list li:last-child').trigger('click');
 		//$('.js-rosters table tbody').append(roster.getRosterRow());
-		applicationState.rostersTable.row.add( $(roster.getRosterRow())[0]).draw();
+		applicationState.rostersTable.row.add($(roster.getRosterRow())[0]).draw();
 		bindRosterRowEvents(`.roster-entry[data-rosterId="${roster.id}"]`);
 	}
 	else if(method === 'update'){
@@ -681,14 +686,15 @@ function handleInitialization(){
 								description: "Roster for against the Raptors", notes: "The Raptors are the best team in the league."});
 				
 					addRosterPromise.done(function(roster){
+						console.log(`RAWRROSTER: ${roster.id} ${roster.formationId} ${roster.description} ${roster.playerPositions} `);
 						roster = new Roster(roster);
 						applicationState.rosters[roster.id] = roster;
 						//$('.js-rosters').append(roster.getHtmlRepr());
-						for(field in applicationState[roster.id]){
-							console.log(field);
+						for(let field in applicationState.rosters[roster.id]){
+							console.log('RAPTORS FIELD!: '+field);
 						}
+						resolve('OK');
 					});
-					resolve('OK');
 				}
 				else{
 				//getRostersList(rosters);
@@ -712,7 +718,8 @@ function handleInitialization(){
 		getRosterInterfaces(applicationState.rosters);
 		getFormationInterfaces(applicationState.formations);
 		getPlayerInterfaces(applicationState.players);
-		getRostersDisplay(applicationState.rosters);
+		console.log(`ROSTORZZZZZZ: ${applicationState.rosters}`);
+		//getRostersDisplay(applicationState.rosters);
 		//$('.js-rosters').append(getRosterDisplay());
 		$('.js-formation-listing').append(getFormationList());
 		handleSideNavigation();
@@ -846,6 +853,7 @@ function handleFieldOperations(){
     			description: $('#description').val(),
     			notes: $('#notes').val()
 		};
+		console.log('ROSTERRRRRRR '+roster);
 		const addRosterPromise = RosterService.addRoster(roster);
 		addRosterPromise.done(function(rosterObject){
 			rosterObject = new Roster(rosterObject);
@@ -1076,6 +1084,7 @@ function handleFormationOperations(){
 			updateFormationInterfaces('bulk-delete', formationsToDelete);
 			//NEEDS TO BE IMPLEMENTED
 			//updateFormationInterfaces('delete', );
+			if(formationsToKeep.length > 0){
 			let couldNotDeleteHtml = '<p>Could not delete the following formations because there are rosters using them: ';
 			for(let i = 0; i < formationsToKeep.length; i++){
 				for(let j = 0; j < formationsToKeep[i].rosters.length; j++){
@@ -1097,6 +1106,7 @@ function handleFormationOperations(){
 			couldNotDeleteHtml+='<br/><div>You must delete the rosters using these formations in order to delete them.</div></p>';
 			$('#myWarningModal .modal-body').empty().append(couldNotDeleteHtml);
 			$('#myWarningModal').modal('show');
+		}
 		});
 	});
 	//bindPositionDropdownList();

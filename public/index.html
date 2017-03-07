@@ -4,7 +4,7 @@
 	<title>Coach Assistant</title>
 	<meta name="description" content="App used to help roster a soccer team">
 	<meta charset="UTF-8">
-	<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+	<meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0" />
 	<link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/5.0.0/normalize.css">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css" media="screen,projection"/>
@@ -17,6 +17,7 @@
 </head>
 <body>
 	<div class="header-banner"></div>
+	<div class="main-background"></div>
 			<div id="myModal" class="modal fade" role="dialog">
   				<div class="modal-dialog">
 
@@ -277,17 +278,30 @@
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
   	<div id="mySidenav" class="sidenav">
   		<!--<div class="js-closed-nav closed-nav">-->
-  			<div class="js-closed-nav closed-nav glyphicon glyphicon-chevron-right" onclick="openNav()">
+  		<div class="js-closed-nav closed-nav glyphicon glyphicon-chevron-right" onclick="openNav()">
   				
-  			</div>
+  		</div>
   		<!--</div>-->
   		<div class="js-nav-components hidden">
-  		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  		<header class="position-header">Player Positions</header>
-  		<div class="js-player-positions player-positions">
+  			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  			<div class="js-dropdown-positions-panel dropdown-positions-panel">
+				<div class="dropdown positions-dropdown">
+  					<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="positions-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    					<span class="formation-button-text">3-4-3</span>
+    					<span class="caret"></span>
+  					</button>
+  					<ul id="js-formation-list" class="dropdown-menu" aria-labelledby="formations-dropdown">
+  			
+  					</ul>
+				</div>
+  			</div>
+  			<div class="js-draggable-positions-panel draggable-positions-panel hidden">
+  				<header class="position-header">Player Positions</header>
+  				<div class="js-player-positions player-positions">
 
-  		</div>
-  		</div>
+  				</div>
+  			</div>
+		</div>
 	</div>
 	<!--<span onclick="openNav()">MENU</span>-->
 	<main id="main">
@@ -383,14 +397,14 @@
 		<section class="js-roster-section roster-section hidden">
 			<div class="js-screen-select screen-select">
 			</div>
-			<header>Rosters</header>
+			<header><span>Rosters</span></header>
 			<div class="js-rosters rosters container-fluid">
 			</div>
 		</section>
 		<section class="js-team-section team-section hidden">
 			<div class="js-screen-select screen-select">
 			</div>
-			<header>Team <button type="button" class="btn btn-default btn-sm js-add-player-button add-player-button" data-toggle="modal" data-target="#myPlayerModal">Add Player...</button></header>
+			<header><span>Team</span> <button type="button" class="btn btn-default btn-sm js-add-player-button add-player-button" data-toggle="modal" data-target="#myPlayerModal">Add Player...</button></header>
 			<div class="js-team team container-fluid">	
 				<!--<table class="table table-striped">
   				
@@ -399,7 +413,7 @@
 		</section>
 		<section class="js-formations-section formations-section hidden">
 			<div class="js-screen-select screen-select"></div>
-			<header>Formations 		
+			<header><span>Formations</span> 		
 			<button type="button" class="btn btn-default btn-sm js-add-formation-button add-formation-button" data-toggle="modal" data-target="#myFormationModal">Add Formation...</button>
 			<button type="button" class="btn btn-default btn-sm js-delete-selected-formations-button delete-selected-formations-button" data-toggle="modal" data-target="#myDeleteFormationModal">Delete Selected Formations</button>
 			</header>

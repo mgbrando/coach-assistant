@@ -85,6 +85,9 @@
     font-size: 22px;
     font-weight: bold;
 }
+section > header span{
+    color: black;
+}
 .page-options{
     display: inline-block;
     /*height: 5vh;
@@ -135,7 +138,14 @@
 .visual-section .dropdown{
     display: inline-block;
 }
-.visual-section header{
+/*.visual-section header{
+    height: 5vh;
+    line-height: 5vh;
+}*/
+.team-section header, .roster-section header, .formations-section header{
+    margin-bottom: 10px;
+}
+section header{
     height: 5vh;
     line-height: 5vh;
 }
@@ -221,7 +231,7 @@
 .formation-select-container{
     margin-left: 5px;
 }
-.js-visual-container{
+.js-visual-container{/*, .formation-listing, .team, .rosters*/
     min-height: 90vh;
     width: 100%;
 
@@ -232,6 +242,12 @@
     /*width: 100%;
     height: 90vh;*/
 }
+/*.formation-listing, .team, .roster-section{
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}*/
 .js-visual-container .row{
     padding-left: 5%;
     padding-right: 5%;
@@ -285,10 +301,14 @@ div.col-xs-12.visual-position-container{
     display: table-cell;
     vertical-align: middle;
     border-radius: 50px;
-    width: 50%;
+    /*width: 50%;
     margin: 0 auto;
-    padding: 5px;
+    padding: 5px;*/
     /*max-width: 231px;*/
+}
+.js-visual-container .row{
+    margin-left: 0;
+    margin-right: 0;
 }
 .js-visual-container .layers-1{
     height: 90vh;
@@ -398,7 +418,10 @@ div.col-xs-12.visual-position-container{
     background-color: red;
     font-weight: bold;
     text-align: center;
-
+    color: white;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-top: -1px;
 }
 /*Formations*/
 .formation-listing .row{
@@ -406,6 +429,9 @@ div.col-xs-12.visual-position-container{
     line-height: 100px;
     text-align: center;
     margin-top: 10px;
+}
+.formation-listing .row:first-child{
+    margin-top: 0;
 }
 .formation{
     border: 1px inset black;
@@ -515,21 +541,63 @@ main {
     height: 10vh;
     background-size: cover;
     background-image: url("../images/soccer_ball.jpg");
-    background-color: black;
-    opacity: .5;
+    /*background-color: black;*/
+    /*background: rgba(255, 255, 255, 255, .5);*/
+    opacity: 0.5;
+    filter: alpha(opacity=50);
     /*background-position: 0 -80px;*/
    /* background-repeat: no-repeat; */
 }
-#main header{
+.rosters, .team, .formation-listing{
+    /*position: relative;
+    z-index: -1;*/
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    /*opacity: .5;*/
+}
+#roster-table_wrapper, #team-table_wrapper{
+    color: white;
+}
+.table-container-div{
+    padding-bottom: 10px;
+    border: none;
+}
+/*#roster-table tbody{
+    color: black;
+}*/
+/*th.sorting_asc::after{
+    color: rgba(255,255,255, 1);
+}*/
+html, body{
+    width: 100%;
+    height: 100%;
+}
+#team-table, #roster-table{
+    background-color: white;
+    color: black;
+}
+.main-background{
+    position: absolute;
+    top: 10vh;
+    z-index: -1;
+    width: 100%;
+    height: 90vh;
+    /*background-size: cover;*/
+    background-image: url("../images/grass.jpg");
+    /*background-color: green;
+    opacity: .5;*/    
+}
+/*#main header{
     position: relative;
-    z-index: 2;
+    z-index: 2;*/
     /*background-color: black;
     opacity: .5;
     margin-left: -20px;
     margin-right: -20px;
     padding-left: 20px;
     padding-right: 20px;*/
-}
+/*}*/
 .main-header-text, .roster-label, .formation-label{
     color: black;
 }
@@ -550,6 +618,19 @@ main {
         padding-left: 0;
         padding-right: 0;
     }   
+    .js-formation-list-container .formation-label, .js-roster-list-container .roster-label{
+        display: none;
+    }
+    .roster-section > header span:first-child, .team-section > header span:first-child, .formations-section > header span:first-child{
+        display: none;
+    }
+    .formation-listing .row .col-xs-4{
+        width: 50%;
+    }
+    #main{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 @media (max-width: 686px){
