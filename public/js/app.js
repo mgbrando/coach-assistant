@@ -9,6 +9,7 @@ const applicationState = {
 	players: {},
 	formations: {},
 	rosters: {},
+	currentPlayerId: "",
 	currentRosterId: "",
 	currentFormationId: "",
 	startPosition: {},
@@ -432,6 +433,23 @@ function updateRosterInterfaces(method, roster){
 	}
 }
 
+function getPlayersDropDown(dropDownNumber){
+	const players = applicationState.players;
+	let html = `<div class="dropdown players-dropdown">
+  					<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="players-dropdown${dropDownNumber}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    					<span class="player-button-text">Empty</span>
+    					<span class="caret"></span>
+  					</button>
+  					<ul class="dropdown-menu js-players-list" aria-labelledby="players-dropdown${dropDownNumber}">
+  					<li class="js-player-list-item js-player-item hidden" data-value="empty"><a class="js-nav-button nav-button" href="#">Empty</a></li>`;
+  	Object.keys(players).forEach(function(key){
+  		html+=players[key].getPlayerListItemRepr();
+  	});		
+  	html+='</ul></div>';
+
+  	return html;
+}
+
 function getVisualLayersByRoster(roster){
 	console.log('THIS IS ROSTER FORMATION ID: '+roster.formationId);
 	const layers = applicationState.formations[roster.formationId].layers;
@@ -441,13 +459,14 @@ function getVisualLayersByRoster(roster){
 	//setRosterName(roster.description+' - '+applicationState.formations[roster.formationId].name);
 	let draggableHtml = '<div>';
 	let visualHtml = `<div class="js-visual-container">`;
+	let playerDropDownCount = 0;
 	for(let i = 0; i < layersLength; i++){
-		draggableHtml+=`<div><header>Layer ${i+1}</header><ul id="${i+1}">`;
+		draggableHtml+=`<div><header>Layer ${i+1}</header><ul id="${i+1}" class="positions-ul${i+1}">`;
 		visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="${i+1}">`;
 		const positions = layers[i];
 		const columnSize = 12/positions;
 		for(let j = 0; j < positions; j++) {
-			draggableHtml+=`<li class="js-position ui-widget-content position ui-widget-header noselect" data-position="${j+1}">${j+1}</li>`;
+			draggableHtml+=`<li class="js-position ui-widget-content position ui-widget-header noselect" data-position="${j+1}">${j+1} ${getPlayersDropDown(++playerDropDownCount)}</li>`;
 			if(positions === 5){
 				visualHtml+=`<div class="col-xs-2 visual-position-container five-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
 			}
@@ -472,8 +491,8 @@ function getVisualLayersByRoster(roster){
 	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="11">
 				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header noselect">Goalie</div></div>
 				</div></div>`;
-	draggableHtml+='<div><header>Goalie</header><ul id="11"><li class="js-position position ui-widget-header noselect" data-position="1">Goalie</li></ul></div>';
-	draggableHtml+='<div><header>Bench</header><ul id="12">';
+	draggableHtml+=`<div><header>Goalie</header><ul id="11" class="positions-ul11"><li class="js-position position ui-widget-header noselect" data-position="1">Goalie ${getPlayersDropDown(++playerDropDownCount)}</li></ul></div>`;
+	draggableHtml+='<div><header>Bench</header><ul id="12" class="positions-ul12">';
 	for(let n = 0; n < Object.keys(applicationState.players).length; n++){
 		draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${n+1}">Bench</li>`;
 	}
@@ -519,14 +538,15 @@ function getVisualLayersByFormation(formation){
 	const layersLength=layers.length;
 	let draggableHtml = '<div>';
 	let visualHtml = `<div class="js-visual-container">`;
+	let playerDropDownCount = 0;
 	for(let i = 0; i < layersLength; i++){
-		draggableHtml+=`<div><header>Layer ${i+1}</header><ul id="${i+1}">`;
+		draggableHtml+=`<div><header>Layer ${i+1}</header><ul id="${i+1}" class="positions-ul${i+1}">`;
 		visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="${i+1}">`;
 		const positions = layers[i];
 		//if()
 		const columnSize = 12/positions;
 		for(let j = 0; j < positions; j++) {
-			draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${j+1}">${j+1}</li>`;
+			draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${j+1}">${j+1} ${getPlayersDropDown(++playerDropDownCount)}</li>`;
 			if(positions === 5){
 				visualHtml+=`<div class="col-xs-2 visual-position-container five-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
 			}
@@ -551,8 +571,8 @@ function getVisualLayersByFormation(formation){
 	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="11">
 				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header noselect">Goalie</div></div>
 				</div></div>`;
-	draggableHtml+='<div><header>Goalie</header><ul id="11"><li class="js-position position ui-widget-header noselect" data-position="1">Goalie</li></ul></div>';
-	draggableHtml+='<div><header>Bench</header><ul id="12">';
+	draggableHtml+=`<div><header>Goalie</header><ul id="11" class="positions-ul11"><li class="js-position position ui-widget-header noselect" data-position="1">Goalie ${getPlayersDropDown(++playerDropDownCount)}</li></ul></div>`;
+	draggableHtml+='<div><header>Bench</header><ul id="12" class="positions-ul12">';
 	for(let k=0; k < Object.keys(applicationState.players).length; k++){
 		const playerDiv = getPlayerItem(applicationState.players[Object.keys(applicationState.players)[k]]);
 		draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${k+1}">Bench ${playerDiv}</li>`;
@@ -729,6 +749,7 @@ function handleInitialization(){
 		handleFormationOperations();
 		handleDraggable();
 		handleErrorMessages();
+		handleSideBarOperations();
   		/*setHeight();
   	
   		$(window).resize(function() {
@@ -737,6 +758,23 @@ function handleInitialization(){
 		/*for(field in applicationState.rosters[Object.keys(applicationState.rosters)[0]]){
 			console.log(field);
 		}*/
+		$(window).on('resize', function(event){
+    // Do stuff here
+    		const windowWidth = $(window).width();
+			if(windowWidth <= 450){
+    		//Do stuff here
+    			if($('.js-player-filled').hasClass('ui-draggable'))
+    				$('.js-player-filled').draggable('disable');
+			}
+			else{
+				if($('.js-player-filled').hasClass('ui-draggable-disabled')){
+					$('.js-player-filled').draggable('enable');
+				}
+			}
+		});
+		if($(window).width() <= 450){
+			$('.js-player-filled').draggable('disable');
+		}
   		console.log('CURRENTROSTERID: '+applicationState.currentRosterId+' CURRENTFORMATIONID: '+applicationState.currentFormationId);
 	});
 	/*A check for last roster or formation that  was up is need here to determine whether
@@ -762,7 +800,7 @@ function handleInitialization(){
 	return rosterId+formationId;
 }*/
 
-function changeDropDownListView(type, id){
+function changeDropDownListView(type, id, selector = null){
 	if(type === 'roster'){
 		$(`#js-roster-list li[data-value="${applicationState.currentRosterId}"]`).removeClass('hidden');
 		$(`#js-roster-list li[data-value="${id}"]`).addClass('hidden');
@@ -771,10 +809,18 @@ function changeDropDownListView(type, id){
 		else	
 			$('.roster-button-text').text(applicationState.rosters[id].description);
 	}
-	else{
+	else if(type === 'formation'){
 		$(`#js-formation-list li[data-value="${applicationState.currentFormationId}"]`).removeClass('hidden');
 		$(`#js-formation-list li[data-value="${id}"]`).addClass('hidden');
 		$('.formation-button-text').text(applicationState.formations[id].name);
+	}
+	else{
+		console.log('SELECTOR TEST: '+selector.html);
+		selector.parents('ul').siblings('button').children('.player-button-text').text(selector.filter('a').text());
+		selector.siblings().removeClass('hidden');
+		//selector.parents('ul').children().removeClass('hidden');
+		//selector.parent().addClass('hidden');
+		selector.addClass('hidden');
 	}
 }
 function getPlayerPositions(){
@@ -794,6 +840,33 @@ function getPlayerPositions(){
 	});*/
 	console.log(playerPositions[0]);
 	return playerPositions;
+}
+function rePositionPlayers(playerId, selector){
+	selector.parents('li.js-position').append(`.js-player-filled[data-playerId="${playerId}"]`);
+}
+function benchPlayer(playerId){
+	$('ul#12 li:not(:has(*))').first().append($(`.js-player-filled[data-playerId="${playerId}"]`).replaceWith(''));
+}
+function handleSideBarOperations(){
+	applicationState.currentPlayerId = "empty";
+	$('.js-players-list').on('click', 'li', function(){
+		const playerId = $(this).attr('data-value');
+
+		if(playerId === applicationState.currentPlayerId){
+			return;
+		}
+		if(playerId === 'empty'){
+			changeDropDownListView('player', playerId, $(this));
+			benchPlayer(playerId);
+			console.log('FORMATIONID: '+applicationState.currentFormationId);
+			//getVisualLayersByFormation(applicationState.formations[applicationState.currentFormationId]);
+			applicationState.currentPlayerId = playerId;
+		}
+		else{
+			changeDropDownListView('player', playerId, $(this));
+			rePositionPlayers(playerId, $(this));
+		}
+	});
 }
 
 /*Field Operations*/

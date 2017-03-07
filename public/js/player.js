@@ -92,6 +92,10 @@ class Player{
 				preferredPosition: this._preferredPosition
 				};
 	}
+	getPlayerListItemRepr(){
+		//return `<option value="${this._id}">${this._name}</option>`;
+		return `<li class="js-player-list-item js-player-item" data-value="${this._id}"><a class="js-nav-button nav-button" href="#">${this.getFullName()}</a></li>`;
+	}
 	/*getHtmlRepr(){
 		return `<div class="player-row">
 						<div>${this._name}</div>

@@ -472,7 +472,7 @@ div.col-xs-12.visual-position-container{
     color: white;
     font-weight: bold;
 }
-.player-positions ul{
+.player-positions ul[class^="positions-ul"]{
     padding: 8px 32px 8px 32px;
     width: 250px;
 }
@@ -484,7 +484,7 @@ div.col-xs-12.visual-position-container{
     margin-bottom: 5px;
     color: white;
 }
-.player-filled{
+.player-filled, .players-dropdown{
     cursor: pointer;
     position: absolute;
     width: 100%;
@@ -604,6 +604,23 @@ html, body{
 .hamburger-button{
     display: none;
 }
+.players-dropdown, #players-dropdown1, #players-dropdown2, #players-dropdown3, #players-dropdown4, #players-dropdown5,
+#players-dropdown6, #players-dropdown7, #players-dropdown8, #players-dropdown9, #players-dropdown10, #players-dropdown11{
+    display: none;
+    width: 100%;
+}
+/*.players-dropdown{
+    position: relative;
+}*/
+/*.players-dropdown{
+    position: relative;
+    top: 0;
+    bottom: 0;
+}*/
+/*#js-players-list li{
+    position: absolute;
+    z-index: 10000;
+}*/
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
@@ -631,6 +648,109 @@ html, body{
         padding-left: 10px;
         padding-right: 10px;
     }
+    .players-dropdown, #players-dropdown1, #players-dropdown2, #players-dropdown3, #players-dropdown4, #players-dropdown5,
+#players-dropdown6, #players-dropdown7, #players-dropdown8, #players-dropdown9, #players-dropdown10, #players-dropdown11{
+        display: block;
+    }
+
+    .player-positions .positions-ul1, .player-positions .positions-ul2, .player-positions .positions-ul3, .player-positions .positions-ul4
+.player-positions .positions-ul5, .player-positions .positions-ul6, .player-positions .positions-ul7, .player-positions .positions-ul8, .player-positions .positions-ul9,
+.player-positions .positions-ul10, .player-positions .positions-ul11{
+    position: relative;
+}
+.player-positions .positions-ul1{
+    z-index: 100;
+}
+.player-positions .positions-ul2{
+    z-index: 99;
+}
+.player-positions .positions-ul3{
+    z-index: 98;
+}
+.player-positions .positions-ul4{
+    z-index: 97;
+}
+.player-positions .positions-ul5{
+    z-index: 96;
+}
+.player-positions .positions-ul6{
+    z-index: 95;
+}
+.player-positions .positions-ul7{
+    z-index: 94;
+}
+.player-positions .positions-ul8{
+    z-index: 93;
+}
+.player-positions .positions-ul9{
+    z-index: 92;
+}
+.player-positions .positions-ul10{
+    z-index: 91;
+}
+.player-positions .positions-ul11{
+    z-index: 90;
+}
+.player-positions .positions-ul12{
+    z-index: 89;
+}
+
+/*list items for player positions*/
+.position{
+    position: relative;
+}
+.position[data-position="1"]{
+    z-index: 100;
+}
+.position[data-position="2"]{
+    z-index: 99;
+}
+.position[data-position="3"]{
+    z-index: 98;
+}
+.position[data-position="4"]{
+    z-index: 97;
+}
+.position[data-position="5"]{
+    z-index: 96;
+}
+.position[data-position="6"]{
+    z-index: 95;
+}
+.position[data-position="7"]{
+    z-index: 94;
+}
+.position[data-position="8"]{
+    z-index: 93;
+}
+.position[data-position="9"]{
+    z-index: 92;
+}
+.position[data-position="10"]{
+    z-index: 91;
+}
+.position[data-position="11"]{
+    z-index: 90;
+}
+    .position{
+        height:34px;
+        border: 2px solid white;
+    }
+    .player-positions div div:last-child .position{
+        height: auto;
+    }
+    /*.player-filled{
+        position: relative;
+    }*/
+    .positions-ul12 .position{
+        z-index: 10;
+    }
+    .js-players-list{
+        margin-left: -3px;
+    }
+    .players-dropdown{
+        z-index: 10000;
+    }
 }
 
 @media (max-width: 686px){
@@ -643,7 +763,7 @@ html, body{
     #main .screenAdjust, #main{
         margin-left: 0;
     }
-    #mySidenav.sidenav ul{
+    #mySidenav.sidenav ul[class^="positions-ul"]{
         margin: 0 auto;
     }
     .closed-nav.glyphicon{
