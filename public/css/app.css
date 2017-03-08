@@ -426,7 +426,7 @@ div.col-xs-12.visual-position-container{
 /*Formations*/
 .formation-listing .row{
     height: 100px;
-    line-height: 100px;
+    /*line-height: 100px;*/
     text-align: center;
     margin-top: 10px;
 }
@@ -434,7 +434,17 @@ div.col-xs-12.visual-position-container{
     margin-top: 0;
 }
 .formation{
+    /*padding-top: 43px;*/
+    position: relative;
+    overflow-y: hidden;
+    height: 100px;
     border: 1px inset black;
+}
+.formation-name-text{
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);   
 }
 .js-formation-listing .ui-selecting { background: #FECA40; }
 .js-formation-listing .ui-selected { background: #F39814; color: white; }
@@ -635,15 +645,15 @@ html, body{
         padding-left: 0;
         padding-right: 0;
     }   
-    .js-formation-list-container .formation-label, .js-roster-list-container .roster-label{
-        display: none;
-    }
     .roster-section > header span:first-child, .team-section > header span:first-child, .formations-section > header span:first-child{
         display: none;
     }
-    .formation-listing .row .col-xs-4{
+    /*.formation-listing .row .col-xs-4{
         width: 50%;
-    }
+    }*/
+    /*.formation-container{
+        margin-top: 10px;
+    }*/
     #main{
         padding-left: 10px;
         padding-right: 10px;
@@ -751,8 +761,32 @@ html, body{
     .players-dropdown{
         z-index: 10000;
     }
+    .js-player-item[data-value="empty"]{
+        border-bottom: 1px dotted black;
+    }
+    /*.visual-position{
+        word-wrap: break-word;
+        letter-spacing: 20px;
+    }*/
+    span.roster-button-text, span.formation-button-text{
+        max-width: 66px;
+    }
 }
-
+@media (max-width: 515px){
+    #rosters-dropdown span, #formations-dropdown span{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .roster-button-text, .formation-button-text{
+        max-width: 80px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .js-formation-list-container .formation-label, .js-roster-list-container .roster-label{
+        display: none;
+    }
+}
 @media (max-width: 686px){
     #mySidenav.sidenav, .closed-nav{
         width: 0px;

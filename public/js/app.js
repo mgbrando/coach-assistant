@@ -342,7 +342,7 @@ function getFormationList(){
 			count++;
 		}
 		//row-xs-${(Object.keys(applicationState.formations).length)/4}
-		html+=`<div class="col-xs-4 formation-container"><div class="noselect js-formation formation ui-widget-content" data-formationId="${formation.id}">${formation.name}</div></div>`;
+		html+=`<div class="col-xs-4 formation-container"><div class="noselect js-formation formation ui-widget-content" data-formationId="${formation.id}"><span class="formation-name-text">${formation.name}</span></div></div>`;
 		count++;
 	});
 	return html+'</div>';
@@ -759,10 +759,8 @@ function handleInitialization(){
 			console.log(field);
 		}*/
 		$(window).on('resize', function(event){
-    // Do stuff here
     		const windowWidth = $(window).width();
 			if(windowWidth <= 450){
-    		//Do stuff here
     			if($('.js-player-filled').hasClass('ui-draggable'))
     				$('.js-player-filled').draggable('disable');
 			}
@@ -816,7 +814,8 @@ function changeDropDownListView(type, id, selector = null){
 	}
 	else{
 		console.log('SELECTOR TEST: '+selector.html);
-		selector.parents('ul').siblings('button').children('.player-button-text').text(selector.filter('a').text());
+		console.log(selector.find('a').text());
+		selector.parents('ul').siblings('button').children('.player-button-text').text(selector.find('a').text());
 		selector.siblings().removeClass('hidden');
 		//selector.parents('ul').children().removeClass('hidden');
 		//selector.parent().addClass('hidden');
@@ -842,31 +841,62 @@ function getPlayerPositions(){
 	return playerPositions;
 }
 function rePositionPlayers(playerId, selector){
-	selector.parents('li.js-position').append(`.js-player-filled[data-playerId="${playerId}"]`);
+	let selection = selector.closest('.js-position');
+	console.log(selector.parents('.js-position').html());
+	const oldLayer = $(`.js-player-filled[data-playerId="${playerId}"]`).closest('ul').attr('id');
+	const oldPosition = $(`.js-player-filled[data-playerId="${playerId}"]`).parent().attr('data-position');
+	const currentPlayer = selector.parents('.js-position').children('.js-player-filled');
+	if(currentPlayer.length !== 0){
+		$(currentPlayer).detach().css({top: 0, left: 0}).appendTo(`ul#${oldLayer} li[data-position="${oldPosition}"]`);
+		//$(`ul#${oldLayer} li[data-position="${oldPosition}"]`).append(currentPlayer);
+		$(`ul#${oldLayer} li[data-position="${oldPosition}"]`).trigger('drop');
+	}
+	else{
+		$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"] div.visual-position`).text(''+oldPosition);
+	}
+	$(`.js-player-filled[data-playerId="${playerId}"]`).detach().css({top: 0, left: 0}).appendTo($(selector).parents('li.js-position'));
+	//selector.parents('li.js-position').append($(`.js-player-filled[data-playerId="${playerId}"]`));
+	selector.parents('li.js-position').trigger('drop');
+	//const newlayer = selector.parents()
+	//$(`.position[data-position="1"]'`).trigger('drop');
+	/*const layer = $(ui.draggable).closest('ul').attr('id');
+    const position = $(ui.draggable).parent().addClass('slot-filled').attr('data-position');
+    console.log('LP: '+layer + position);
+    $(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"] div.visual-position`).text(''+oldPosition);
+        if(layer != '12')
+        	$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(ui.draggable).text());*/
 }
-function benchPlayer(playerId){
-	$('ul#12 li:not(:has(*))').first().append($(`.js-player-filled[data-playerId="${playerId}"]`).replaceWith(''));
+function benchPlayer(benchPlayerId, selector){
+	const currentLayer=selector.parents('ul[class^="positions-ul"]').attr('id');
+	const currentPosition= selector.parents('li.position').attr('data-position');;
+	const benchPosition = $('ul#12 li:not(:has(*))').first();
+	benchPosition.append($(`.js-player-filled[data-playerId="${benchPlayerId}"]`).replaceWith(''));
+	$(`.row[data-layer="${currentLayer}"] div[data-position="${currentPosition}"] div.visual-position`).text(currentPosition);
+	benchPosition.trigger('drop');
+	//$("#droppable").droppable('option', 'drop')
 }
 function handleSideBarOperations(){
-	applicationState.currentPlayerId = "empty";
+	//applicationState.currentPlayerId = "empty";
 	$('.js-players-list').on('click', 'li', function(){
 		const playerId = $(this).attr('data-value');
 
-		if(playerId === applicationState.currentPlayerId){
+		/*if(playerId === applicationState.currentPlayerId){
 			return;
-		}
+		}*/
 		if(playerId === 'empty'){
 			changeDropDownListView('player', playerId, $(this));
-			benchPlayer(playerId);
+			const benchPlayerId = $(this).parents('li.js-position').children('.js-player-filled').attr('data-playerId');
+			benchPlayer(benchPlayerId, $(this));
 			console.log('FORMATIONID: '+applicationState.currentFormationId);
 			//getVisualLayersByFormation(applicationState.formations[applicationState.currentFormationId]);
-			applicationState.currentPlayerId = playerId;
+			//applicationState.currentPlayerId = playerId;
 		}
 		else{
 			changeDropDownListView('player', playerId, $(this));
 			rePositionPlayers(playerId, $(this));
 		}
 	});
+	//$('.js-players-list li:first-child').addClass('hidden');
 }
 
 /*Field Operations*/
@@ -1356,7 +1386,12 @@ function handleDraggable(){
 			const position = $(this).parent().addClass('slot-filled').attr('data-position');
 			console.log('LAYER: '+layer+' POSITION: '+position)
 			if(layer !== '12'){
+				$(this).siblings('.players-dropdown:hidden').find('.player-button-text').text($(this).text());
 				$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(this).text());
+			}
+			const windowWidth = $(window).width();
+			if(windowWidth <= 450){
+				$(this).draggable('disable');
 			}
 		},
 		stop: function(ev, ui){
@@ -1369,7 +1404,29 @@ function handleDraggable(){
 	});
 	//});
 
-	$('.position').droppable({
+	/*$('.position').droppable({
+    	drop: function(ev, ui) {
+    		const oldLayer = $(ui.draggable).closest('ul').attr('id');
+    		const oldPosition = $(ui.draggable).parent().removeClass('slot-filled').attr('data-position');
+    		if($(this).children().length !== 0){
+    			$(this).children('.player-filled').detach().css({top: 0, left: 0}).appendTo(`ul[id="${oldLayer}"] li[data-position="${oldPosition}"]`);
+    		}
+        	$(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);
+        	const layer = $(ui.draggable).closest('ul').attr('id');
+        	const position = $(ui.draggable).parent().addClass('slot-filled').attr('data-position');
+        	console.log('LP: '+layer + position);
+        	$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"] div.visual-position`).text(''+oldPosition);
+        	if(layer != '12')
+        		$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(ui.draggable).text());
+    	}
+	});*/
+	handleDroppable();
+
+	//$('.position').selectable();
+}
+
+function handleDroppable(){
+	$('.position').droppable(/*{
     	drop: function(ev, ui) {
     		const oldLayer = $(ui.draggable).closest('ul').attr('id');
     		const oldPosition = $(ui.draggable).parent().removeClass('slot-filled').attr('data-position');
@@ -1385,10 +1442,46 @@ function handleDraggable(){
         		$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(ui.draggable).text());
         	//$('.visual-position').text($(ui.draggable).text());
     	}
+	}*/);
+	$('.position').on('drop',function(ev,ui){
+		if(ui === undefined){
+			/*const oldLayer = $(this).closest('ul').attr('id');
+    		const oldPosition = $(ui.draggable).parent().removeClass('slot-filled').attr('data-position');
+    		if($(this).children().length !== 0){
+    			$(this).children('.player-filled').detach().css({top: 0, left: 0}).appendTo(`ul[id="${oldLayer}"] li[data-position="${oldPosition}"]`);
+    		}
+        	$(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);*/
+        	const layer = $(this).parent('ul').attr('id');
+        	const position = $(this).addClass('slot-filled').attr('data-position');
+        	console.log('LP: '+layer + position);
+        	//$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"] div.visual-position`).text(''+oldPosition);
+        	if(layer != '12'){
+        		console.log($(this).find('.player-button-text').text());
+        		$(this).find('.player-button-text').text($(this).children('.player-filled:last-child').text());
+        		//console.log($(this).children('.players-dropdown').children('button').children('span:first-child').text());
+        		//$(this).children('.players-button').children('button[id^="player-dropdown"]').children('.player-button-text').text($(this).children('.player-filled:last-child').text());
+        		$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(this).children('.player-filled:last-child').text());
+    		}	
+		}
+		else{
+			const oldLayer = $(ui.draggable).closest('ul').attr('id');
+    		const oldPosition = $(ui.draggable).parent().removeClass('slot-filled').attr('data-position');
+    		if($(this).children().length !== 0){
+    			$(this).children('.player-filled').detach().css({top: 0, left: 0}).appendTo(`ul[id="${oldLayer}"] li[data-position="${oldPosition}"]`);
+    		}
+        	$(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);
+        	const layer = $(ui.draggable).closest('ul').attr('id');
+        	const position = $(ui.draggable).parent().addClass('slot-filled').attr('data-position');
+        	console.log('LP: '+layer + position);
+        	$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"] div.visual-position`).text(''+oldPosition);
+        	if(layer != '12'){
+        		$(this).find('.player-button-text').text($(this).children('.player-filled:last-child').text());
+        		$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(ui.draggable).text());
+        	}
+    	}
 	});
-
-	//$('.position').selectable();
 }
+
 function handleErrorMessages(){
 	$('.close-button').click(function(){
 		if(!$('.error-message').hasClass('hidden'))

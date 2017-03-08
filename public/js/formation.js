@@ -51,7 +51,7 @@ class Formation{
 		return `<li class="js-formation-list-item js-formation-item" data-value="${this._id}"><a class="js-nav-button nav-button" href="#">${this._name}</a></li>`;
 	}
 	getHtmlRepr(){
-		return `<div class="col-xs-4 formation-container"><div class="noselect js-formation formation ui-widget-content" data-formationId="${this._id}">${this._name}</div></div>`;
+		return `<div class="col-xs-4 formation-container"><div class="noselect js-formation formation ui-widget-content" data-formationId="${this._id}"><span class="formation-name-text">${this._name}</span></div></div>`;
 	}
 	/*getHtmlRepr(elementNumber){
 		elementNumber = elementNumber || '';
