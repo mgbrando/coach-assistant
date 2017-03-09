@@ -2,18 +2,24 @@
   "name": "coach-assistant",
   "version": "1.0.0",
   "description": "App used to create a roster for a soccer team.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "mocha test"
   },
   "author": "Matthew Brando",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.14.1"
+    "body-parser": "^1.16.0",
+    "datatables-bootstrap3-plugin": "^0.5.0",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.1",
+    "mongoose-integer": "^0.1.1",
+    "morgan": "^1.8.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "faker": "^3.1.0",
     "mocha": "^3.2.0"
   }
 }
