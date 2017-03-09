@@ -5,8 +5,6 @@
     text-align: center;
 }
 .closed-nav{
-    /*height: 100%;
-    line-height: 100vh;*/
     position: fixed;
     padding-top: 47vh;
     text-align: center;
@@ -14,29 +12,20 @@
     height: 100%;
     font-size: 18px;
     color: white;
-    /*padding-top: 25%;*/
-    /*margin-top: -60px;*/
 }
-/*.closed-nav{
-    height: 50vh;
-    line-height: 100vh;
-    margin-top: -60px;
-    padding-top: 28px;
-    color: white;
-}*/
+
 /* The side navigation menu */
 .sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 50px; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    /*z-index: 1;*/ /* Stay on top */
+    height: 100%;
+    width: 50px;
+    position: fixed;
     z-index: 20000;
     top: 0;
     left: 0;
-    background-color: #111; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    background-color: #111;
+    overflow-x: hidden; 
+    padding-top: 60px;
+    transition: 0.5s;
 }
 
 /* The navigation menu links */
@@ -78,8 +67,6 @@
     margin-left: 50px;
 }
 #main > header{
-    /*height: 40px;
-    line-height: 40px;*/
     height: 5vh;
     line-height: 5vh;
     font-size: 22px;
@@ -90,13 +77,7 @@ section > header span{
 }
 .page-options{
     display: inline-block;
-    /*height: 5vh;
-    line-height: 5vh;*/
-    /*vertical-align: middle;*/
 }
-/*.visual-section label:last-child{
-    margin-left: 5px;
-}*/
 .js-roster-list-container, .js-formation-list-container{
     display: inline-block;
 }
@@ -105,9 +86,6 @@ section > header span{
 }
 .formation-label{
     margin-left: 5px;
-}
-.save-button{
-    /*margin-left: 10px;*/
 }
 .page-options button:first-child{
     float: left;
@@ -121,11 +99,6 @@ section > header span{
     border-bottom: 1px solid black;
 }
 .main-visual{
-    /*background-image: url("../images/soccer-half.jpg");
-    background-repeat: no-repeat;*/
-    /*background-size:cover;*/
-    /*width: 100%;
-    height: 90vh;*/
     margin-left: -20px;
     margin-right: -20px;
 }
@@ -138,10 +111,6 @@ section > header span{
 .visual-section .dropdown{
     display: inline-block;
 }
-/*.visual-section header{
-    height: 5vh;
-    line-height: 5vh;
-}*/
 .team-section header, .roster-section header, .formations-section header{
     margin-bottom: 10px;
 }
@@ -149,57 +118,6 @@ section header{
     height: 5vh;
     line-height: 5vh;
 }
-/*.new-roster-option{
-    font-weight: bold;
-    border-bottom: 1px dotted black;
-}*/
-/* Changed to table.*/
-/*.playerlist-header{
-    height: 80px;
-    /*padding-top: 13px;
-    padding-bottom: 13px*/
-/*}
-.player-entry{
-    border: 1px solid black;
-    border-bottom: none;
-    height: 80px;
-}
-.js-team > :last-child{
-    border-bottom: 1px solid black;
-}
-.player-field{
-    height: 100%;
-    border-right: 1px solid black;
-    padding: 2px;
-    text-align: center;
-    line-height: 66px;
-}
-.playerlist-header{
-    text-align: center;
-}
-.player-entry > :last-child{
-    border-right: none;
-}*/
-/*For updating and deleting lists*/
-/*.js-update-button{
-    width: 100%;
-    height: 100%;
-    line-height: 100%;
-}
-.js-delete-button{
-    width: 100%;
-    height: 100%;
-    line-height: 100%;
-}*/
-/*.roster-action-field{
-   line-height: 100%; 
-}
-.table>tbody>tr>td.roster-action-field{
-    line-height: 100%; 
-}*/
-/*.table tbody>tr>td.vert-align{
-    vertical-align: middle;
-}*/
 .table tbody>tr>td{
     vertical-align: middle;
 }
@@ -216,11 +134,6 @@ section header{
 .js-delete-button, .js-roster-row-delete-button{
     color: red;
 }
-
-/*This needs to be percentage based by number of rows*/
-.select-type{
-    /*line-height: 5vh;*/
-}
 .select-container{
     height: 5vh;
     display: inline-block;
@@ -231,23 +144,13 @@ section header{
 .formation-select-container{
     margin-left: 5px;
 }
-.js-visual-container{/*, .formation-listing, .team, .rosters*/
+.js-visual-container{
     min-height: 90vh;
     width: 100%;
-
     background-image: url("../images/soccer-half.jpg");
     background-repeat: no-repeat;
     background-size:100% 100%;
-    /*background-size:cover;*/
-    /*width: 100%;
-    height: 90vh;*/
 }
-/*.formation-listing, .team, .roster-section{
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-}*/
 .js-visual-container .row{
     padding-left: 5%;
     padding-right: 5%;
@@ -255,12 +158,6 @@ section header{
 .five-positions{
     width: 20%;
 }
-/*.five-positions:first-child{
-    margin-left: 8.333%;
-}
-.five-positions:last-child{
-    margin-right: 8.333%;
-}*/
 .seven-positions{
     width: 14.2857%;
 }
@@ -273,25 +170,14 @@ section header{
 .ten-positions{
     width: 10%;
 }
-
-.js-visual-container .row{
-    /*height: 50px;
-    padding: auto;*/
-}
 .visual-position-container{
     display: table;
     text-align: center;
     margin: 0 auto;
     height: 90%;
-    /*height: 100%;*/
-    /*line-height: 50px;*/
     padding: 5px;
     padding-top: 20px;
     padding-bottom: 20px;
-    /*padding-top: 5px;
-    padding-left: 5%;
-    padding-right: 5%;*/
-    /*max-width: 175px;*/
 }
 div.col-xs-12.visual-position-container{
     padding-left: 25%;
@@ -301,10 +187,6 @@ div.col-xs-12.visual-position-container{
     display: table-cell;
     vertical-align: middle;
     border-radius: 50px;
-    /*width: 50%;
-    margin: 0 auto;
-    padding: 5px;*/
-    /*max-width: 231px;*/
 }
 .js-visual-container .row{
     margin-left: 0;
@@ -346,42 +228,8 @@ div.col-xs-12.visual-position-container{
 .js-visual-container .goalie-layer{
     height: 8vh;
 }
-/*.js-visual-container .layers-1{
-    height: 100vh;
-}
-.js-visual-container .layers-2{
-    height: 50vh;
-}
-.js-visual-container .layers-3{
-    height: 33.333vh;
-}
-.js-visual-container .layers-4{
-    height: 25vh;
-}
-.js-visual-container .layers-5{
-    height: 20vh;
-}
-.js-visual-container .layers-6{
-    height: 16.666vh;
-}
-.js-visual-container .layers-7{
-    height: 14.2857vh;
-}
-.js-visual-container .layers-8{
-    height: 12.5vh;
-}
-.js-visual-container .layers-9{
-    height: 11.111vh;
-}
-.js-visual-container .layers-10{
-    height: 10vh;
-}
-.js-visual-container .layers-11{
-    height: 9.09090vh;
-}*/
 /*Modal*/
 .modal{
-    /*z-index: 10001;*/
     z-index: 30000;
 }
 #myFormationModal h5, .layer-dropdown{
@@ -394,23 +242,6 @@ div.col-xs-12.visual-position-container{
     background-color: red;
 }
 /*Rosters*/
-/*.rosters .row{
-    height: 100px;
-    line-height: 50px;
-    text-align: center;
-    margin-top: 5px;
-}*/
-/*.rosters .row > div{
-    height: 100%;
-}
-.roster{
-    height: 100%;
-    border: 1px inset black;
-    padding: 2px;
-}
-.roster div{
-    height: 100%;
-}*/
 .modal-body{
     padding-top: 0px;
 }
@@ -426,7 +257,6 @@ div.col-xs-12.visual-position-container{
 /*Formations*/
 .formation-listing .row{
     height: 100px;
-    /*line-height: 100px;*/
     text-align: center;
     margin-top: 10px;
 }
@@ -434,7 +264,6 @@ div.col-xs-12.visual-position-container{
     margin-top: 0;
 }
 .formation{
-    /*padding-top: 43px;*/
     position: relative;
     overflow-y: hidden;
     height: 100px;
@@ -449,18 +278,13 @@ div.col-xs-12.visual-position-container{
 .js-formation-listing .ui-selecting { background: #FECA40; }
 .js-formation-listing .ui-selected { background: #F39814; color: white; }
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+  -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none; 
 }
-/*.formation-error-message{
-    height: 20px;
-    width: 100%;
-}*/
 .modal form{
     margin-top: 10px;
 }
@@ -471,12 +295,6 @@ div.col-xs-12.visual-position-container{
 #myDeleteFormationModal .modal-body{
     padding-top: 15px;
 }
-/*#save-formation-form{
-    margin-top: 10px;
-}*/
-/*This is the field position CSS*/
-
-/* This is the left side draggable content CSS*/
 .player-positions header{
     text-align: center;
     color: white;
@@ -533,17 +351,6 @@ main {
 #main.screenAdjust{
     margin-left: 250px;
 }
-/*#main{
-    position: relative;
-    z-index: 5;
-}*/
-/*#main{
-    background-image: url("../images/soccer-banner-3.jpeg");
-    background-position: 0 -80px;
-    background-repeat: no-repeat;
-    background-size: 100% 10vh;
-    background-size: cover;
-}*/
 .header-banner{
     position: absolute;
     z-index: -1;
@@ -551,20 +358,13 @@ main {
     height: 10vh;
     background-size: cover;
     background-image: url("../images/soccer_ball.jpg");
-    /*background-color: black;*/
-    /*background: rgba(255, 255, 255, 255, .5);*/
     opacity: 0.5;
     filter: alpha(opacity=50);
-    /*background-position: 0 -80px;*/
-   /* background-repeat: no-repeat; */
 }
 .rosters, .team, .formation-listing{
-    /*position: relative;
-    z-index: -1;*/
     padding: 5px;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
-    /*opacity: .5;*/
 }
 #roster-table_wrapper, #team-table_wrapper{
     color: white;
@@ -573,12 +373,6 @@ main {
     padding-bottom: 10px;
     border: none;
 }
-/*#roster-table tbody{
-    color: black;
-}*/
-/*th.sorting_asc::after{
-    color: rgba(255,255,255, 1);
-}*/
 html, body{
     width: 100%;
     height: 100%;
@@ -587,27 +381,38 @@ html, body{
     background-color: white;
     color: black;
 }
-.main-background{
+/*html{
+    background-image: url("../images/grass.jpg");  
+}*/
+.team-section, .roster-section, .formations-section{
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-image: url("../images/grass.jpg"); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 33px;
+    padding-bottom: 20px;
+    min-height: 100vh;
+}
+/*.team-section:after, .roster-section:after{
+    content:"";
+    position:absolute;
+    top:10vh;
+    left:0;
+    right:0;
+    bottom:0;
+    background-image: url("../images/grass.jpg"); 
+}*/
+/*.main-background{
     position: absolute;
     top: 10vh;
     z-index: -1;
     width: 100%;
     height: 90vh;
-    /*background-size: cover;*/
-    background-image: url("../images/grass.jpg");
-    /*background-color: green;
-    opacity: .5;*/    
-}
-/*#main header{
-    position: relative;
-    z-index: 2;*/
-    /*background-color: black;
-    opacity: .5;
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;*/
-/*}*/
+    background-image: url("../images/grass.jpg");   
+}*/
 .main-header-text, .roster-label, .formation-label{
     color: black;
 }
@@ -619,18 +424,16 @@ html, body{
     display: none;
     width: 100%;
 }
-/*.players-dropdown{
-    position: relative;
-}*/
-/*.players-dropdown{
-    position: relative;
-    top: 0;
-    bottom: 0;
-}*/
-/*#js-players-list li{
-    position: absolute;
-    z-index: 10000;
-}*/
+    #rosters-dropdown span, #formations-dropdown span{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .roster-button-text, .formation-button-text{
+        max-width: 80px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
@@ -648,12 +451,6 @@ html, body{
     .roster-section > header span:first-child, .team-section > header span:first-child, .formations-section > header span:first-child{
         display: none;
     }
-    /*.formation-listing .row .col-xs-4{
-        width: 50%;
-    }*/
-    /*.formation-container{
-        margin-top: 10px;
-    }*/
     #main{
         padding-left: 10px;
         padding-right: 10px;
@@ -742,7 +539,9 @@ html, body{
 .position[data-position="11"]{
     z-index: 90;
 }
-    .position{
+   ul[id="1"] .position, ul[id="2"] .position, ul[id="3"] .position, ul[id="4"] .position,
+   ul[id="5"] .position, ul[id="6"] .position, ul[id="7"] .position, ul[id="8"] .position,
+   ul[id="9"] .position, ul[id="10"] .position, ul[id="11"] .position{
         height:34px;
         border: 2px solid white;
     }
@@ -764,16 +563,12 @@ html, body{
     .js-player-item[data-value="empty"]{
         border-bottom: 1px dotted black;
     }
-    /*.visual-position{
-        word-wrap: break-word;
-        letter-spacing: 20px;
-    }*/
     span.roster-button-text, span.formation-button-text{
         max-width: 66px;
     }
 }
 @media (max-width: 515px){
-    #rosters-dropdown span, #formations-dropdown span{
+    /*#rosters-dropdown span, #formations-dropdown span{
         display: inline-block;
         vertical-align: middle;
     }
@@ -782,7 +577,7 @@ html, body{
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-    }
+    }*/
     .js-formation-list-container .formation-label, .js-roster-list-container .roster-label{
         display: none;
     }
@@ -818,6 +613,9 @@ html, body{
         background-color: #cccccc;
     }
 }
+/*@media (max-width: 710px){
+
+}*/
 @media (min-width: 768px) {
     .col-sm-5ths {
         width: 20%;
