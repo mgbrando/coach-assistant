@@ -8,8 +8,7 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 
-const {Player} = require('../models');
-//const {deletePlayer} = require('../services');
+const {Player, Roster} = require('../models');
 
 //Method that returns an array of player objects from the database
 router.get('/', (req, res) => {
@@ -107,6 +106,44 @@ router.delete('/:id', (req, res) => {
 		});
 	//playerService.delete(req.params.id);
 });
+
+/*router.delete('/:id', (req, res) => {
+	const playerId = req.params.id;
+	Player
+		.findByIdAndRemove(req.params.id)
+		.exec()
+		.then(player => {
+			console.log(`Deleted player \`${req.params.id}\``);
+			return Roster.find({
+  							"playerPositions.playerId": playerId
+						})
+						.exec()
+						.then(rosters => {
+							rosters.forEach(roster => {
+								const index = roster.playerPositions.findIndex(position => {
+									return position.playerId === playerId;
+								});
+								if(index >= 0){
+									roster.playerPositions.slice(index, 1);
+									Roster.findAndModify({
+										_id: roster._id
+									},
+									{
+										$set: roster.playerPositions
+									}
+									});
+								}
+							});
+						})
+			res.status(204).end();
+		})
+		.catch(err => {
+			console.error(err);
+			res.status(500).json({message: 'Internal Service Error: '+err});
+		});
+	playerService.delete(req.params.id);
+});*/
+
 
 module.exports = router;
 

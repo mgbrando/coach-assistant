@@ -39,18 +39,7 @@ router.get('/:id', (req, res) => {
 
 //Method that stores a roster in the database and then returns that roster representation
 router.post('/', jsonParser, (req, res) => {
-	//const requiredFields = ['playerPositions', 'formation'];
-	/*for(let i = 0; i < requiredFields.length; i++){
-		const field = requiredFields[i];
-		console.log(field);
-		console.log(req.body);
-		if(!(field in req.body)){
-			const message = `Missing \`${field}\` in request body`;
-			console.error(message);
-			return res.status(400).json({message: message});
-		}
-	}
-*/
+	
 	if(!('formationId' in req.body)){
 			const message = `Missing \` formationId \` in request body`;
 			console.error(message);

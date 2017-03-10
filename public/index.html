@@ -12,7 +12,6 @@
     <link type="text/css" rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.theme.min.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" media="screen,projection"/> 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
-    <!--<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>-->
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
@@ -34,7 +33,6 @@
       					</div>
       					<div class="modal-footer">
       						<input type="submit" class="btn btn-primary js-save-roster-button" value="Save">
-      						<!--<button type="button" class="btn btn-primary js-save-roster-button" data-dismiss="modal">Save</button>-->
         					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       					</div>
       					</form>
@@ -56,10 +54,6 @@
          						<label for="notes">Notes (optional):</label> <textarea id="js-update-notes" name="notes" class="form-control"></textarea>       						
         					</form>
       					</div>
-      					<!--<div class="modal-footer">
-      						<button type="button" class="btn btn-primary js-update-roster-details" data-dismiss="modal">Update</button>
-        					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      					</div>-->
     				</div>
 				</div>
 			</div>	
@@ -205,7 +199,6 @@
       					</div>
       					<div class="modal-footer">
       						<input type="submit" class="btn btn-primary" value="Save">
-      						<!--<button type="button" class="btn btn-primary js-save-player-button">Save</button>-->
         					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       					</div>
       					</form>
@@ -224,9 +217,6 @@
       					<div class="modal-body">
 
       					</div>
-      					<!--<div class="modal-footer">
-        					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      					</div>-->
     				</div>
 				</div>
 			</div>
@@ -242,59 +232,19 @@
       					<div class="modal-body">
 
       					</div>
-      					<!--<div class="modal-footer">
-        					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      					</div>-->
     				</div>
 				</div>
 			</div>
-<!-- <div class="no-js-warning"><a href="enable-javscript.com">Enable javascript</a></div> -->
- <!--<ul id="slide-out" class="side-nav">
-    <li><div class="userView">
-      <div class="background">
-        <img src="images/office.jpg">
-      </div>
-      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-      <a href="#!name"><span class="white-text name">John Doe</span></a>
-      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-    </div></li>
-    <li><div class="divider"></div></li>
-    <li class="js-nav-button nav-button selected"><a href="#!">Home</a></li>
-    <li class="js-nav-button nav-button"><a href="#!">Rosters</a></li>
-    <li class="js-nav-button nav-button"><a href="#!">Team</a></li>
-    <li><div class="divider"></div></li>
-    <li class="js-nav-button nav-button selected">
-    	<div>
-    		<header>Positions</header>
-    		<div class="js-positions positions"></div>
-    	</div>
-    </li>-->
-    <!--<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>-->
-  <!--</ul>
-  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
+
   	<div id="mySidenav" class="sidenav">
-  		<!--<div class="js-closed-nav closed-nav">-->
+
   		<div class="js-closed-nav closed-nav glyphicon glyphicon-chevron-right" onclick="openNav()">
   				
   		</div>
-  		<!--</div>-->
+
   		<div class="js-nav-components hidden">
   			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  			<!--<div class="js-dropdown-positions-panel dropdown-positions-panel">
-				<div class="dropdown positions-dropdown">
-  					<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="positions-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    					<span class="formation-button-text">3-4-3</span>
-    					<span class="caret"></span>
-  					</button>
-  					<ul id="js-formation-list" class="dropdown-menu" aria-labelledby="formations-dropdown">
-  			
-  					</ul>
-				</div>
-  			</div>-->
+
   			<div class="js-draggable-positions-panel draggable-positions-panel">
   				<header class="position-header">Player Positions</header>
   				<div class="js-player-positions player-positions">
@@ -303,7 +253,7 @@
   			</div>
 		</div>
 	</div>
-	<!--<span onclick="openNav()">MENU</span>-->
+
 	<main id="main">
 	<header>
 		<span class="main-header-text">Coach Assistant</span>
@@ -330,10 +280,7 @@
     				<span class="caret"></span>
   				</button>
   				<ul id="js-roster-list" class="dropdown-menu" aria-labelledby="rosters-dropdown">
-  					<!--<li class="js-nav-list-item js-field-item hidden"><a class="js-nav-button nav-button" href="#">Field</a></li>
-    				<li class="js-nav-list-item js-team-item"><a class="js-nav-button nav-button" href="#">Team</a></li>
-    				<li class="js-nav-list-item js-rosters-item"><a class="js-nav-button nav-button" href="#">Rosters</a></li>
-    				<li class="js-nav-list-item js-formations-item"><a class="js-nav-button nav-button" href="#">Formations</a></li>-->
+
   				</ul>
 			</div>
 			</div>
@@ -345,46 +292,10 @@
     				<span class="caret"></span>
   				</button>
   				<ul id="js-formation-list" class="dropdown-menu" aria-labelledby="formations-dropdown">
-  					<!--<li class="js-nav-list-item js-field-item hidden"><a class="js-nav-button nav-button" href="#">Field</a></li>
-    				<li class="js-nav-list-item js-team-item"><a class="js-nav-button nav-button" href="#">Team</a></li>
-    				<li class="js-nav-list-item js-rosters-item"><a class="js-nav-button nav-button" href="#">Rosters</a></li>
-    				<li class="js-nav-list-item js-formations-item"><a class="js-nav-button nav-button" href="#">Formations</a></li>-->
+
   				</ul>
 			</div>
 			</div>
-			<!--<span class="js-roster-name roster-name"></span>-->
-			<!--<div class="js-select-container select-container">
-				<div class="js-select-type select-type">
-					<div class="js-roster-select-container roster-select-container">
-						<label for="js-roster-select">Roster: </label>
-						<select id="js-roster-select">
-						</select>
-					</div>
-					<div class="js-formation-select-container formation-select-container">
-						<label for="js-formation-select">Formation: </label>
-						<select id="js-formation-select">
-						</select>
-					</div>
-				</div>
-			</div>-->
-			<!--<div class="js-page-options page-options">
-				<button type="button" class="btn btn-default btn-sm">Save Roster</button>
-			</div>-->
-			<!--<div class="dropdown save-dropdown">
-  				<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="save-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    				<span class="formation-button-text">Save Roster...</span>
-    				<span class="caret"></span>
-  				</button>
-  				<ul id="js-formation-list" class="dropdown-menu" aria-labelledby="save-dropdown">
-  					<li>
-  						<form id="js-roster-form roster-form">
-  							<label>Short Description</label>
-  						</form>	
-  					</li>
-  				</ul>
-			</div>-->
-
-
 
 			<button type="button" class="btn btn-default btn-sm js-save-button save-button" data-toggle="modal" data-target="#myModal">Save Roster...</button>
 			<button type="button" class="btn btn-default btn-sm js-notes-button notes-button hidden" data-toggle="modal" data-target="#myNotesModal">Details</button>
@@ -420,12 +331,7 @@
 			<div class="js-formation-listing formation-listing container-fluid">
 			</div>
 		</section>
-		<!--<button type="button" class="navbar-toggle collapsed hamburger-button" onclick="openNav()">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>-->
+
 		<button type="button" class="btn btn-default btn-sm navbar-toggle js-hamburger-button hamburger-button" onclick="openNav()">
 			<span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -440,8 +346,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
 	<script src="https://cdn.datatables.net/plug-ins/1.10.13/sorting/datetime-moment.js"></script>
 	<script src="js/jquery.ui.touch-punch.min.js"></script>
-	
-	<!--<script type="text/javascript" src="materialize/js/materialize.min.js"></script>-->
 	<script src="js/player.js"></script>
 	<script src="js/formation.js"></script>
 	<script src="js/roster.js"></script>
