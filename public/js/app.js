@@ -167,6 +167,7 @@ function updatePlayerInterfaces(method, player){
 			RosterService.updateRoster(applicationState.rosters[key].getRosterObject());
 		});
 		firstEmptyBenchPosition.append(player.getPlayerDraggableDiv());
+		$('.js-players-list').append(player.getPlayerListItemRepr());
 		applicationState.teamTable.row.add($(player.getPlayerRow())[0]).draw();
 		bindPlayerRowEvents(`.player-entry[data-playerId="${player.id}"]`);
 		handleDraggableAndDroppable();
@@ -795,7 +796,6 @@ function updateRosterRow(currentSelection){
 		currentSelection.parent().siblings().each(function(){
 			console.log(count);
 			const field = $(this).attr('data-type');
-			//if(field === 'description' || field === 'notes'){
 			if(count < 4){
 				newRoster[$(this).attr('data-type')] = $(this).text();
 			}
@@ -809,7 +809,6 @@ function updateRosterRow(currentSelection){
 			newRoster['lastModified'] = new Date().toDateString();
 			const updateRosterPromise = RosterService.updateRoster(newRoster);
 			updateRosterPromise.done(function(){
-				//applicationState.players[playerId] = new Player(newPlayer);
 				updateRosterInterfaces('update', newRoster);
 			});
 		}
@@ -1148,6 +1147,10 @@ function handleDraggable(){
 				$(this).draggable('disable');
 			}
 		},
+		start: function(ev, ui){
+
+		},
+
 		stop: function(ev, ui){
 
 		},
@@ -1164,55 +1167,51 @@ function handleDraggableAndDroppable(){
 }
 
 function handleDroppable(){
-	//$('.position').droppable("destroy");
 	$('.position').each(function(){
 		if(!$(this).hasClass('ui-droppable')){
-	//$('.position').removeClass('ui-droppable');
-	$(this).droppable();
-	$(this).on('drop',function(ev,ui){
-		if(ui === undefined){
-        	const layer = $(this).parent('ul').attr('id');
-        	const position = $(this).addClass('slot-filled').attr('data-position');
-        	console.log('LP: '+layer + position);
-        	if(layer != '12'){
-        		console.log($(this).find('.player-button-text').text());
-        		$(this).find('.player-button-text').text($(this).children('.player-filled:last-child').text());
-        		$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(this).children('.player-filled:last-child').text());
-    		}	
+			$(this).droppable();
+			$(this).on('drop',function(ev,ui){
+				if(ui === undefined){
+        			const layer = $(this).parent('ul').attr('id');
+        			const position = $(this).addClass('slot-filled').attr('data-position');
+        			console.log('LP: '+layer + position);
+        			if(layer != '12'){
+        				console.log($(this).find('.player-button-text').text());
+        				$(this).find('.player-button-text').text($(this).children('.player-filled:last-child').text());
+        				$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(this).children('.player-filled:last-child').text());
+    				}	
+				}
+				else{
+					const oldLayer = $(ui.draggable).closest('ul').attr('id');
+    				const oldPosition = $(ui.draggable).parent().attr('data-position');
+    				if($(this).children().length >= 2 || ($(this).children().length >= 1 && $(this).parent().attr('id') === '12')){
+    					$(ui.draggable).siblings('.players-dropdown:hidden').children('button').children('.player-button-text').text($(this).children('.player-filled').text());
+    					$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').children().removeClass('hidden');
+        				$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').find(`li[data-value="${$(this).children('.player-filled').attr('data-playerId')}"]`).addClass('hidden');
+        				$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"] div.visual-position`).text($(this).children('.player-filled').text());
+    					$(this).children('.player-filled').detach().css({top: 0, left: 0}).appendTo(`ul[id="${oldLayer}"] li[data-position="${oldPosition}"]`);
+    				}
+    				else{
+    					$(ui.draggable).siblings('.players-dropdown:hidden').children('button').children('.player-button-text').text('Empty');
+    					$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').children().removeClass('hidden');
+    					$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').find('li[data-value="empty"]').addClass('hidden');
+    					$(ui.draggable).parent().removeClass('slot-filled');
+    					$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"] div.visual-position`).text(''+oldPosition);
+    				}
+        			$(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);
+        			const layer = $(ui.draggable).closest('ul').attr('id');
+        			const position = $(ui.draggable).parent().addClass('slot-filled').attr('data-position');
+        			if(layer != '12'){
+        				console.log($(ui.draggable).attr('data-playerId'));
+        				console.log($(this).children('.players-dropdown:hidden').children('.js-players-list').html());
+        				$(this).children('.players-dropdown:hidden').children('button').children('.player-button-text').text($(ui.draggable).text());
+        				$(this).children('.players-dropdown:hidden').children('.js-players-list').children().removeClass('hidden');
+        				$(this).children('.players-dropdown:hidden').children('.js-players-list').find(`li[data-value="${$(ui.draggable).attr('data-playerId')}"]`).addClass('hidden');
+        				$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(ui.draggable).text());
+        			}
+    			}
+			});
 		}
-		else{
-			const oldLayer = $(ui.draggable).closest('ul').attr('id');
-    		const oldPosition = $(ui.draggable).parent().removeClass('slot-filled').attr('data-position');
-    		if($(this).children().length >= 2){
-    			$(ui.draggable).siblings('.players-dropdown:hidden').children('button').children('.player-button-text').text($(this).children('.player-filled').text());
-    			$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').children().removeClass('hidden');
-        		$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').find(`li[data-value="${$(this).children('.player-filled').attr('data-playerId')}"]`).addClass('hidden');
-    			$(this).children('.player-filled').detach().css({top: 0, left: 0}).appendTo(`ul[id="${oldLayer}"] li[data-position="${oldPosition}"]`);
-    		}
-    		else{
-    			$(ui.draggable).siblings('.players-dropdown:hidden').children('button').children('.player-button-text').text('Empty');
-    			$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').children().removeClass('hidden');
-    			$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').find('li[data-value="empty"]').addClass('hidden');
-    		}
-        	$(ui.draggable).detach().css({top: 0, left: 0}).appendTo(this);
-        	const layer = $(ui.draggable).closest('ul').attr('id');
-        	const position = $(ui.draggable).parent().addClass('slot-filled').attr('data-position');
-        	console.log('LP: '+layer + position);
-        	$(`.row[data-layer="${oldLayer}"] div[data-position="${oldPosition}"] div.visual-position`).text(''+oldPosition);
-        	if(layer != '12'){
-        		//$(this).find('.player-button-text').text($(this).children('.player-filled:last-child').text());
-        		console.log($(ui.draggable).attr('data-playerId'));
-        		console.log($(this).children('.players-dropdown:hidden').children('.js-players-list').html());
-        		$(this).children('.players-dropdown:hidden').children('button').children('.player-button-text').text($(ui.draggable).text());
-        		$(this).children('.players-dropdown:hidden').children('.js-players-list').children().removeClass('hidden');
-        		$(this).children('.players-dropdown:hidden').children('.js-players-list').find(`li[data-value="${$(ui.draggable).attr('data-playerId')}"]`).addClass('hidden');
-        		//$(this).children('.players-dropdown:hidden').children('.js-players-list').find(`li[data-value="${$(ui.draggable).attr('data-playerId')}"]`).trigger('click');
-        		//$(this).find(`li[data-value="${$(ui.draggable).attr('data-playerId')}"]`);
-        		$(`.row[data-layer="${layer}"] div[data-position="${position}"] div.visual-position`).text($(ui.draggable).text());
-        	}
-    	}
-	});
-	}
 	});
 }
 

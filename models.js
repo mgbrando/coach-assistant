@@ -9,10 +9,6 @@ const playerSchema = mongoose.Schema({
   preferredPosition: {type: String, default: 'Not Specified'}
 });
 
-/*playerSchema.virtual('fullName').get(function(){
-  return `${this.firstName} ${this.lastName}`.trim();
-});*/
-
 playerSchema.methods.playerRepr = function() {
   return {
     id: this._id,
@@ -29,28 +25,9 @@ const formationSchema = mongoose.Schema({
   layers: [{type: Number, required: true}], 
 });
 
-/*formationSchema.virtual('formationName').get(function(){
-  return `${this.getName()}`;
-});*/
-
 formationSchema.virtual('amountOfLayers').get(function(){
   return `${this.layers.length}`;
 });
-
-/*formationSchema.methods.getName = function() {
-  let name=this.name;
-  console.log(!name);
-  console.log(name);
-  if(!name){
-    name='';
-    for(let i=0; i < this.layers.length; i++){
-      name+=this.layers[i];
-      if(i < (this.layers.length-1))
-        name+='-';
-    }
-  }
-  return name;
-}*/
 
 formationSchema.methods.formationRepr = function() {
   return {
