@@ -321,6 +321,9 @@ div.col-xs-12.visual-position-container{
     left: 0;
     z-index: 9999;
 }
+.ui-draggable-dragging{
+    z-index: 10000;
+}
 .slot-filled{
     border: 2px solid white;
 }
