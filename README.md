@@ -1,13 +1,13 @@
 # Coach Assistant
 
 ## Screens
-###Field Screen:
+### *Field Screen:* 
 ![Field Screen] (public/images/field-screen.png)
-###Team Screen: 
+### *Team Screen:* 
 ![Team Screen] (public/images/team-screen.png)  
-###Rosters Screen:
+### *Rosters Screen:*
 ![Rosters Screen](public/images/rosters-screen.png)  
-###Formations Screen:
+### *Formations Screen:*
 ![Formations Screen] (public/images/formations-screen.png)   
 
 ## Summary
