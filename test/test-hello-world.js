@@ -7,6 +7,7 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
+//Test that a request for the app produces the correct response
 describe('connection to root starting page', function(){
 	it('should return a static html page', function(){
 		return chai.request(app)

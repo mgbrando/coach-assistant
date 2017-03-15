@@ -12,7 +12,7 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-
+//Function that seeds the database with 10 roster entries
 function seedRosterData(){
 	console.info('seeding roster data');
   	const seedData = [];
@@ -34,6 +34,7 @@ function seedRosterData(){
   	return Roster.insertMany(seedData);
 }
 
+//Function used to drop the database after testing
 function dropDatabase(){
   return new Promise((resolve, reject) => {
     console.warn('Deleting database');
@@ -43,6 +44,7 @@ function dropDatabase(){
   });
 }
 
+//Tests each roster endpoint
 describe('rosters api', function(){
 
 	before(function(){
@@ -61,6 +63,7 @@ describe('rosters api', function(){
 		return closeServer();
 	});
 
+  //Function used to check that all fields are present
 	function checkKeys(itemCollection, expectedKeys){
 		itemCollection.forEach(type => {
 			type.should.be.a('object');
@@ -68,6 +71,7 @@ describe('rosters api', function(){
 		});
 	}
 
+  //Tests the roster GET endpoint
 	describe('GET endpoint', () => {
 		it('should list all rosters with correct fields on GET', () => {
 			let res;
@@ -83,8 +87,6 @@ describe('rosters api', function(){
 
 					const expectedKeys = ['id', 'formationId', 'playerPositions', 'dateCreated', 'lastModified',
           'description', 'notes'];
-					//checkKeys(res.body.players, expectedKeys);
-					//console.log('All rosters: '+res.body.players.status);
 					res.body.rosters.forEach(roster => {
 						console.log('Value for roster: '+roster);
 						roster.should.be.a('object');
@@ -120,6 +122,8 @@ describe('rosters api', function(){
 				});
 		});
 	});
+
+  //Tests the roster POST endpoint
 	describe('POST endpoint', () => {
     	it('should add a new roster and return a roster representation', () => {
 
@@ -141,11 +145,10 @@ describe('rosters api', function(){
           			res.should.have.status(201);
           			res.should.be.json;
           			res.body.should.be.a('object');
-          			res.body.should.include.keys('id', 'formationId', 'playerPositions', 'dateCreated', 'lastModified',
-          'description', 'notes');
+          			res.body.should.include.keys('id', 'formationId', 'playerPositions', 'dateCreated', 'lastModified', 
+                'description', 'notes');
            			res.body.id.should.not.be.null;
                 res.body.formationId.should.not.be.null;
-                //newRoster.playerPositions[0]._id = res.body.playerPositions[0]._id;
                 res.body.playerPositions[0].layer.should.equal(newRoster.playerPositions[0].layer);
                 res.body.playerPositions[0].position.should.equal(newRoster.playerPositions[0].position);
                 res.body.playerPositions[0].playerId.should.equal(newRoster.playerPositions[0].playerId);
@@ -170,6 +173,8 @@ describe('rosters api', function(){
     	});
 
 	});
+
+  //Tests the roster PUT endpoint
 	describe('PUT endpoint', () => {
     	it('should update roster fields that you include in the request', () => {
       		const updateData = {
@@ -212,6 +217,8 @@ describe('rosters api', function(){
           		});
     	});
 	});
+
+  //Tests the roster DELETE endpoint
 	describe('DELETE endpoint', () => {
     	
     	it('should delete a roster given an id', () => {

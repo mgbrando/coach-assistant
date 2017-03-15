@@ -12,7 +12,7 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-
+//Function that seeds the database with 10 player entries
 function seedPlayerData(){
 	console.info('seeding player data');
   	const seedData = [];
@@ -28,6 +28,7 @@ function seedPlayerData(){
   	return Player.insertMany(seedData);
 }
 
+//Function used to drop the database after testing
 function dropDatabase(){
   return new Promise((resolve, reject) => {
     console.warn('Deleting database');
@@ -37,6 +38,7 @@ function dropDatabase(){
   });
 }
 
+//Tests each player api endpoint
 describe('players api', function(){
 
 	before(function(){
@@ -55,6 +57,7 @@ describe('players api', function(){
 		return closeServer();
 	});
 
+	//Function used to check that all fields are present
 	function checkKeys(itemCollection, expectedKeys){
 		itemCollection.forEach(type => {
 			type.should.be.a('object');
@@ -62,6 +65,7 @@ describe('players api', function(){
 		});
 	}
 
+	//Tests the player GET endpoint
 	describe('GET endpoint', () => {
 		it('should list all players with correct fields on GET', () => {
 			let res;
@@ -109,6 +113,8 @@ describe('players api', function(){
 				});
 		});
 	});
+
+	//Tests the player POST endpoint
 	describe('POST endpoint', () => {
     	it('should add a new player and return a player representation', () => {
 
@@ -144,6 +150,8 @@ describe('players api', function(){
     	});
 
 	});
+
+	//Tests the player PUT endpoint
 	describe('PUT endpoint', () => {
     	it('should update player fields that you include in the request', () => {
       		const updateData = {
@@ -175,6 +183,8 @@ describe('players api', function(){
           		});
     	});
 	});
+
+	//Tests the player DELETE endpoint
 	describe('DELETE endpoint', () => {
     	
     	it('should delete a player given an id', () => {

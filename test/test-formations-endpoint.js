@@ -12,12 +12,14 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
+//Function used to get a random integer
 function getRandomInteger(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+//Function used to seed the database with 10 formation entries
 function seedFormationData(){
   console.info('seeding formation data');
   const seedData = [];
@@ -42,6 +44,7 @@ function seedFormationData(){
   return Formation.insertMany(seedData);
 }
 
+//Function used to drop the database after testing
 function dropDatabase(){
   return new Promise((resolve, reject) => {
     console.warn('Deleting database');
@@ -51,6 +54,7 @@ function dropDatabase(){
   });
 }
 
+//Tests on all formations endpoints
 describe('formations api', () => {
 
 	before(function(){
@@ -69,6 +73,7 @@ describe('formations api', () => {
 		return closeServer();
 	});
 
+	//Function used to check that all fields are present 
 	function checkKeys(itemCollection, expectedKeys){
 		itemCollection.forEach(type => {
 			type.should.be.a('object');
@@ -76,6 +81,7 @@ describe('formations api', () => {
 		});
 	}
 
+	//Test the formation GET endpoint
 	describe('GET endpoint', () => {
 		it('should list all formations with correct fields on GET', () => {
 			let res;
@@ -119,6 +125,7 @@ describe('formations api', () => {
 		});
 	});
 
+	//Test the formation POST endpoint
 	describe('POST endpoint', () => {
     	it('should add a new formation and return a formation representation', () => {
 
@@ -154,6 +161,7 @@ describe('formations api', () => {
 
 	});
 
+	//Test the formation PUT endpoint
 	describe('PUT endpoint', () => {
     	it('should update formation fields that you include in the request', () => {
       		const updateData = {
@@ -184,6 +192,7 @@ describe('formations api', () => {
     	});
 	});
 
+	//Test the formation DELETE endpoint
 	describe('DELETE endpoints', () => {
     	
     	it('should delete a formation given an id', () => {

@@ -39,7 +39,7 @@ router.get('/:id', (req, res) => {
 
 //Method that stores a roster in the database and then returns that roster representation
 router.post('/', jsonParser, (req, res) => {
-	
+
 	if(!('formationId' in req.body)){
 			const message = `Missing \` formationId \` in request body`;
 			console.error(message);
@@ -91,6 +91,7 @@ router.put('/:id', jsonParser, (req, res) => {
  		});
 });
 
+//Method used to delete a roster
 router.delete('/:id', (req, res) => {
 	Roster
 		.findByIdAndRemove(req.params.id)

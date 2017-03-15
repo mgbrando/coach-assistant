@@ -9,6 +9,7 @@ const jsonParser = bodyParser.json();
 
 const {Formation} = require('../models');
 
+//Function that determines whether or not an array contains only integers
 function onlyIntegersInArray(arr){
 	for(let i = 0; i < arr.length; i++){
 		console.log("INSIDE LOOP: "+Number.isInteger(arr[i]));
@@ -43,6 +44,7 @@ router.get('/:id', (req, res) => {
 		});
 });
 
+//Function used to get the default name of a formation
 function getDefaultName(layers){
 	let name='';
     for(let i=0; i < layers.length; i++){
@@ -93,7 +95,7 @@ router.post('/', jsonParser, (req, res) => {
 		});
 });
 
-//Method that updates a fomration's information
+//Method that updates a formation's information
 router.put('/:id', jsonParser, (req, res) => {
 	if(!(req.params.id && req.body.id && req.params.id === req.body.id)){
 		const message = `Request path id (${req.params.id}) and request body id `
@@ -124,6 +126,7 @@ router.put('/:id', jsonParser, (req, res) => {
  		});
 });
 
+//Method that deletes a group of formations
 router.delete('/bulk-delete', jsonParser, (req, res) => {
 
 	const formationsArray = req.body.formationsArray;
@@ -140,7 +143,7 @@ router.delete('/bulk-delete', jsonParser, (req, res) => {
 		});
 });
 
-//Method that deletes a fomration's information
+//Method that deletes a formation's information
 router.delete('/:id', (req,res) => {
 	Formation
 		.findByIdAndRemove(req.params.id)

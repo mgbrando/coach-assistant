@@ -1,5 +1,6 @@
 'use strict';
 
+//ES6 class representing a player
 class Player{
 
 	constructor(playerObject){
