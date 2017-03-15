@@ -553,9 +553,6 @@ html, body{
     .player-positions > div > div:last-child .position .player-filled{
         height: 20px;
     }
-    /*.positions-ul12 .position{
-        z-index: 10;
-    }*/
     .js-players-list{
         margin-left: -3px;
     }
