@@ -443,47 +443,62 @@ html, body{
     #players-dropdown6, #players-dropdown7, #players-dropdown8, #players-dropdown9, #players-dropdown10, #players-dropdown11{
         display: block;
     }
-
-    .player-positions .positions-ul1, .player-positions .positions-ul2, .player-positions .positions-ul3, .player-positions .positions-ul4
-    .player-positions .positions-ul5, .player-positions .positions-ul6, .player-positions .positions-ul7, .player-positions .positions-ul8, .player-positions .positions-ul9,
-    .player-positions .positions-ul10, .player-positions .positions-ul11{
+    .position{
+        position: absolute;
+    }
+    /*.player-positions div div{
+        position: adb;
+    }*/
+    .position-number{
+        position: absolute;
+        z-index: 3;
+    }
+    .position .players-dropdown{
+        position: absolute;
+        z-index: 5;
+        top: 0;
+    }
+    .player-positions > div > div{
         position: relative;
     }
-    .player-positions .positions-ul1{
+    .player-positions > div > div:nth-child(1){
         z-index: 100;
     }
-    .player-positions .positions-ul2{
+    .player-positions > div > div:nth-child(2){
         z-index: 99;
     }
-    .player-positions .positions-ul3{
+    .player-positions > div > div:nth-child(3){
         z-index: 98;
     }
-    .player-positions .positions-ul4{
+    .player-positions > div > div:nth-child(4){
         z-index: 97;
-    }  
-    .player-positions .positions-ul5{
+    }
+    .player-positions > div > div:nth-child(5){
         z-index: 96;
     }
-    .player-positions .positions-ul6{
+    .player-positions > div > div:nth-child(6){
         z-index: 95;
     }
-    .player-positions .positions-ul7{
+    .player-positions > div > div:nth-child(7){
         z-index: 94;
     }
-    .player-positions .positions-ul8{
+    .player-positions > div > div:nth-child(8){
         z-index: 93;
     }
-    .player-positions .positions-ul9{
+    .player-positions > div > div:nth-child(9){
         z-index: 92;
     }
-    .player-positions .positions-ul10{
+    .player-positions > div > div:nth-child(10){
         z-index: 91;
     }
-    .player-positions .positions-ul11{
+    .player-positions > div > div:nth-child(11){
         z-index: 90;
     }
-    .player-positions .positions-ul12{
+    .player-positions > div > div:nth-child(12){
         z-index: 89;
+    }
+    .position .player-filled{
+        z-index: 4;
     }
 
     /*list items for player positions*/
@@ -529,12 +544,21 @@ html, body{
         height: 34px;
         border: 2px solid white;
     }
-    .player-positions div div:last-child .position{
-        height: auto;
+    .player-positions > div > div:last-child .position{
+        height: 24px;
     }
-    .positions-ul12 .position{
+    .position-number{
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+    .player-positions > div > div:last-child .position .player-filled{
+        height: 20px;
+    }
+    /*.positions-ul12 .position{
         z-index: 10;
-    }
+    }*/
     .js-players-list{
         margin-left: -3px;
     }

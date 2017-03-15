@@ -279,7 +279,7 @@ function getVisualLayersByRoster(roster){
 		const positions = layers[i];
 		const columnSize = 12/positions;
 		for(let j = 0; j < positions; j++) {
-			draggableHtml+=`<li class="js-position ui-widget-content position ui-widget-header noselect" data-position="${j+1}">${j+1} ${getPlayersDropDown(++playerDropDownCount)}</li>`;
+			draggableHtml+=`<li class="js-position ui-widget-content position ui-widget-header noselect" data-position="${j+1}"><span class="position-number">${j+1}</span> ${getPlayersDropDown(++playerDropDownCount)}</li>`;
 			if(positions === 5){
 				visualHtml+=`<div class="col-xs-2 visual-position-container five-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
 			}
@@ -304,10 +304,10 @@ function getVisualLayersByRoster(roster){
 	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="11">
 				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header noselect">Goalie</div></div>
 				</div></div>`;
-	draggableHtml+=`<div><header>Goalie</header><ul id="11" class="positions-ul11"><li class="js-position position ui-widget-header noselect" data-position="1">Goalie ${getPlayersDropDown(++playerDropDownCount)}</li></ul></div>`;
+	draggableHtml+=`<div><header>Goalie</header><ul id="11" class="positions-ul11"><li class="js-position position ui-widget-header noselect" data-position="1"><span class="position-number">Goalie</span> ${getPlayersDropDown(++playerDropDownCount)}</li></ul></div>`;
 	draggableHtml+='<div><header>Bench</header><ul id="12" class="positions-ul12">';
 	for(let n = 0; n < Object.keys(applicationState.players).length; n++){
-		draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${n+1}">Bench</li>`;
+		draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${n+1}"><span class="position-number">Bench</span></li>`;
 	}
 	draggableHtml+='</ul></div></div>'
 
@@ -343,7 +343,7 @@ function getVisualLayersByFormation(formation){
 		const positions = layers[i];
 		const columnSize = 12/positions;
 		for(let j = 0; j < positions; j++) {
-			draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${j+1}">${j+1} ${getPlayersDropDown(++playerDropDownCount)}</li>`;
+			draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${j+1}"><span class="position-number">${j+1}</span> ${getPlayersDropDown(++playerDropDownCount)}</li>`;
 			if(positions === 5){
 				visualHtml+=`<div class="col-xs-2 visual-position-container five-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
 			}
@@ -368,17 +368,18 @@ function getVisualLayersByFormation(formation){
 	visualHtml+=`<div class="row layers-${layersLength+1}" data-layer="11">
 				<div class="col-xs-12 visual-position-container" data-position="1"><div class="visual-position ui-widget-header noselect">Goalie</div></div>
 				</div></div>`;
-	draggableHtml+=`<div><header>Goalie</header><ul id="11" class="positions-ul11"><li class="js-position position ui-widget-header noselect" data-position="1">Goalie ${getPlayersDropDown(++playerDropDownCount)}</li></ul></div>`;
+	draggableHtml+=`<div><header>Goalie</header><ul id="11" class="positions-ul11"><li class="js-position position ui-widget-header noselect" data-position="1"><span class="position-number">Goalie</span> ${getPlayersDropDown(++playerDropDownCount)}</li></ul></div>`;
 	draggableHtml+='<div><header>Bench</header><ul id="12" class="positions-ul12">';
 	for(let k=0; k < Object.keys(applicationState.players).length; k++){
 		const player = applicationState.players[Object.keys(applicationState.players)[k]];
-		draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${k+1}">Bench ${player.getPlayerDraggableDiv()}</li>`;
+		draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${k+1}"><span class="position-number">Bench</span> ${player.getPlayerDraggableDiv()}</li>`;
 	}
 	draggableHtml+='</ul></div></div>';
 	$('.js-player-positions').empty().append(draggableHtml);
 	$('.js-main-visual').empty().append(visualHtml);
 
 	//handlePlayerOperations();
+	handleSideBarOperations();
 	handleDraggableAndDroppable();
 }
 
