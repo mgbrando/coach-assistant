@@ -1,5 +1,6 @@
 'use strict';
 
+//Formation service used to interact with the formation collection in the database
 class FormationService{
 	static getFormations(){
 		return $.getJSON('/formations');
@@ -43,5 +44,3 @@ class FormationService{
 		});
 	}
 }
-
-//module.exports = FormationService;

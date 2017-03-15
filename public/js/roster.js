@@ -1,5 +1,6 @@
 'use strict';
 
+//ES6 class representing a roster
 class Roster{
 
 	constructor(rosterObject){

@@ -28,7 +28,6 @@
     transition: 0.5s;
 }
 
-/* The navigation menu links */
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -38,12 +37,10 @@
     transition: 0.3s
 }
 
-/* When you mouse over the navigation links, change their color */
 .sidenav a:hover, .offcanvas a:focus{
     color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
 .sidenav .closebtn {
     position: absolute;
     top: 0;
@@ -101,18 +98,16 @@ section > header span{
 .main-visual{
     margin-left: -20px;
     margin-right: -20px;
+    border-top: 1px solid black;
 }
 .nav-dropdown{
     position: fixed;
     top: 0;
-    right: 10px;
+    right: 15px;
     z-index: 10000;
 }
 .visual-section .dropdown{
     display: inline-block;
-}
-.team-section header, .roster-section header, .formations-section header{
-    margin-bottom: 10px;
 }
 section header{
     height: 5vh;
@@ -327,7 +322,7 @@ div.col-xs-12.visual-position-container{
 .slot-filled{
     border: 2px solid white;
 }
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+
 main {
     transition: margin-left .5s;
     padding: 20px;
@@ -384,38 +379,21 @@ html, body{
     background-color: white;
     color: black;
 }
-/*html{
-    background-image: url("../images/grass.jpg");  
-}*/
 .team-section, .roster-section, .formations-section{
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    background-image: url("../images/grass.jpg"); 
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0 33px;
-    padding-bottom: 20px;
     min-height: 100vh;
 }
-/*.team-section:after, .roster-section:after{
-    content:"";
-    position:absolute;
-    top:10vh;
-    left:0;
-    right:0;
-    bottom:0;
+.formations-main, .rosters-main, .team-main{
+    min-height: 100vh;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
     background-image: url("../images/grass.jpg"); 
-}*/
-/*.main-background{
-    position: absolute;
-    top: 10vh;
-    z-index: -1;
-    width: 100%;
-    height: 90vh;
-    background-image: url("../images/grass.jpg");   
-}*/
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
 .main-header-text, .roster-label, .formation-label{
     color: black;
 }
@@ -427,16 +405,19 @@ html, body{
     display: none;
     width: 100%;
 }
-    #rosters-dropdown span, #formations-dropdown span{
-        display: inline-block;
-        vertical-align: middle;
-    }
-    .roster-button-text, .formation-button-text{
-        max-width: 80px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
+#rosters-dropdown span, #formations-dropdown span{
+    display: inline-block;
+    vertical-align: middle;
+}
+.roster-button-text, .formation-button-text{
+    max-width: 80px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* Media Queries */
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
@@ -459,101 +440,98 @@ html, body{
         padding-right: 10px;
     }
     .players-dropdown, #players-dropdown1, #players-dropdown2, #players-dropdown3, #players-dropdown4, #players-dropdown5,
-#players-dropdown6, #players-dropdown7, #players-dropdown8, #players-dropdown9, #players-dropdown10, #players-dropdown11{
+    #players-dropdown6, #players-dropdown7, #players-dropdown8, #players-dropdown9, #players-dropdown10, #players-dropdown11{
         display: block;
     }
 
     .player-positions .positions-ul1, .player-positions .positions-ul2, .player-positions .positions-ul3, .player-positions .positions-ul4
-.player-positions .positions-ul5, .player-positions .positions-ul6, .player-positions .positions-ul7, .player-positions .positions-ul8, .player-positions .positions-ul9,
-.player-positions .positions-ul10, .player-positions .positions-ul11{
-    position: relative;
-}
-.player-positions .positions-ul1{
-    z-index: 100;
-}
-.player-positions .positions-ul2{
-    z-index: 99;
-}
-.player-positions .positions-ul3{
-    z-index: 98;
-}
-.player-positions .positions-ul4{
-    z-index: 97;
-}
-.player-positions .positions-ul5{
-    z-index: 96;
-}
-.player-positions .positions-ul6{
-    z-index: 95;
-}
-.player-positions .positions-ul7{
-    z-index: 94;
-}
-.player-positions .positions-ul8{
-    z-index: 93;
-}
-.player-positions .positions-ul9{
-    z-index: 92;
-}
-.player-positions .positions-ul10{
-    z-index: 91;
-}
-.player-positions .positions-ul11{
-    z-index: 90;
-}
-.player-positions .positions-ul12{
-    z-index: 89;
-}
+    .player-positions .positions-ul5, .player-positions .positions-ul6, .player-positions .positions-ul7, .player-positions .positions-ul8, .player-positions .positions-ul9,
+    .player-positions .positions-ul10, .player-positions .positions-ul11{
+        position: relative;
+    }
+    .player-positions .positions-ul1{
+        z-index: 100;
+    }
+    .player-positions .positions-ul2{
+        z-index: 99;
+    }
+    .player-positions .positions-ul3{
+        z-index: 98;
+    }
+    .player-positions .positions-ul4{
+        z-index: 97;
+    }  
+    .player-positions .positions-ul5{
+        z-index: 96;
+    }
+    .player-positions .positions-ul6{
+        z-index: 95;
+    }
+    .player-positions .positions-ul7{
+        z-index: 94;
+    }
+    .player-positions .positions-ul8{
+        z-index: 93;
+    }
+    .player-positions .positions-ul9{
+        z-index: 92;
+    }
+    .player-positions .positions-ul10{
+        z-index: 91;
+    }
+    .player-positions .positions-ul11{
+        z-index: 90;
+    }
+    .player-positions .positions-ul12{
+        z-index: 89;
+    }
 
-/*list items for player positions*/
-.position{
-    position: relative;
-}
-.position[data-position="1"]{
-    z-index: 100;
-}
-.position[data-position="2"]{
-    z-index: 99;
-}
-.position[data-position="3"]{
-    z-index: 98;
-}
-.position[data-position="4"]{
-    z-index: 97;
-}
-.position[data-position="5"]{
-    z-index: 96;
-}
-.position[data-position="6"]{
-    z-index: 95;
-}
-.position[data-position="7"]{
-    z-index: 94;
-}
-.position[data-position="8"]{
-    z-index: 93;
-}
-.position[data-position="9"]{
-    z-index: 92;
-}
-.position[data-position="10"]{
-    z-index: 91;
-}
-.position[data-position="11"]{
-    z-index: 90;
-}
-   ul[id="1"] .position, ul[id="2"] .position, ul[id="3"] .position, ul[id="4"] .position,
-   ul[id="5"] .position, ul[id="6"] .position, ul[id="7"] .position, ul[id="8"] .position,
-   ul[id="9"] .position, ul[id="10"] .position, ul[id="11"] .position{
-        height:34px;
+    /*list items for player positions*/
+    .position{
+        position: relative;
+    }
+    .position[data-position="1"]{
+        z-index: 100;
+    }
+    .position[data-position="2"]{
+        z-index: 99;
+    }
+    .position[data-position="3"]{
+        z-index: 98;
+    }
+    .position[data-position="4"]{
+        z-index: 97;
+    }
+    .position[data-position="5"]{
+        z-index: 96;
+    }
+    .position[data-position="6"]{
+        z-index: 95;
+    }
+    .position[data-position="7"]{
+        z-index: 94;
+    }
+    .position[data-position="8"]{
+        z-index: 93;
+    }
+    .position[data-position="9"]{
+        z-index: 92;
+    }
+    .position[data-position="10"]{
+        z-index: 91;
+    }
+    .position[data-position="11"]{
+        z-index: 90;
+    }
+    ul[id="1"] .position, ul[id="2"] .position, ul[id="3"] .position, ul[id="4"] .position,
+    ul[id="5"] .position, ul[id="6"] .position, ul[id="7"] .position, ul[id="8"] .position,
+    ul[id="9"] .position, ul[id="10"] .position, ul[id="11"] .position{
+        height: 34px;
         border: 2px solid white;
     }
     .player-positions div div:last-child .position{
         height: auto;
     }
-    /*.player-filled{
-        position: relative;
-    }*/
     .positions-ul12 .position{
         z-index: 10;
     }
@@ -569,18 +547,38 @@ html, body{
     span.roster-button-text, span.formation-button-text{
         max-width: 66px;
     }
+    #main{
+        padding: 0;
+    }
+    #main > header{
+        padding-left: 15px;
+    }
+    .visual-section > header{
+        padding-left: 15px;
+    }
+    .visual-section > header button, .formations-section > header button, .roster-section > header button, .team-section > header button{
+        height: 27px;
+        vertical-align: bottom;
+    }
+    .main-visual, .formations-section, .roster-section, .team-section, .formations-main, .rosters-main, .team-main{
+        margin: 0;
+    }
+    .formations-main, .rosters-main, .team-main{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .formations-section, .roster-section, .team-section{
+        width: 100%;
+    }
+    button#nav-dropdown{
+        height: 28px;
+        vertical-align: bottom;
+    }
+    .formations-section > header, .roster-section > header, .team-section > header{
+        padding-left: 15px;
+    }
 }
 @media (max-width: 515px){
-    /*#rosters-dropdown span, #formations-dropdown span{
-        display: inline-block;
-        vertical-align: middle;
-    }
-    .roster-button-text, .formation-button-text{
-        max-width: 80px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }*/
     .js-formation-list-container .formation-label, .js-roster-list-container .roster-label{
         display: none;
     }
@@ -589,10 +587,10 @@ html, body{
     #mySidenav.sidenav, .closed-nav{
         width: 0px;
     }
-    #mySidenav.sidenav.screenAdjust{
+    #mySidenav.sidenav.screenAdjust, .js-nav-components, .draggable-positions-panel, .player-positions, .player-positions > div{
         width: 100%;
     }
-    #main .screenAdjust, #main{
+    #main.screenAdjust, #main{
         margin-left: 0;
     }
     #mySidenav.sidenav ul[class^="positions-ul"]{
@@ -616,9 +614,6 @@ html, body{
         background-color: #cccccc;
     }
 }
-/*@media (max-width: 710px){
-
-}*/
 @media (min-width: 768px) {
     .col-sm-5ths {
         width: 20%;

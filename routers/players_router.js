@@ -92,6 +92,7 @@ router.put('/:id', jsonParser, (req, res) => {
  		});
 });
 
+//Method used to delete a player
 router.delete('/:id', (req, res) => {
 	Player
 		.findByIdAndRemove(req.params.id)

@@ -1,5 +1,6 @@
 'use strict';
 
+//Roster service used to interact with the roster collection in the database
 class RosterService{
 	static getRosters(){
 		return $.getJSON('/rosters');

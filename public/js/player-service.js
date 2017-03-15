@@ -1,5 +1,6 @@
 'use strict';
 
+//Player service used to interact with the player collection in the database
 class PlayerService{
 	static getPlayers(){
 		return $.getJSON('/players');
