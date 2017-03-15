@@ -446,9 +446,6 @@ html, body{
     .position{
         position: absolute;
     }
-    /*.player-positions div div{
-        position: adb;
-    }*/
     .position-number{
         position: absolute;
         z-index: 3;
