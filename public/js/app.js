@@ -113,7 +113,7 @@ function updatePlayerInterfaces(method, player){
 		if(method==='create'){
 			applicationState.players[player.id]=player;
 			$('ul#12').append(`<li class="js-position position ui-widget-header">Bench</li>`);
-			const firstEmptyBenchPosition = $('ul#12 li:not(:has(*))').first();
+			const firstEmptyBenchPosition = $('ul#12 li:not(:has(div))').first();
 			Object.keys(applicationState.rosters).forEach(function(key){
 				applicationState.rosters[key].playerPositions.push({layer: 12, position: firstEmptyBenchPosition.index()+1, playerId: player.id});
 				RosterService.updateRoster(applicationState.rosters[key].getRosterObject());
@@ -137,7 +137,7 @@ function updatePlayerInterfaces(method, player){
 			const position = playerDiv.parent().attr('data-position');
 			playerDiv.parent().removeClass('slot-filled');
 			playerDiv.remove();
-			$('ul#12 li:not(:has(*))').first().remove();
+			$('ul#12 li:not(:has(div))').first().remove();
 			let visualText = position;
 			if(layer === 12)
 				visualText = 'Goalie';
@@ -320,7 +320,7 @@ function getVisualLayersByRoster(roster){
 		const player = applicationState.players[playerPositions[k].playerId];
 
 		if(layer === 12){
-			$('ul#12 li:not(:has(*))').first().append(player.getPlayerDraggableDiv());
+			$('ul#12 li:not(:has(div))').first().append(player.getPlayerDraggableDiv());
 		}
 		else
 			$(`ul#${layer} li[data-position="${position}"]`).append(player.getPlayerDraggableDiv());
@@ -573,9 +573,9 @@ function rePositionPlayers(playerId, selector){
 function benchPlayer(benchPlayerId, selector){
 	const currentLayer=selector.parents('ul[class^="positions-ul"]').attr('id');
 	const currentPosition= selector.parents('li.position').attr('data-position');;
-	const benchPosition = $('ul#12 li:not(:has(*))').first();
+	const benchPosition = $('ul#12 li:not(:has(div))').first();
 	//benchPosition$('.js-player-filled').hasClass('ui-draggable')
-	$(selector).parents(('li.position')).removeClass('slot-filled');
+	selector.parents(('li.position')).removeClass('slot-filled');
 	$(`.js-player-filled[data-playerId="${benchPlayerId}"]`).detach().css({top: 0, left: 0}).appendTo(benchPosition);
 	//benchPosition.append($(`.js-player-filled[data-playerId="${benchPlayerId}"]`).replaceWith(''));
 	$(`.row[data-layer="${currentLayer}"] div[data-position="${currentPosition}"] div.visual-position`).text(currentPosition);
@@ -1065,7 +1065,7 @@ function handleDroppable(){
 				else{
 					const oldLayer = $(ui.draggable).closest('ul').attr('id');
     				const oldPosition = $(ui.draggable).parent().attr('data-position');
-    				if($(this).children().length >= 2 || ($(this).children().length >= 1 && $(this).parent().attr('id') === '12')){
+    				if($(this).children().length >= 3 || ($(this).children().length >= 2 && $(this).parent().attr('id') === '12')){
     					$(ui.draggable).siblings('.players-dropdown:hidden').children('button').children('.player-button-text').text($(this).children('.player-filled').text());
     					$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').children().removeClass('hidden');
         				$(ui.draggable).siblings('.players-dropdown:hidden').children('.js-players-list').find(`li[data-value="${$(this).children('.player-filled').attr('data-playerId')}"]`).addClass('hidden');
