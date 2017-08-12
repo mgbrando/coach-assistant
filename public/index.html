@@ -17,6 +17,12 @@
 <body>
 	<div class="header-banner"></div>
 	<div class="main-background"></div>
+  <!--<div class="front-page">
+    <div class="main-headers"> 
+      <header class="main-header">Coach Assistant</header>
+      <header class="sub-header">The assistant coach no head coach should be without</header>
+    </div>
+  </div>-->
 
 	<!-- Save Roster Modal -->
 	<div id="myModal" class="modal fade" role="dialog">
@@ -252,21 +258,6 @@
 
 	<!-- Main content -->
 	<main id="main">
-		<header>
-			<span class="main-header-text">Coach Assistant</span>
-			<div class="dropdown nav-dropdown">
-  				<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    				<span class="nav-button-text">Field</span>
-    				<span class="caret"></span>
-  				</button>
-  				<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-dropdown">
-  					<li class="js-nav-list-item js-field-item hidden"><a class="js-nav-button nav-button" href="#">Field</a></li>
-    				<li class="js-nav-list-item js-team-item"><a class="js-nav-button nav-button" href="#">Team</a></li>
-    				<li class="js-nav-list-item js-rosters-item"><a class="js-nav-button nav-button" href="#">Rosters</a></li>
-    				<li class="js-nav-list-item js-formations-item"><a class="js-nav-button nav-button" href="#">Formations</a></li>
-  				</ul>
-			</div>
-		</header>
 
 		<!-- Visual Roster Layout Section -->
 		<section class="js-visual-section visual-section">
@@ -298,6 +289,18 @@
 				<button type="button" class="btn btn-default btn-sm js-save-button save-button" data-toggle="modal" data-target="#myModal">Save Roster...</button>
 				<button type="button" class="btn btn-default btn-sm js-notes-button notes-button hidden" data-toggle="modal" data-target="#myNotesModal">Details</button>
 				<button type="button" class="btn btn-default btn-sm js-update-roster-button update-roster-button hidden">Update Roster</button>
+        <div class="dropdown nav-dropdown">
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="nav-button-text">Field</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-dropdown">
+            <li class="js-nav-list-item js-field-item hidden"><a class="js-nav-button nav-button" href="#">Field</a></li>
+            <li class="js-nav-list-item js-team-item"><a class="js-nav-button nav-button" href="#">Team</a></li>
+            <li class="js-nav-list-item js-rosters-item"><a class="js-nav-button nav-button" href="#">Rosters</a></li>
+            <li class="js-nav-list-item js-formations-item"><a class="js-nav-button nav-button" href="#">Formations</a></li>
+          </ul>
+        </div>
 			</header>
 			<div class="js-main-visual main-visual">
 			
@@ -307,7 +310,21 @@
 		<!-- Rosters Section -->
 		<section class="js-roster-section roster-section hidden">
 			<div class="js-screen-select screen-select"></div>
-			<header><span>Rosters</span></header>
+			<header>
+        <span>Rosters</span>
+        <div class="dropdown nav-dropdown">
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="nav-button-text">Field</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-dropdown">
+            <li class="js-nav-list-item js-field-item hidden"><a class="js-nav-button nav-button" href="#">Field</a></li>
+            <li class="js-nav-list-item js-team-item"><a class="js-nav-button nav-button" href="#">Team</a></li>
+            <li class="js-nav-list-item js-rosters-item"><a class="js-nav-button nav-button" href="#">Rosters</a></li>
+            <li class="js-nav-list-item js-formations-item"><a class="js-nav-button nav-button" href="#">Formations</a></li>
+          </ul>
+        </div>
+      </header>
 			<div class="rosters-main">
 				<div class="js-rosters rosters container-fluid"></div>
 			</div>
@@ -319,6 +336,18 @@
 			<header>
 				<span>Team</span> 
 				<button type="button" class="btn btn-default btn-sm js-add-player-button add-player-button" data-toggle="modal" data-target="#myPlayerModal">Add Player...</button>
+        <div class="dropdown nav-dropdown">
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="nav-button-text">Field</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-dropdown">
+            <li class="js-nav-list-item js-field-item hidden"><a class="js-nav-button nav-button" href="#">Field</a></li>
+            <li class="js-nav-list-item js-team-item"><a class="js-nav-button nav-button" href="#">Team</a></li>
+            <li class="js-nav-list-item js-rosters-item"><a class="js-nav-button nav-button" href="#">Rosters</a></li>
+            <li class="js-nav-list-item js-formations-item"><a class="js-nav-button nav-button" href="#">Formations</a></li>
+          </ul>
+        </div>
 			</header>
 			<div class="team-main">
 				<div class="js-team team container-fluid"></div>
@@ -332,6 +361,18 @@
 				<span>Formations</span> 		
 				<button type="button" class="btn btn-default btn-sm js-add-formation-button add-formation-button" data-toggle="modal" data-target="#myFormationModal">Add Formation...</button>
 				<button type="button" class="btn btn-default btn-sm js-delete-selected-formations-button delete-selected-formations-button" data-toggle="modal" data-target="#myDeleteFormationModal">Delete Selected Formations</button>
+        <div class="dropdown nav-dropdown">
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="nav-button-text">Field</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-dropdown">
+            <li class="js-nav-list-item js-field-item hidden"><a class="js-nav-button nav-button" href="#">Field</a></li>
+            <li class="js-nav-list-item js-team-item"><a class="js-nav-button nav-button" href="#">Team</a></li>
+            <li class="js-nav-list-item js-rosters-item"><a class="js-nav-button nav-button" href="#">Rosters</a></li>
+            <li class="js-nav-list-item js-formations-item"><a class="js-nav-button nav-button" href="#">Formations</a></li>
+          </ul>
+        </div>
 			</header>
 			<div class="formations-main">
 				<div class="js-formation-listing formation-listing container-fluid"></div>

@@ -1,3 +1,6 @@
+/*html, body, main{
+    height: 100%;
+}*/
 .hidden{
     display: none;
 }
@@ -12,6 +15,30 @@
     height: 100%;
     font-size: 18px;
     color: white;
+}
+.front-page{
+    position: absolute;
+    z-index: 99999999999999;
+    background-color: black;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.front-page{
+    color: white;
+    padding-top: 35vh;
+}
+.front-page .main-headers{
+    width: 600px;
+    margin: auto auto;
+}
+.front-page .main-headers .main-header{
+    font-size: 64px;
+}
+.front-page .main-headers .sub-header{
+    font-size: 22px;
+    text-indent: 20px;
 }
 
 /* The side navigation menu */
@@ -101,7 +128,7 @@ section > header span{
     border-top: 1px solid black;
 }
 .nav-dropdown{
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 15px;
     z-index: 10000;
@@ -140,11 +167,12 @@ section header{
     margin-left: 5px;
 }
 .js-visual-container{
-    min-height: 90vh;
+    height: 90vh;
+    min-height: 500px;
     width: 100%;
     background-image: url("../images/soccer-half.jpg");
     background-repeat: no-repeat;
-    background-size:100% 100%;
+    background-size: 100% 100%;
 }
 .js-visual-container .row{
     padding-left: 5%;
@@ -164,6 +192,15 @@ section header{
 }
 .ten-positions{
     width: 10%;
+}
+.ten-positions .visual-position{
+width: 1em;
+word-break: break-word;
+letter-spacing: 1em;
+white-space: pre-wrap;
+padding-left: 5px;
+margin: 0;
+text-align: center;
 }
 .visual-position-container{
     display: table;
@@ -188,40 +225,51 @@ div.col-xs-12.visual-position-container{
     margin-right: 0;
 }
 .js-visual-container .layers-1{
-    height: 90vh;
+    /*height: 90vh;*/
+    height: 100%;
 }
 .js-visual-container .layers-2{
-    height: 45vh;
+    /*height: 45vh;*/
+    height: 50%;
 }
 .js-visual-container .layers-3{
-    height: 30vh;
+    /*height: 30vh;*/
+    height: 33.3333%;
 }
 .js-visual-container .layers-4{
-    height: 22.5vh;
+    /*height: 22.5vh;*/
+    height: 25%;
 }
 .js-visual-container .layers-5{
-    height: 18vh;
+    /*height: 18vh;*/
+    height: 20%;
 }
 .js-visual-container .layers-6{
-    height: 15vh;
+    /*height: 15vh;*/
+    height: 16.6667%;
 }
 .js-visual-container .layers-7{
-    height: 12.85714vh;
+    /*height: 12.85714vh;*/
+    height: 14.2857%;
 }
 .js-visual-container .layers-8{
-    height: 11.25vh;
+    /*height: 11.25vh;*/
+    height: 12.5%;
 }
 .js-visual-container .layers-9{
-    height: 10vh;
+    /*height: 10vh;*/
+    height: 11.1111%;
 }
 .js-visual-container .layers-10{
-    height: 9vh;
+    /*height: 9vh;*/
+    height: 10%;
 }
 .js-visual-container .layers-11{
-    height: 8.18.18vh;
+    /*height: 8.18vh;*/
+    height: 9.0909%;
 }
 .js-visual-container .goalie-layer{
-    height: 8vh;
+    /*height: 8vh;*/
 }
 /*Modal*/
 .modal{
@@ -415,24 +463,151 @@ html, body{
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.visual-section > header, .roster-section > header, .team-section > header, .formations-section > header{
+    /*height: 10vh;
+    min-height: 50px;*/
+    height: 80px;
+}
+div.header-banner{
+    height: 80px;
+}
+.visual-section > header, .nav-dropdown, .roster-section > header, .team-section > header, .formations-section > header{
+    line-height: 80px;
+}
+/*.formations-dropdown, .rosters-dropdown{
+    padding-bottom: 5px;
+}*/
+/*#rosters-dropdown, #formations-dropdown, .save-button, .update-roster-button{
+    position: relative;
+    bottom: 20;
+}
+.js-roster-list-container, .js-formation-list-container{
+    padding-bottom: 5px;
+}*/
 
+/*.nav-dropdown{
+    padding-top: 10px;
+}*/
+.visual-position{
+    display: block;
+    border-radius: 5px;
+    width: 100%;
+    min-width: 1.5em;
+    max-width: 250px;
+    margin: 0 auto;
+    /*overflow-wrap: break-word;*/
+    word-break: break-word;
+    /*word-break: break-all;*/
+    word-spacing: 250px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    overflow: scroll;
+    max-height: 100%;
+    /*vertical-align: middle;*/
+}
+.js-visual-container .row{
+    overflow: scroll;
+}
+/*.visual-position-container{
+    padding-top: 0;
+}
+.visual-position-container:last-child{
+    padding-bottom: 0;
+}*/
+main#main{
+height: 100%;
+}
+.js-visual-container{
+    /*position: relative;
+    top: 10;
+    bottom: 0;*/
+    height: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*height: 100%;*/
+}
+.visual-position-container{
+    display: block;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.dropdown-menu{
+    top: 55px;
+}
+.visual-section, .main-visual{
+    height: 100%;
+}
+.main-visual{
+    /*height: 100%;*/
+    position: relative;
+    top: 0;
+    bottom: 0;
+}
+.js-visual-container{
+    /*padding-top: 10px;*/
+}
+.visual-section > header, .nav-dropdown, .roster-section > header, .team-section > header, .formations-section > header{
+    line-height: 80px;
+}
+.formations-dropdown{
+    height: auto;
+}
+/*.visual-section > header, .roster-section > header, .team-section > header, .formations-section > header{
+    margin-bottom: 5px;
+}*/
+/*.nav-dropdown{
+    padding-top: 5px;
+}*/
 /* Media Queries */
-
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 492px) {
+    .visual-section > header, .nav-dropdown, .roster-section > header, .team-section > header, .formations-section > header{
+        line-height: 80px;
+    }
+}
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
+    /*.sidenav {padding-top: 15px;}*/
     .sidenav a {font-size: 18px;}
     div.col-xs-12.visual-position-container{
         padding-left: 0%;
         padding-right: 0%;
-    }   
+    }  
+}
+@media screen and (max-width: 411px) {
+    .visual-section > header button, .formations-section > header button, .roster-section > header button, .team-section > header button{
+        /*height: 27px;*/
+        /*line-height: normal;*/
+        vertical-align: bottom;
+    }
+    button#nav-dropdown{
+        /*height: 28px;*/
+        vertical-align: top;
+    }
+    .dropdown-menu{
+        top: 56px;
+    }
+    .dropdown-menu-right{
+        top: 30px;
+    }
+    .nav-dropdown{
+        top: 5px;
+    }
+    .formations-dropdown .dropdown-toggle, .rosters-dropdown .dropdown-toggle, .save-button, .update-button,
+    .add-player-button, .add-formation-button, .delete-selected-formations-button, .notes-button, .update-roster-button{
+        position: relative;
+        bottom: 5px;
+    } 
+    /*.nav-dropdown{
+        right: 10px;
+    }*/
 }
 @media screen and (max-width: 450px) {
     div.col-xs-12.visual-position-container{
         padding-left: 0;
         padding-right: 0;
     }   
-    .roster-section > header span:first-child, .team-section > header span:first-child, .formations-section > header span:first-child{
+    .roster-section > header > span:first-of-type, .team-section > header > span:first-of-type, .formations-section > header > span:first-of-type{
         display: none;
     }
     #main{
@@ -554,6 +729,7 @@ html, body{
         height: 20px;
     }
     .js-players-list{
+        margin-top: -20px;
         margin-left: -3px;
     }
     .players-dropdown{
@@ -574,10 +750,10 @@ html, body{
     .visual-section > header{
         padding-left: 15px;
     }
-    .visual-section > header button, .formations-section > header button, .roster-section > header button, .team-section > header button{
+    /*.visual-section > header button, .formations-section > header button, .roster-section > header button, .team-section > header button{
         height: 27px;
         vertical-align: bottom;
-    }
+    }*/
     .main-visual, .formations-section, .roster-section, .team-section, .formations-main, .rosters-main, .team-main{
         margin: 0;
     }
@@ -588,13 +764,17 @@ html, body{
     .formations-section, .roster-section, .team-section{
         width: 100%;
     }
-    button#nav-dropdown{
+    /*button#nav-dropdown{
         height: 28px;
         vertical-align: bottom;
-    }
+    }*/
     .formations-section > header, .roster-section > header, .team-section > header{
         padding-left: 15px;
     }
+    .js-visual-container .row{
+        padding-left: 0;
+        padding-right: 0;
+    } 
 }
 @media (max-width: 515px){
     .js-formation-list-container .formation-label, .js-roster-list-container .roster-label{
