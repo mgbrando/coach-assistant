@@ -283,6 +283,9 @@ function getVisualLayersByRoster(roster){
 			if(positions === 5){
 				visualHtml+=`<div class="col-xs-2 visual-position-container five-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
 			}
+			else if(positions === 6){
+				visualHtml+=`<div class="col-xs-2 visual-position-container six-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
 			else if(positions === 7){
 				visualHtml+=`<div class="col-xs-1 visual-position-container seven-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
 			}
@@ -346,6 +349,9 @@ function getVisualLayersByFormation(formation){
 			draggableHtml+=`<li class="js-position position ui-widget-header noselect" data-position="${j+1}"><span class="position-number">${j+1}</span> ${getPlayersDropDown(++playerDropDownCount)}</li>`;
 			if(positions === 5){
 				visualHtml+=`<div class="col-xs-2 visual-position-container five-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
+			}
+			else if(positions === 6){
+				visualHtml+=`<div class="col-xs-2 visual-position-container six-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
 			}
 			else if(positions === 7){
 				visualHtml+=`<div class="col-xs-1 visual-position-container seven-positions" data-position="${j+1}"><div class="visual-position ui-widget-header noselect">${j+1}</div></div>`;
