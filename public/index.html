@@ -242,6 +242,63 @@
 		</div>
 	</div>
 
+  <!-- App Info Modal -->
+  <div id="myAppInfoModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Coach Assistant App</h4>
+            </div>
+            <div class="modal-body">
+              <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Purpose</a>
+                    </h4>
+                  </div>
+                  <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                      <p>
+                        The purpose of the Coach Assistant App is to help coaches roster their team for a game or scrimmage ahead of time. 
+                      </p>
+                      <p>
+                        New formations can be created by the coach and the rosters and formations that are created can be used again at a later date.
+                      </p>
+                      <p>
+                        A visual field is given so that coaches can visual the formation, as well as show players where they need to go and possibly demonstrate what their role will be in that position.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">How to use</a>
+                    </h4>
+                  </div>
+                  <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <img class="howToImage" src="../images/how-to.jpg" alt="field"/>
+                      <p>
+                        At the top of the screen is where the section functionality, app info, and app navigation is located. The "i" icon button is used to see information about this app. To the right of that is the button that allows you to navigate between the four sections (field, rosters, team, formations).
+                      </p>
+                      <p>
+                        To the far left of the screen there is a ">" character on large screens. On smaller screens this will appear as a "hamburger" button in the buttom left. Clicking these areas will open up an interface to either drag and drop players into positions or to select them from a dropdown menu in each of the positions.
+                      </p>
+                      <p>
+                        In the formations section, formations can be selected by clicking or dragging over them.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </div>
+        </div>
+    </div>
+  </div>
+
 	<!-- Sidebar -->
   	<div id="mySidenav" class="sidenav">
   		<div class="js-closed-nav closed-nav glyphicon glyphicon-chevron-right" onclick="openNav()"></div>
@@ -290,6 +347,9 @@
 				<button type="button" class="btn btn-default btn-sm js-notes-button notes-button hidden" data-toggle="modal" data-target="#myNotesModal">Details</button>
 				<button type="button" class="btn btn-default btn-sm js-update-roster-button update-roster-button hidden">Update Roster</button>
         <div class="dropdown nav-dropdown">
+          <button type="button" class="btn btn-default btn-sm info-button" data-toggle="modal" data-target="#myAppInfoModal">
+            <span class="glyphicon glyphicon-info-sign"></span>
+          </button>
           <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="nav-button-text">Field</span>
             <span class="caret"></span>
@@ -313,6 +373,9 @@
 			<header>
         <span>Rosters</span>
         <div class="dropdown nav-dropdown">
+          <button type="button" class="btn btn-default btn-sm info-button" data-toggle="modal" data-target="#myAppInfoModal">
+            <span class="glyphicon glyphicon-info-sign"></span>
+          </button>
           <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="nav-button-text">Field</span>
             <span class="caret"></span>
@@ -323,6 +386,7 @@
             <li class="js-nav-list-item js-rosters-item"><a class="js-nav-button nav-button" href="#">Rosters</a></li>
             <li class="js-nav-list-item js-formations-item"><a class="js-nav-button nav-button" href="#">Formations</a></li>
           </ul>
+        </div>
         </div>
       </header>
 			<div class="rosters-main">
@@ -337,6 +401,9 @@
 				<span>Team</span> 
 				<button type="button" class="btn btn-default btn-sm js-add-player-button add-player-button" data-toggle="modal" data-target="#myPlayerModal">Add Player...</button>
         <div class="dropdown nav-dropdown">
+          <button type="button" class="btn btn-default btn-sm info-button" data-toggle="modal" data-target="#myAppInfoModal">
+            <span class="glyphicon glyphicon-info-sign"></span>
+          </button>
           <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="nav-button-text">Field</span>
             <span class="caret"></span>
@@ -362,6 +429,9 @@
 				<button type="button" class="btn btn-default btn-sm js-add-formation-button add-formation-button" data-toggle="modal" data-target="#myFormationModal">Add Formation...</button>
 				<button type="button" class="btn btn-default btn-sm js-delete-selected-formations-button delete-selected-formations-button" data-toggle="modal" data-target="#myDeleteFormationModal">Delete Selected Formations</button>
         <div class="dropdown nav-dropdown">
+          <button type="button" class="btn btn-default btn-sm info-button" data-toggle="modal" data-target="#myAppInfoModal">
+            <span class="glyphicon glyphicon-info-sign"></span>
+          </button>
           <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="nav-button-text">Field</span>
             <span class="caret"></span>

@@ -15,6 +15,7 @@
     height: 100%;
     font-size: 18px;
     color: white;
+    cursor: pointer;
 }
 .front-page{
     position: absolute;
@@ -99,6 +100,9 @@
 section > header span{
     color: black;
 }
+section > header > span{
+    color: white;
+}
 .page-options{
     display: inline-block;
 }
@@ -130,8 +134,20 @@ section > header span{
 .nav-dropdown{
     position: absolute;
     top: 0;
-    right: 15px;
+    right: 0;
     z-index: 10000;
+}
+.info-button{
+    /*position: absolute;
+    top: 25px;
+    right: 15px;
+    z-index: 10000;*/
+    height: 30px;
+    padding-top: 3px;
+    padding-bottom: 0;
+}
+.glyphicon-info-sign{
+    font-size: 18px;
 }
 .visual-section .dropdown{
     display: inline-block;
@@ -193,13 +209,13 @@ section header{
 .ten-positions{
     width: 10%;
 }
-.ten-positions .visual-position{
+.ten-positions .visual-position, .nine-positions .visual-position{
 width: 1em;
 word-break: break-word;
 letter-spacing: 1em;
 white-space: pre-wrap;
 padding-left: 5px;
-margin: 0;
+margin: 0 auto;
 text-align: center;
 }
 .visual-position-container{
@@ -403,8 +419,9 @@ main {
     width: 100%;
     height: 10vh;
     background-size: cover;
-    background-image: url("../images/soccer_ball.jpg");
-    opacity: 0.5;
+    background-color: black;
+    /*background-image: url("../images/soccer_ball.jpg");
+    opacity: 0.5;*/
     filter: alpha(opacity=50);
 }
 .rosters, .team, .formation-listing{
@@ -443,7 +460,7 @@ html, body{
     background-size: cover;    
 }
 .main-header-text, .roster-label, .formation-label{
-    color: black;
+    color: white;
 }
 .hamburger-button{
     display: none;
@@ -466,6 +483,7 @@ html, body{
 .visual-section > header, .roster-section > header, .team-section > header, .formations-section > header{
     /*height: 10vh;
     min-height: 50px;*/
+    position: relative;
     height: 80px;
 }
 div.header-banner{
@@ -553,6 +571,20 @@ height: 100%;
 .formations-dropdown{
     height: auto;
 }
+#myAppInfoModal .modal-body{
+    padding-top: 15px;
+}
+.panel-group{
+    margin-bottom: 0;
+}
+.howToImage{
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 14px;
+}
+.js-player-item > a{
+    font-size: 18px;
+}
 /*.visual-section > header, .roster-section > header, .team-section > header, .formations-section > header{
     margin-bottom: 5px;
 }*/
@@ -572,36 +604,11 @@ height: 100%;
     div.col-xs-12.visual-position-container{
         padding-left: 0%;
         padding-right: 0%;
-    }  
+    }
 }
-@media screen and (max-width: 411px) {
-    .visual-section > header button, .formations-section > header button, .roster-section > header button, .team-section > header button{
-        /*height: 27px;*/
-        /*line-height: normal;*/
-        vertical-align: bottom;
-    }
-    button#nav-dropdown{
-        /*height: 28px;*/
-        vertical-align: top;
-    }
-    .dropdown-menu{
-        top: 56px;
-    }
-    .dropdown-menu-right{
-        top: 30px;
-    }
-    .nav-dropdown{
-        top: 5px;
-    }
-    .formations-dropdown .dropdown-toggle, .rosters-dropdown .dropdown-toggle, .save-button, .update-button,
-    .add-player-button, .add-formation-button, .delete-selected-formations-button, .notes-button, .update-roster-button{
-        position: relative;
-        bottom: 5px;
-    } 
-    /*.nav-dropdown{
-        right: 10px;
-    }*/
-}
+/*@media screen and (max-width: 411px) {
+
+}*/
 @media screen and (max-width: 450px) {
     div.col-xs-12.visual-position-container{
         padding-left: 0;
@@ -775,13 +782,75 @@ height: 100%;
         padding-left: 0;
         padding-right: 0;
     } 
+    .nav-dropdown{
+        right: 15px;
+    }
 }
-@media (max-width: 515px){
+@media (max-width: 484px){
+    /*.add-formation-button, .delete-selected-formations-button{
+        position: relative;
+        bottom: 5px;
+        vertical-align: bottom;
+    }*/
+    /*button#nav-dropdown, button.info-button{
+
+        vertical-align: top;
+    }*/
+    /*.roster-section > header > span:first-of-type, .team-section > header > span:first-of-type, .formations-section > header > span:first-of-type{
+        display: none;
+    }*/
+    .visual-section > header button, .formations-section > header button, .roster-section > header button, .team-section > header button{
+        /*height: 27px;*/
+        /*line-height: normal;*/
+        vertical-align: bottom;
+    }
+    button#nav-dropdown, .nav-dropdown > button.info-button {
+        /*height: 28px;*/
+        position: relative;
+        top: 5px;
+        vertical-align: top;
+    }
+    .dropdown-menu{
+        top: 56px;
+    }
+    .dropdown-menu-right{
+        top: 30px;
+    }
+    /*.nav-dropdown{
+        top: 5px;
+    }*/
+    .formations-dropdown .dropdown-toggle, .rosters-dropdown .dropdown-toggle, .save-button, .update-button,
+    .add-player-button, .notes-button, .update-roster-button, .add-formation-button, .delete-selected-formations-button{
+        position: relative;
+        bottom: 5px;
+        vertical-align: bottom;
+    } 
+    /*.nav-dropdown{
+        right: 10px;
+    }*/
+}
+/*@media (max-width: 599px){
     .js-formation-list-container .formation-label, .js-roster-list-container .roster-label{
         display: none;
     }
 }
-@media (max-width: 686px){
+@media (max-width: 604px){
+    .formations-section > header > span{
+        display: none;
+    }
+}686*/
+@media (max-width: 639px) {
+    .six-positions .visual-position{
+        width: 1em;
+        word-break: break-word;
+        letter-spacing: 1em;
+        white-space: pre-wrap;
+        padding-left: 5px;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
+@media (max-width: 724px){
     #mySidenav.sidenav, .closed-nav{
         width: 0px;
     }
@@ -818,14 +887,40 @@ height: 100%;
         float: left;
     }
 }
-
+@media (max-width: 829px) {
+    .seven-positions .visual-position{
+        width: 1em;
+        word-break: break-word;
+        letter-spacing: 1em;
+        white-space: pre-wrap;
+        padding-left: 5px;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
+@media (max-width: 847px) {
+    .roster-section > header > span:first-of-type, .team-section > header > span:first-of-type, .formations-section > header > span:first-of-type,
+    .js-formation-list-container .formation-label, .js-roster-list-container .roster-label, .formations-section > header > span{
+        display: none;
+    }
+}
 @media (min-width: 992px) {
     .col-md-5ths {
         width: 20%;
         float: left;
     }
 }
-
+@media (max-width: 954px) {
+    .eight-positions .visual-position{
+        width: 1em;
+        word-break: break-word;
+        letter-spacing: 1em;
+        white-space: pre-wrap;
+        padding-left: 5px;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
 @media (min-width: 1200px) {
     .col-lg-5ths {
         width: 20%;
