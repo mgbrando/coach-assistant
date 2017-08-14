@@ -1,3 +1,6 @@
+/*html, body, main{
+    height: 100%;
+}*/
 .hidden{
     display: none;
 }
@@ -12,6 +15,31 @@
     height: 100%;
     font-size: 18px;
     color: white;
+    cursor: pointer;
+}
+.front-page{
+    position: absolute;
+    z-index: 99999999999999;
+    background-color: black;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.front-page{
+    color: white;
+    padding-top: 35vh;
+}
+.front-page .main-headers{
+    width: 600px;
+    margin: auto auto;
+}
+.front-page .main-headers .main-header{
+    font-size: 64px;
+}
+.front-page .main-headers .sub-header{
+    font-size: 22px;
+    text-indent: 20px;
 }
 
 /* The side navigation menu */
@@ -72,6 +100,9 @@
 section > header span{
     color: black;
 }
+section > header > span{
+    color: white;
+}
 .page-options{
     display: inline-block;
 }
@@ -101,10 +132,22 @@ section > header span{
     border-top: 1px solid black;
 }
 .nav-dropdown{
-    position: fixed;
+    position: absolute;
     top: 0;
-    right: 15px;
+    right: 0;
     z-index: 10000;
+}
+.info-button{
+    /*position: absolute;
+    top: 25px;
+    right: 15px;
+    z-index: 10000;*/
+    height: 30px;
+    padding-top: 3px;
+    padding-bottom: 0;
+}
+.glyphicon-info-sign{
+    font-size: 18px;
 }
 .visual-section .dropdown{
     display: inline-block;
@@ -140,11 +183,12 @@ section header{
     margin-left: 5px;
 }
 .js-visual-container{
-    min-height: 90vh;
+    height: 90vh;
+    min-height: 500px;
     width: 100%;
     background-image: url("../images/soccer-half.jpg");
     background-repeat: no-repeat;
-    background-size:100% 100%;
+    background-size: 100% 100%;
 }
 .js-visual-container .row{
     padding-left: 5%;
@@ -164,6 +208,15 @@ section header{
 }
 .ten-positions{
     width: 10%;
+}
+.ten-positions .visual-position, .nine-positions .visual-position{
+width: 1em;
+word-break: break-word;
+letter-spacing: 1em;
+white-space: pre-wrap;
+padding-left: 5px;
+margin: 0 auto;
+text-align: center;
 }
 .visual-position-container{
     display: table;
@@ -188,40 +241,51 @@ div.col-xs-12.visual-position-container{
     margin-right: 0;
 }
 .js-visual-container .layers-1{
-    height: 90vh;
+    /*height: 90vh;*/
+    height: 100%;
 }
 .js-visual-container .layers-2{
-    height: 45vh;
+    /*height: 45vh;*/
+    height: 50%;
 }
 .js-visual-container .layers-3{
-    height: 30vh;
+    /*height: 30vh;*/
+    height: 33.3333%;
 }
 .js-visual-container .layers-4{
-    height: 22.5vh;
+    /*height: 22.5vh;*/
+    height: 25%;
 }
 .js-visual-container .layers-5{
-    height: 18vh;
+    /*height: 18vh;*/
+    height: 20%;
 }
 .js-visual-container .layers-6{
-    height: 15vh;
+    /*height: 15vh;*/
+    height: 16.6667%;
 }
 .js-visual-container .layers-7{
-    height: 12.85714vh;
+    /*height: 12.85714vh;*/
+    height: 14.2857%;
 }
 .js-visual-container .layers-8{
-    height: 11.25vh;
+    /*height: 11.25vh;*/
+    height: 12.5%;
 }
 .js-visual-container .layers-9{
-    height: 10vh;
+    /*height: 10vh;*/
+    height: 11.1111%;
 }
 .js-visual-container .layers-10{
-    height: 9vh;
+    /*height: 9vh;*/
+    height: 10%;
 }
 .js-visual-container .layers-11{
-    height: 8.18.18vh;
+    /*height: 8.18vh;*/
+    height: 9.0909%;
 }
 .js-visual-container .goalie-layer{
-    height: 8vh;
+    /*height: 8vh;*/
 }
 /*Modal*/
 .modal{
@@ -355,8 +419,9 @@ main {
     width: 100%;
     height: 10vh;
     background-size: cover;
-    background-image: url("../images/soccer_ball.jpg");
-    opacity: 0.5;
+    background-color: black;
+    /*background-image: url("../images/soccer_ball.jpg");
+    opacity: 0.5;*/
     filter: alpha(opacity=50);
 }
 .rosters, .team, .formation-listing{
@@ -395,7 +460,7 @@ html, body{
     background-size: cover;    
 }
 .main-header-text, .roster-label, .formation-label{
-    color: black;
+    color: white;
 }
 .hamburger-button{
     display: none;
@@ -415,24 +480,141 @@ html, body{
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.visual-section > header, .roster-section > header, .team-section > header, .formations-section > header{
+    /*height: 10vh;
+    min-height: 50px;*/
+    position: relative;
+    height: 80px;
+}
+div.header-banner{
+    height: 80px;
+}
+.visual-section > header, .nav-dropdown, .roster-section > header, .team-section > header, .formations-section > header{
+    line-height: 80px;
+}
+/*.formations-dropdown, .rosters-dropdown{
+    padding-bottom: 5px;
+}*/
+/*#rosters-dropdown, #formations-dropdown, .save-button, .update-roster-button{
+    position: relative;
+    bottom: 20;
+}
+.js-roster-list-container, .js-formation-list-container{
+    padding-bottom: 5px;
+}*/
 
+/*.nav-dropdown{
+    padding-top: 10px;
+}*/
+.visual-position{
+    display: block;
+    border-radius: 5px;
+    width: 100%;
+    min-width: 1.5em;
+    max-width: 250px;
+    margin: 0 auto;
+    /*overflow-wrap: break-word;*/
+    word-break: break-word;
+    /*word-break: break-all;*/
+    word-spacing: 250px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    overflow: scroll;
+    max-height: 100%;
+    /*vertical-align: middle;*/
+}
+.js-visual-container .row{
+    overflow: scroll;
+}
+/*.visual-position-container{
+    padding-top: 0;
+}
+.visual-position-container:last-child{
+    padding-bottom: 0;
+}*/
+main#main{
+height: 100%;
+}
+.js-visual-container{
+    /*position: relative;
+    top: 10;
+    bottom: 0;*/
+    height: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*height: 100%;*/
+}
+.visual-position-container{
+    display: block;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.dropdown-menu{
+    top: 55px;
+}
+.visual-section, .main-visual{
+    height: 100%;
+}
+.main-visual{
+    /*height: 100%;*/
+    position: relative;
+    top: 0;
+    bottom: 0;
+}
+.js-visual-container{
+    /*padding-top: 10px;*/
+}
+.visual-section > header, .nav-dropdown, .roster-section > header, .team-section > header, .formations-section > header{
+    line-height: 80px;
+}
+.formations-dropdown{
+    height: auto;
+}
+#myAppInfoModal .modal-body{
+    padding-top: 15px;
+}
+.panel-group{
+    margin-bottom: 0;
+}
+.howToImage{
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 14px;
+}
+.js-player-item > a{
+    font-size: 18px;
+}
+/*.visual-section > header, .roster-section > header, .team-section > header, .formations-section > header{
+    margin-bottom: 5px;
+}*/
+/*.nav-dropdown{
+    padding-top: 5px;
+}*/
 /* Media Queries */
-
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 492px) {
+    .visual-section > header, .nav-dropdown, .roster-section > header, .team-section > header, .formations-section > header{
+        line-height: 80px;
+    }
+}
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
+    /*.sidenav {padding-top: 15px;}*/
     .sidenav a {font-size: 18px;}
     div.col-xs-12.visual-position-container{
         padding-left: 0%;
         padding-right: 0%;
-    }   
+    }
 }
+/*@media screen and (max-width: 411px) {
+
+}*/
 @media screen and (max-width: 450px) {
     div.col-xs-12.visual-position-container{
         padding-left: 0;
         padding-right: 0;
     }   
-    .roster-section > header span:first-child, .team-section > header span:first-child, .formations-section > header span:first-child{
+    .roster-section > header > span:first-of-type, .team-section > header > span:first-of-type, .formations-section > header > span:first-of-type{
         display: none;
     }
     #main{
@@ -554,6 +736,7 @@ html, body{
         height: 20px;
     }
     .js-players-list{
+        margin-top: -20px;
         margin-left: -3px;
     }
     .players-dropdown{
@@ -574,10 +757,10 @@ html, body{
     .visual-section > header{
         padding-left: 15px;
     }
-    .visual-section > header button, .formations-section > header button, .roster-section > header button, .team-section > header button{
+    /*.visual-section > header button, .formations-section > header button, .roster-section > header button, .team-section > header button{
         height: 27px;
         vertical-align: bottom;
-    }
+    }*/
     .main-visual, .formations-section, .roster-section, .team-section, .formations-main, .rosters-main, .team-main{
         margin: 0;
     }
@@ -588,20 +771,89 @@ html, body{
     .formations-section, .roster-section, .team-section{
         width: 100%;
     }
-    button#nav-dropdown{
+    /*button#nav-dropdown{
         height: 28px;
         vertical-align: bottom;
-    }
+    }*/
     .formations-section > header, .roster-section > header, .team-section > header{
         padding-left: 15px;
     }
+    .js-visual-container .row{
+        padding-left: 0;
+        padding-right: 0;
+    } 
+    .nav-dropdown{
+        right: 15px;
+    }
 }
-@media (max-width: 515px){
+@media (max-width: 484px){
+    /*.add-formation-button, .delete-selected-formations-button{
+        position: relative;
+        bottom: 5px;
+        vertical-align: bottom;
+    }*/
+    /*button#nav-dropdown, button.info-button{
+
+        vertical-align: top;
+    }*/
+    /*.roster-section > header > span:first-of-type, .team-section > header > span:first-of-type, .formations-section > header > span:first-of-type{
+        display: none;
+    }*/
+    .visual-section > header button, .formations-section > header button, .roster-section > header button, .team-section > header button{
+        /*height: 27px;*/
+        /*line-height: normal;*/
+        vertical-align: bottom;
+    }
+    button#nav-dropdown, .nav-dropdown > button.info-button {
+        /*height: 28px;*/
+        position: relative;
+        top: 5px;
+        vertical-align: top;
+    }
+    .dropdown-menu{
+        top: 75px;
+    }
+    .dropdown-menu.js-players-list{
+        top: 54px;
+    }
+    .dropdown-menu-right{
+        top: 35px;
+    }
+    /*.nav-dropdown{
+        top: 5px;
+    }*/
+    .formations-dropdown .dropdown-toggle, .rosters-dropdown .dropdown-toggle, .save-button, .update-button,
+    .add-player-button, .notes-button, .update-roster-button, .add-formation-button, .delete-selected-formations-button{
+        position: relative;
+        bottom: 5px;
+        vertical-align: bottom;
+    } 
+    /*.nav-dropdown{
+        right: 10px;
+    }*/
+}
+/*@media (max-width: 599px){
     .js-formation-list-container .formation-label, .js-roster-list-container .roster-label{
         display: none;
     }
 }
-@media (max-width: 686px){
+@media (max-width: 604px){
+    .formations-section > header > span{
+        display: none;
+    }
+}686*/
+@media (max-width: 639px) {
+    .six-positions .visual-position{
+        width: 1em;
+        word-break: break-word;
+        letter-spacing: 1em;
+        white-space: pre-wrap;
+        padding-left: 5px;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
+@media (max-width: 724px){
     #mySidenav.sidenav, .closed-nav{
         width: 0px;
     }
@@ -638,14 +890,40 @@ html, body{
         float: left;
     }
 }
-
+@media (max-width: 829px) {
+    .seven-positions .visual-position{
+        width: 1em;
+        word-break: break-word;
+        letter-spacing: 1em;
+        white-space: pre-wrap;
+        padding-left: 5px;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
+@media (max-width: 847px) {
+    .roster-section > header > span:first-of-type, .team-section > header > span:first-of-type, .formations-section > header > span:first-of-type,
+    .js-formation-list-container .formation-label, .js-roster-list-container .roster-label, .formations-section > header > span{
+        display: none;
+    }
+}
 @media (min-width: 992px) {
     .col-md-5ths {
         width: 20%;
         float: left;
     }
 }
-
+@media (max-width: 954px) {
+    .eight-positions .visual-position{
+        width: 1em;
+        word-break: break-word;
+        letter-spacing: 1em;
+        white-space: pre-wrap;
+        padding-left: 5px;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
 @media (min-width: 1200px) {
     .col-lg-5ths {
         width: 20%;
