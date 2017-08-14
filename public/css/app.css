@@ -811,10 +811,13 @@ height: 100%;
         vertical-align: top;
     }
     .dropdown-menu{
-        top: 56px;
+        top: 75px;
+    }
+    .dropdown-menu.js-players-list{
+        top: 54px;
     }
     .dropdown-menu-right{
-        top: 30px;
+        top: 35px;
     }
     /*.nav-dropdown{
         top: 5px;
