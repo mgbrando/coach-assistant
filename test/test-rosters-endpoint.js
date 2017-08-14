@@ -30,7 +30,7 @@ function seedRosterData(){
         notes: faker.lorem.sentences()
     	});
 	}
-	console.log('SEED DATA: '+seedData[0].firstName);
+	//console.log('SEED DATA: '+seedData[0].firstName);
   	return Roster.insertMany(seedData);
 }
 
